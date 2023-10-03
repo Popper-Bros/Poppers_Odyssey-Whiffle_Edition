@@ -45,9 +45,12 @@ bool Player::Update(float dt)
 {
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN&&jumping==false) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN&&jumping==false) {
 		jumping = true;
 		pbody->body->ApplyLinearImpulse({0,-2.8f},pbody->body->GetWorldCenter(), true);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+		//
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 		//
