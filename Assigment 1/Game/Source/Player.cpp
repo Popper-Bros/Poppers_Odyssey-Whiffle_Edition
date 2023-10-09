@@ -43,32 +43,30 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
+	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN&&jumping==false) {
+	// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
+	vel.x = 0;
+
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping) {
 		jumping = true;
-		pbody->body->ApplyLinearImpulse({0,-2.8f},pbody->body->GetWorldCenter(), true);
-	}
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		//
-	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		//
+		vel.y = -10.0f; // Aplicar impulso vertical al saltar
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel = b2Vec2(-speed*dt, -GRAVITY_Y);
+		vel.x = -speed*dt; // Moverse a la izquierda
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel = b2Vec2(speed*dt, -GRAVITY_Y);
+		vel.x = speed*dt; // Moverse a la derecha
 	}
 
-	//Set the velocity of the pbody of the player
-	if (jumping == false) {
-
-		pbody->body->SetLinearVelocity(vel);
+	// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
+	if (!jumping) {
+		vel.y = -GRAVITY_Y; // Aplicar gravedad en el eje Y
 	}
+
+	pbody->body->SetLinearVelocity(vel);
 
 	//Update player position in pixels
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
