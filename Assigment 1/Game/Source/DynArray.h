@@ -58,7 +58,7 @@ public:
 	}
 
 	// Data Management
-	void PushBack(const VALUE& element)
+	void PBack(const VALUE& element)
 	{
 		if(numElements >= memCapacity)
 		{
@@ -90,7 +90,7 @@ public:
 
 		if(position == numElements)
 		{
-			PushBack(element);
+			PBack(element);
 			return true;
 		}
 
