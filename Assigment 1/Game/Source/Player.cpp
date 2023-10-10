@@ -93,8 +93,12 @@ bool Player::Update(float dt)
 	}
 	destRect = Move_derecha[currentFrame];
 	// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
-	if (!jumping) {
-		vel.y = -GRAVITY_Y; // Aplicar gravedad en el eje Y
+
+	if (vel.y<0) {
+		pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
+	}
+	else {
+		pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 	}
 
 	pbody->body->SetLinearVelocity(vel);
