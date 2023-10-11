@@ -72,6 +72,7 @@ bool Player::Update(float dt)
 	vel.x = 0;
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping) {
+		pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 		jumping = true;
 		vel.y = -10.0f; // Aplicar impulso vertical al saltar
 	}
@@ -94,10 +95,7 @@ bool Player::Update(float dt)
 	destRect = Move_derecha[currentFrame];
 	// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
 
-	if (vel.y<0) {
-		pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
-	}
-	else {
+	if (!jumping) {
 		pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 	}
 
@@ -108,9 +106,7 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 	
 	app->render->DrawTexture(texture_Move_Derecha, position.x, position.y, &destRect);
-	
-
-	
+		
 	return true;
 }
 int Player::Move_Derecha(int &currentF, float &frameC, const int frameS)
@@ -138,7 +134,8 @@ bool Player::CleanUp()
 }
 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
-
+	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
+	
 	switch (physB->ctype)
 	{
 	case ColliderType::ITEM:
@@ -146,8 +143,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
-		jumping = false;
+		//if(!jumping)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
+		if (vel.y > 0)jumping = false;
 		LOG("Collision PLATFORM");
+		break;
+	case ColliderType::WALL:
+		pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
+		LOG("Collision UNKNOWN");
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");

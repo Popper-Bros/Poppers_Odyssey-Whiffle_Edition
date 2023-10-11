@@ -188,7 +188,7 @@ bool Map::Load()
     c3->ctype = ColliderType::PLATFORM;
 
     PhysBody* c4 = app->physics->CreateRectangle(0+32, 768-704+320, 64, 640, STATIC);
-    c4->ctype = ColliderType::PLATFORM;
+    c4->ctype = ColliderType::WALL;
 
 
     
