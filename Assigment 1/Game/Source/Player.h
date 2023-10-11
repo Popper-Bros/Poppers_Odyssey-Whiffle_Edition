@@ -11,7 +11,9 @@ enum class Direction
 	IDLE_R,
 	IDLE_L,
 	LEFT,
-	RIGHT
+	RIGHT,
+	JUMP_R,
+	JUMP_L
 };
 
 class Player : public Entity
@@ -32,13 +34,11 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-	int Move_Derecha(int &currentF, float &frameC, const int frameS);
-
 
 public:
 	float speed = 0.2f;
 	const char* texturePath;
-	SDL_Texture* texture_Move_Derecha = NULL;
+	SDL_Texture* texture = NULL;
 
 	PhysBody* pbody;
 	int pickCoinFxId;
@@ -54,6 +54,8 @@ public:
 	SDL_Rect Move_izquierda[8];
 	SDL_Rect Idle_right[8];
 	SDL_Rect Idle_left[8];
+	SDL_Rect Jump_right[8];
+	SDL_Rect Jump_left[8];
 
 	Direction currentDirection = Direction::IDLE_R;
 	SDL_Rect* currentAnimation = Idle_right;

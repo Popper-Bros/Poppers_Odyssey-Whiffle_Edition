@@ -30,9 +30,9 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//initilize textures
-	texture_Move_Derecha = app->tex->Load(texturePath);
+	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 12, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
@@ -74,6 +74,24 @@ bool Player::Start() {
 	Idle_left[6] = { 89, 195, 26, 30 };
 	Idle_left[7] = { 25, 197, 26, 28 };
 
+	Jump_left[0] = { 252,271,28,35 };
+	Jump_left[1] = { 252,271,28,35 };
+	Jump_left[2] = { 252,271,28,35 };
+	Jump_left[3] = { 252,271,28,35 };
+	Jump_left[4] = { 252,271,28,35 };
+	Jump_left[5] = { 252,271,28,35 };
+	Jump_left[6] = { 252,271,28,35 };
+	Jump_left[7] = { 252,271,28,35 };
+
+	Jump_right[0] = { 399,236,30,36 };
+	Jump_right[1] = { 399,236,30,36 };
+	Jump_right[2] = { 399,236,30,36 };
+	Jump_right[3] = { 399,236,30,36 };
+	Jump_right[4] = { 399,236,30,36 };
+	Jump_right[5] = { 399,236,30,36 };
+	Jump_right[6] = { 399,236,30,36 };
+	Jump_right[7] = { 399,236,30,36 };
+
 	return true;
 }
 
@@ -81,11 +99,11 @@ bool Player::Update(float dt)
 {
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 	
-	if (currentDirection == Direction::RIGHT)
+	if (currentDirection == Direction::RIGHT || currentDirection == Direction::JUMP_R && !jumping)
 	{
 		currentDirection = Direction::IDLE_R;
 	}
-	else if (currentDirection == Direction::LEFT)
+	else if (currentDirection == Direction::LEFT || currentDirection == Direction::JUMP_L && !jumping)
 	{
 		currentDirection = Direction::IDLE_L;
 	}
@@ -132,6 +150,17 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 	
+	if (jumping)
+	{
+		if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
+		{
+			currentDirection = Direction::JUMP_R;
+		}
+		else if (currentDirection == Direction::LEFT || currentDirection == Direction::IDLE_L)
+		{
+			currentDirection = Direction::JUMP_L;
+		}
+	}
 	switch (currentDirection)
 	{
 	case Direction::IDLE_R:
@@ -146,31 +175,21 @@ bool Player::Update(float dt)
 	case Direction::RIGHT:
 		currentAnimation = Move_derecha;
 		break;
+	case Direction::JUMP_R:
+		currentAnimation = Jump_right;
+		break;
+	case Direction::JUMP_L:
+		currentAnimation = Jump_left;
+		break;
 	}
+	
 
 	if (currentAnimation != nullptr) {
 		destRect = currentAnimation[currentFrame];
-		app->render->DrawTexture(texture_Move_Derecha, position.x, position.y, &destRect);
+		app->render->DrawTexture(texture, position.x, position.y, &destRect);
 	}
 		
 	return true;
-}
-int Player::Move_Derecha(int &currentF, float &frameC, const int frameS)
-{
-	frameC += frameS;
-
-	if (frameC >= NUM_FRAMES) 
-	{
-		frameC = 0;
-		currentF++;
-
-		if (currentF >= NUM_FRAMES) 
-		{
-			currentF = 0;
-		}
-	}
-	return currentF;
-
 }
 
 bool Player::CleanUp()
