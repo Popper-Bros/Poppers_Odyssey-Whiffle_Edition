@@ -80,18 +80,18 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	float camSpeed = 1; 
+	float camSpeed = 0.1f; 
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
+	//if(app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	//	app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);
+	//if(app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	//	app->render->camera.y += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if(app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && app->render->camera.x <= 2048 && (app->scene->player->position.x)>=((app->render->camera.w)/2))
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if(app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->render->camera.x <=0 && (app->scene->player->position.x) <= ((app->render->camera.w) / 2))
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 
 	// Renders the image in the center of the screen 
