@@ -6,6 +6,13 @@
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
+enum class Direction
+{
+	IDLE_R,
+	IDLE_L,
+	LEFT,
+	RIGHT
+};
 
 class Player : public Entity
 {
@@ -30,22 +37,26 @@ public:
 
 public:
 	float speed = 0.2f;
-	const char* texturePath_M_D;
-	const char* texturePath_M_I;
+	const char* texturePath;
 	SDL_Texture* texture_Move_Derecha = NULL;
-	SDL_Texture* texture_Move_Izquierda = NULL;
+
 	PhysBody* pbody;
 	int pickCoinFxId;
 	bool jumping=false;
 
 	const int NUM_FRAMES = 8;
 	int currentFrame = 0;
-	float frameCounter = 0;
-	const int frameSpeed = 2;
+	float frameCounter = 0.0f;
+	const int frameSpeed = 1;
 
 	SDL_Rect destRect;
 	SDL_Rect Move_derecha[8];
 	SDL_Rect Move_izquierda[8];
+	SDL_Rect Idle_right[8];
+	SDL_Rect Idle_left[8];
+
+	Direction currentDirection = Direction::IDLE_R;
+	SDL_Rect* currentAnimation = Idle_right;
 };
 
 #endif // __PLAYER_H__
