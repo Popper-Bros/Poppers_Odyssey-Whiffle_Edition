@@ -121,7 +121,7 @@ bool Player::Update(float dt)
 	// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
 	vel.x = 0;
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && vel.y==0) {
 		pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 		jumping = true;
 		vel.y = -10.0f; // Aplicar impulso vertical al saltar
