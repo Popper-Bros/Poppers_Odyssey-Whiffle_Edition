@@ -80,7 +80,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	float camSpeed = 0.1f; 
+	float camSpeed = 0.125f; 
 
 	//if(app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	//	app->render->camera.y -= (int)ceil(camSpeed * dt);
