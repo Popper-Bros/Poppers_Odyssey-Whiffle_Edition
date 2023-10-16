@@ -205,8 +205,7 @@ void App::FinishUpdate()
 
 	// Shows the time measurements in the window title
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %I32u Frame Count: %I64u ",
-		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
+	sprintf_s(title, 256, "FPS: %i Av.FPS: %.2f Last frame MS: %.3f Vsync: Off",Fps,averageFps, dt);
 
 	app->win->SetTitle(title);
 }
@@ -271,6 +270,17 @@ bool App::PostUpdate()
 		}
 
 		ret = item->data->PostUpdate();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+		if (maxFrameDuration == 16) {
+			maxFrameDuration = 32;
+			Fps = 30;
+		}
+		else {
+			maxFrameDuration = 16;
+			Fps = 60;
+		}
 	}
 
 	return ret;

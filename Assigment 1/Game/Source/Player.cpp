@@ -97,96 +97,200 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
+
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
-	
-	if (currentDirection == Direction::RIGHT || currentDirection == Direction::JUMP_R && !jumping)
-	{
-		currentDirection = Direction::IDLE_R;
-	}
-	else if (currentDirection == Direction::LEFT || currentDirection == Direction::JUMP_L && !jumping)
-	{
-		currentDirection = Direction::IDLE_L;
-	}
-
-	frameCounter += frameSpeed;
-
-	if (frameCounter >= NUM_FRAMES) {
-		frameCounter = 0.0f;
-		currentFrame++;
-
-		if (currentFrame >= NUM_FRAMES) {
-			currentFrame = 0;
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT) {
+		if (godmode) {
+			godmode = false;
+		}
+		else {
+			godmode = true;
 		}
 	}
-	// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
-	vel.x = 0;
+	if (!godmode) {
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping) {
-		pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
-		jumping = true;
-		vel.y = -10.0f; // Aplicar impulso vertical al saltar
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel.x = -speed*dt; // Moverse a la izquierda
-
-		currentDirection = Direction::LEFT;
-	}
-	
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel.x = speed*dt; // Moverse a la derecha
-		currentDirection = Direction::RIGHT;
-	}
-	// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
-
-	if (!jumping) {
-		pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
-	}
-
-	pbody->body->SetLinearVelocity(vel);
-
-	//Update player position in pixels
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-	
-	if (jumping)
-	{
-		if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
+		if (currentDirection == Direction::RIGHT || currentDirection == Direction::JUMP_R && !jumping)
 		{
-			currentDirection = Direction::JUMP_R;
+			currentDirection = Direction::IDLE_R;
 		}
-		else if (currentDirection == Direction::LEFT || currentDirection == Direction::IDLE_L)
+		else if (currentDirection == Direction::LEFT || currentDirection == Direction::JUMP_L && !jumping)
 		{
-			currentDirection = Direction::JUMP_L;
+			currentDirection = Direction::IDLE_L;
+		}
+
+		frameCounter += frameSpeed;
+
+		if (frameCounter >= NUM_FRAMES) {
+			frameCounter = 0.0f;
+			currentFrame++;
+
+			if (currentFrame >= NUM_FRAMES) {
+				currentFrame = 0;
+			}
+		}
+		// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
+		vel.x = 0;
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			vel.x = -speed * dt; // Moverse a la izquierda
+
+			currentDirection = Direction::LEFT;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			vel.x = speed * dt; // Moverse a la derecha
+			currentDirection = Direction::RIGHT;
+		}
+		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && vel.y == 0) {
+			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
+			jumping = true;
+			vel.y = -10.0f; // Aplicar impulso vertical al saltar
+		}
+
+		if (!jumping) {
+			pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
+		}
+
+		pbody->body->SetLinearVelocity(vel);
+
+		//Update player position in pixels
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+
+		if (jumping)
+		{
+			if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
+			{
+				currentDirection = Direction::JUMP_R;
+			}
+			else if (currentDirection == Direction::LEFT || currentDirection == Direction::IDLE_L)
+			{
+				currentDirection = Direction::JUMP_L;
+			}
+		}
+		switch (currentDirection)
+		{
+		case Direction::IDLE_R:
+			currentAnimation = Idle_right;
+			break;
+		case Direction::IDLE_L:
+			currentAnimation = Idle_left;
+			break;
+		case Direction::LEFT:
+			currentAnimation = Move_izquierda;
+			break;
+		case Direction::RIGHT:
+			currentAnimation = Move_derecha;
+			break;
+		case Direction::JUMP_R:
+			currentAnimation = Jump_right;
+			break;
+		case Direction::JUMP_L:
+			currentAnimation = Jump_left;
+			break;
+		}
+
+		if (currentAnimation != nullptr) {
+			destRect = currentAnimation[currentFrame];
+			app->render->DrawTexture(texture, position.x, position.y, &destRect);
 		}
 	}
-	switch (currentDirection)
-	{
-	case Direction::IDLE_R:
-		currentAnimation = Idle_right;
-		break;
-	case Direction::IDLE_L:
-		currentAnimation = Idle_left;
-		break;
-	case Direction::LEFT:
-		currentAnimation = Move_izquierda;
-		break;
-	case Direction::RIGHT:
-		currentAnimation = Move_derecha;
-		break;
-	case Direction::JUMP_R:
-		currentAnimation = Jump_right;
-		break;
-	case Direction::JUMP_L:
-		currentAnimation = Jump_left;
-		break;
-	}
-	
+	else {
 
-	if (currentAnimation != nullptr) {
-		destRect = currentAnimation[currentFrame];
-		app->render->DrawTexture(texture, position.x, position.y, &destRect);
+		pbody->body->GetFixtureList()->SetSensor(true);
+
+		if (currentDirection == Direction::RIGHT || currentDirection == Direction::JUMP_R && !jumping)
+		{
+			currentDirection = Direction::IDLE_R;
+		}
+		else if (currentDirection == Direction::LEFT || currentDirection == Direction::JUMP_L && !jumping)
+		{
+			currentDirection = Direction::IDLE_L;
+		}
+
+		frameCounter += frameSpeed;
+
+		if (frameCounter >= NUM_FRAMES) {
+			frameCounter = 0.0f;
+			currentFrame++;
+
+			if (currentFrame >= NUM_FRAMES) {
+				currentFrame = 0;
+			}
+		}
+		// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
+		vel.x = 0;
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			vel.x = -speed * dt; // Moverse a la izquierda
+
+			currentDirection = Direction::LEFT;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			vel.x = speed * dt; // Moverse a la derecha
+
+			currentDirection = Direction::RIGHT;
+		}
+		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			vel.y = speed * dt; // Moverse a la derecha
+			if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
+			{
+				currentDirection = Direction::JUMP_R;
+			}
+			else if (currentDirection == Direction::LEFT || currentDirection == Direction::IDLE_L)
+			{
+				currentDirection = Direction::JUMP_L;
+			}
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			vel.y = -speed * dt; // Moverse a la derecha
+			if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
+			{
+				currentDirection = Direction::JUMP_R;
+			}
+			else if (currentDirection == Direction::LEFT || currentDirection == Direction::IDLE_L)
+			{
+				currentDirection = Direction::JUMP_L;
+			}
+		}
+
+		pbody->body->SetLinearVelocity(vel);
+
+		//Update player position in pixels
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+
+		switch (currentDirection)
+		{
+		case Direction::IDLE_R:
+			currentAnimation = Idle_right;
+			break;
+		case Direction::IDLE_L:
+			currentAnimation = Idle_left;
+			break;
+		case Direction::LEFT:
+			currentAnimation = Move_izquierda;
+			break;
+		case Direction::RIGHT:
+			currentAnimation = Move_derecha;
+			break;
+		case Direction::JUMP_R:
+			currentAnimation = Jump_right;
+			break;
+		case Direction::JUMP_L:
+			currentAnimation = Jump_left;
+			break;
+		}
+
+
+		if (currentAnimation != nullptr) {
+			destRect = currentAnimation[currentFrame];
+			app->render->DrawTexture(texture, position.x, position.y, &destRect);
+		}
 	}
 		
 	return true;
