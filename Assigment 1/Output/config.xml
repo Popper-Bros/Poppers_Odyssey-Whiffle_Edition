@@ -24,11 +24,11 @@
   <scene>
     <player x="400" y="352" rataTexturepath="Assets/Textures/Spritesheet.png"/>
 	
-    <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
+    <item x="256" y="515" texturepath="Assets/Textures/popper.png"/>
+    <item x="416" y="512" texturepath="Assets/Textures/popper.png"/>
+    <item x="384" y="352" texturepath="Assets/Textures/popper.png"/>
+    <item x="200" y="672" texturepath="Assets/Textures/popper.png"/>
+    <item x="500" y="672" texturepath="Assets/Textures/popper.png"/>
   </scene>
 
   <map>
