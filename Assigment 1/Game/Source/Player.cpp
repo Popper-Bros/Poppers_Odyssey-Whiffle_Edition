@@ -105,7 +105,7 @@ bool Player::Update(float dt)
 		countF = 0.0f;
 	}
 
-	if (countF >= 30.0f) {
+	if (countF >= 40.0f) {
 		falling = false;
 	}
 
@@ -153,13 +153,13 @@ bool Player::Update(float dt)
 			currentDirection = Direction::RIGHT;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && !falling && !jumping && vel.y==0) {
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && !falling && !jumping ) {
 			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 			falling = true;
 		}
 
 		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !falling && vel.y == 0) {
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !falling ) {
 			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 			jumping = true;
 			vel.y = -10.0f; // Aplicar impulso vertical al saltar
