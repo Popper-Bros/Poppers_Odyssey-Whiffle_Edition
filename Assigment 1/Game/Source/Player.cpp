@@ -339,6 +339,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 		LOG("Collision UNKNOWN");
 		break;
+	case ColliderType::FLOOR:
+		if (vel.y > 0)jumping = false;
+		LOG("Collision FLOOR");
+		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
