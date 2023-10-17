@@ -178,21 +178,6 @@ bool Map::Load()
     
     // NOTE: Later you have to create a function here to load and create the colliders from the map
 
-    PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
-    c1->ctype = ColliderType::PLATFORM;
-
-    PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
-    c2->ctype = ColliderType::PLATFORM;
-
-    PhysBody* c3 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
-    c3->ctype = ColliderType::PLATFORM;
-
-    PhysBody* c4 = app->physics->CreateRectangle(0+32, 768-704+320, 64, 640, STATIC);
-    c4->ctype = ColliderType::WALL;
-
-    PhysBody* c5 = app->physics->CreateRectangle(1312, 704 + 32, 1344, 64, STATIC);
-    c5->ctype = ColliderType::PLATFORM;
-
     
     if(ret == true)
     {
@@ -318,6 +303,53 @@ bool Map::LoadAllLayers(pugi::xml_node mapNode) {
 
         //add the layer to the map
         mapData.maplayers.Add(mapLayer);
+        std::string layerName = layerNode.attribute("name").as_string();
+        if (layerName == "Collisions") {
+            ret = LoadColliders(layerNode);
+        }
+    }
+
+    return ret;
+}
+
+bool Map::LoadColliders(pugi::xml_node& layerNode) {
+    bool ret = true;
+
+    // Iterar sobre los tiles de la capa "Collisions"
+    pugi::xml_node dataNode = layerNode.child("data");
+    if (dataNode) {
+        int tileIndex = 0;
+        for (pugi::xml_node tileNode = dataNode.child("tile"); tileNode; tileNode = tileNode.next_sibling("tile")) {
+            int gid = tileNode.attribute("gid").as_int();
+
+            // Verificar si el tile representa un collider
+            //gid == 1 -> rojo
+            //gid == 2 -> verde
+            if (gid == 1) {
+                // Calcular las coordenadas del tile en el mundo del juego
+                int x = tileIndex % mapData.width;
+                int y = tileIndex / mapData.width;
+
+                // Crear un collider para el tile rojo en la posición (x, y)
+                PhysBody* collider = app->physics->CreateRectangle(x * mapData.tileWidth + 16, y * mapData.tileHeight + 16, mapData.tileWidth, mapData.tileHeight, STATIC);
+                collider->ctype = ColliderType::PLATFORM; // Define el tipo de collider según tu necesidad
+            }
+            else if (gid == 2) {
+                // Calcular las coordenadas del tile en el mundo del juego
+                int x = tileIndex % mapData.width;
+                int y = tileIndex / mapData.width;
+
+                // Crear un collider para el tile rojo en la posición (x, y)
+                PhysBody* collider = app->physics->CreateRectangle(x * mapData.tileWidth + 16, y * mapData.tileHeight + 16, mapData.tileWidth, mapData.tileHeight, STATIC);
+                collider->ctype = ColliderType::WALL; // Define el tipo de collider según tu necesidad
+            }
+
+
+            tileIndex++;
+        }
+    }
+    else {
+        ret = false;
     }
 
     return ret;
