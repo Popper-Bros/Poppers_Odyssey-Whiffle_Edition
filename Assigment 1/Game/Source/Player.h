@@ -41,9 +41,11 @@ public:
 	SDL_Texture* texture = NULL;
 
 	PhysBody* pbody;
-	int pickCoinFxId;
+	int sniff;
 	bool jumping=false;
+	bool falling = false;
 	bool godmode = false;
+	float countF = 0.0f;
 
 	const int NUM_FRAMES = 8;
 	int currentFrame = 0;

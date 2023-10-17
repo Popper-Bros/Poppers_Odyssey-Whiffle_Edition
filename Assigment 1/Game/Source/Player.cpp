@@ -36,7 +36,7 @@ bool Player::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
-	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
 
 	Move_derecha[0] = { 14, 16, 29, 31 };
 	Move_derecha[1] = { 79,18,25,31 };
@@ -98,6 +98,17 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 
+	if (falling) {
+		countF = (countF + 1);
+	}
+	else {
+		countF = 0.0f;
+	}
+
+	if (countF >= 30.0f) {
+		falling = false;
+	}
+
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT) {
 		if (godmode) {
@@ -141,14 +152,21 @@ bool Player::Update(float dt)
 			vel.x = speed * dt; // Moverse a la derecha
 			currentDirection = Direction::RIGHT;
 		}
+
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && !falling && !jumping && vel.y==0) {
+			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
+			falling = true;
+		}
+
 		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && vel.y == 0) {
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !falling && vel.y == 0) {
 			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 			jumping = true;
 			vel.y = -10.0f; // Aplicar impulso vertical al saltar
 		}
 
-		if (!jumping) {
+
+		if (!jumping && !falling) {
 			pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 		}
 
@@ -158,7 +176,7 @@ bool Player::Update(float dt)
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-		if (jumping)
+		if (jumping||vel.y>0)
 		{
 			if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
 			{
@@ -309,7 +327,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	{
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
-		app->audio->PlayFx(pickCoinFxId);
+		app->audio->PlayFx(sniff);
+		if (vel.y > 0)jumping = false;
 		break;
 	case ColliderType::PLATFORM:
 		//if(!jumping)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
