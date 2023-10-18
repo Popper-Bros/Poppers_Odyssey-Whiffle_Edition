@@ -152,7 +152,6 @@ bool Player::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			vel.x = -speed * dt; // Moverse a la izquierda
-
 			currentDirection = Direction::LEFT;
 		}
 
@@ -184,7 +183,7 @@ bool Player::Update(float dt)
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-		if (jumping||(vel.y<-0.05f && vel.y>0.05f)||falling)
+		if (jumping||(vel.y>0.05f)||falling)
 		{
 			if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
 			{
