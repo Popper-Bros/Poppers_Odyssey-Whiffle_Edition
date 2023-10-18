@@ -151,7 +151,10 @@ bool Player::Update(float dt)
 			currentDirection = Direction::RIGHT;
 		}
 
-	
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !falling && !jumping && vel.y<0.5f && vel.y>-0.5f && collidingPlat) {
+			countF = 0.0f;
+			falling = true;
+		}
 
 		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !falling && vel.y<0.5f && vel.y>-0.5f) {
@@ -171,7 +174,7 @@ bool Player::Update(float dt)
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-		if (jumping||vel.y>0)
+		if (jumping||(vel.y<-0.05f && vel.y>0.05f)||falling)
 		{
 			if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
 			{
@@ -324,14 +327,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision ITEM");
 		app->audio->PlayFx(sniff);
 		if (vel.y > 0)jumping = false;
+
+		collidingPlat = false;
 		break;
 	case ColliderType::PLATFORM:
 		//if(!jumping)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 		if (vel.y > 0)jumping = false;
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !falling && !jumping) {
-			countF = 0.0f;
-			falling = true;
-		}
+
+		collidingPlat = true;
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::WALL:
@@ -341,6 +344,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::FLOOR:
 		if (vel.y > 0)jumping = false;
 		falling = false;
+
+		collidingPlat = false;
 		LOG("Collision FLOOR");
 		break;
 	case ColliderType::UNKNOWN:

@@ -51,6 +51,7 @@ public:
 	int currentFrame = 0;
 	float frameCounter = 0.0f;
 	const int frameSpeed = 2;
+	bool collidingPlat;
 
 	SDL_Rect destRect;
 	SDL_Rect Move_derecha[8];
