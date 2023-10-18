@@ -13,7 +13,8 @@ enum class Direction
 	LEFT,
 	RIGHT,
 	JUMP_R,
-	JUMP_L
+	JUMP_L,
+	DIE
 };
 
 class Player : public Entity
@@ -60,6 +61,7 @@ public:
 	SDL_Rect Idle_left[8];
 	SDL_Rect Jump_right[8];
 	SDL_Rect Jump_left[8];
+	SDL_Rect Die[8];
 
 	Direction currentDirection = Direction::IDLE_R;
 	SDL_Rect* currentAnimation = Idle_right;
