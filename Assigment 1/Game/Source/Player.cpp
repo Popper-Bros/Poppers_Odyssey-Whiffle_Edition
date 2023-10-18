@@ -100,9 +100,7 @@ bool Player::Update(float dt)
 
 	if (falling) {
 		countF = (countF + 1);
-	}
-	else {
-		countF = 0.0f;
+		pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 	}
 
 	if (countF >= 40.0f) {
@@ -153,13 +151,10 @@ bool Player::Update(float dt)
 			currentDirection = Direction::RIGHT;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && !falling && !jumping ) {
-			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
-			falling = true;
-		}
+	
 
 		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !falling ) {
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !falling && vel.y<0.5f && vel.y>-0.5f) {
 			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 			jumping = true;
 			vel.y = -10.0f; // Aplicar impulso vertical al saltar
@@ -333,6 +328,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLATFORM:
 		//if(!jumping)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 		if (vel.y > 0)jumping = false;
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !falling && !jumping) {
+			countF = 0.0f;
+			falling = true;
+		}
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::WALL:
@@ -341,6 +340,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::FLOOR:
 		if (vel.y > 0)jumping = false;
+		falling = false;
 		LOG("Collision FLOOR");
 		break;
 	case ColliderType::UNKNOWN:
