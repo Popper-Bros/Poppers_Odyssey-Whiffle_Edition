@@ -6,7 +6,9 @@
 #include "Input.h"
 #include "Render.h"
 
+
 class PhysBody;
+class App;
 
 enum class EntityType
 {
@@ -66,6 +68,7 @@ public:
 		{
 			active = false;
 			CleanUp();
+			
 		}
 	}
 

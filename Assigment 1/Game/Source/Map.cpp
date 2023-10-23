@@ -325,6 +325,8 @@ bool Map::LoadColliders(pugi::xml_node& layerNode) {
             // Verificar si el tile representa un collider
             //gid == 1 -> rojo
             //gid == 2 -> verde
+            //gid == 3 -> azul
+            //gid == 4 -> amarillo
             if (gid == 1) {
                 // Calcular las coordenadas del tile en el mundo del juego
                 int x = tileIndex % mapData.width;
@@ -351,6 +353,15 @@ bool Map::LoadColliders(pugi::xml_node& layerNode) {
                 // Crear un collider para el tile rojo en la posición (x, y)
                 PhysBody* collider = app->physics->CreateRectangle(x * mapData.tileWidth + 16, y * mapData.tileHeight + 16, mapData.tileWidth, mapData.tileHeight, STATIC);
                 collider->ctype = ColliderType::FLOOR; // Define el tipo de collider según tu necesidad
+            }
+            else if (gid == 4) {
+                // Calcular las coordenadas del tile en el mundo del juego
+                int x = tileIndex % mapData.width;
+                int y = tileIndex / mapData.width;
+
+                // Crear un collider para el tile rojo en la posición (x, y)
+                PhysBody* collider = app->physics->CreateRectangle(x * mapData.tileWidth + 16, y * mapData.tileHeight + 16, mapData.tileWidth, mapData.tileHeight, STATIC);
+                collider->ctype = ColliderType::SPIKES; // Define el tipo de collider según tu necesidad
             }
 
 

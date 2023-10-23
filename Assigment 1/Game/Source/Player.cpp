@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Item.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -107,6 +108,7 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
+
 
 	if (falling) {
 		countF = (countF + 1);
@@ -214,14 +216,23 @@ bool Player::Update(float dt)
 		case Direction::JUMP_L:
 			currentAnimation = Jump_left;
 			break;
-		case Direction::DIE:
+		}
+
+		if (!isAlive)
+		{
 			currentAnimation = Die;
-			break;
+			LOG("DEAD");
 		}
 
 		if (currentAnimation != nullptr) {
+			if (!isAlive) frameSpeed = 1;
 			destRect = currentAnimation[currentFrame];
 			app->render->DrawTexture(texture, position.x, position.y, &destRect);
+
+			if (currentAnimation == Die && currentFrame == 7)
+			{
+				Disable();
+			}
 		}
 	}
 	else {
@@ -312,17 +323,15 @@ bool Player::Update(float dt)
 		case Direction::JUMP_L:
 			currentAnimation = Jump_left;
 			break;
+		
 		}
-
-
-		if (currentAnimation != nullptr) {
-			destRect = currentAnimation[currentFrame];
-			app->render->DrawTexture(texture, position.x, position.y, &destRect);
-		}
+		
 	}
 		
 	return true;
 }
+
+
 
 bool Player::CleanUp()
 {
@@ -339,8 +348,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision ITEM");
 		app->audio->PlayFx(sniff);
 		if (vel.y > 0)jumping = false;
-		Direction::DIE;
-
+		state::PICKED_TRUE;
 		collidingPlat = false;
 		break;
 	case ColliderType::PLATFORM:
@@ -360,6 +368,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 		collidingPlat = false;
 		LOG("Collision FLOOR");
+		break;
+	case ColliderType::SPIKES:
+		if (vel.y > 0)jumping = false;
+		falling = false;
+
+		isAlive = false;
+		LOG("Collision SPIKES");
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");

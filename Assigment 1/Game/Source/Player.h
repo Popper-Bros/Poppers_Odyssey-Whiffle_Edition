@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 
+
 struct SDL_Texture;
 enum class Direction
 {
@@ -14,7 +15,6 @@ enum class Direction
 	RIGHT,
 	JUMP_R,
 	JUMP_L,
-	DIE
 };
 
 class Player : public Entity
@@ -31,9 +31,13 @@ public:
 
 	bool Update(float dt);
 
+	/*bool PostUpdate();*/
+
 	bool CleanUp();
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
+
+
 
 
 public:
@@ -47,11 +51,12 @@ public:
 	bool falling = false;
 	bool godmode = false;
 	float countF = 0.0f;
+	bool isAlive = true;
 
 	const int NUM_FRAMES = 8;
 	int currentFrame = 0;
 	float frameCounter = 0.0f;
-	const int frameSpeed = 2;
+	int frameSpeed = 2;
 	bool collidingPlat;
 
 	SDL_Rect destRect;

@@ -6,6 +6,11 @@
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
+enum class state
+{
+	PICKED_TRUE,
+	PICKED_FALSE
+};
 
 class Item : public Entity
 {
@@ -25,6 +30,7 @@ public:
 public:
 
 	bool isPicked = false;
+	state Picked = state::PICKED_FALSE;
 
 private:
 

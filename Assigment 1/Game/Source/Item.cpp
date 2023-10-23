@@ -42,7 +42,15 @@ bool Item::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 8;
 
 	app->render->DrawTexture(texture, position.x, position.y);
-
+	switch (Picked)
+	{
+	case state::PICKED_TRUE:
+		isPicked = true;
+		break;
+	case state::PICKED_FALSE:
+		isPicked = false;
+		break;
+	}
 	return true;
 }
 
