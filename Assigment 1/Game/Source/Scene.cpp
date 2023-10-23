@@ -71,6 +71,15 @@ bool Scene::Start()
 	return true;
 }
 
+void Scene::restartScene()
+{
+	CleanUp();  // Uncomment this if the scene requires cleanup before restart
+	// Then reinitialize the scene
+	player->position.x= 80;
+	player->position.y = 120;
+	app->scene->player->Awake();
+}
+
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
@@ -93,6 +102,12 @@ bool Scene::Update(float dt)
 
 	if(app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->render->camera.x < 0 && ((app->scene->player->position.x) + app->render->camera.x)<(((app->render->camera.w) / 2)) - 40)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && app->render->camera.x > -1024 && ((app->scene->player->position.x) + app->render->camera.x) > (((app->render->camera.w) / 2)) + 40)
+		app->render->camera.x -= (int)ceil(camSpeed * dt);
+
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT) {
+		restartScene();
+	}
 
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
