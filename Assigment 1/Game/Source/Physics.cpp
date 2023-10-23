@@ -308,6 +308,12 @@ bool Physics::PostUpdate()
 	return ret;
 }
 
+void Physics::ChupaBody(b2World* world, b2Body* body)
+{
+	world->DestroyBody(body);
+	
+}
+
 // Called before quitting
 bool Physics::CleanUp()
 {

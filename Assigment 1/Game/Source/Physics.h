@@ -69,6 +69,11 @@ public:
 	bool PreUpdate();
 	bool PostUpdate();
 	bool CleanUp();
+	void ChupaBody(b2World* world, b2Body* body);
+	b2World* GetWorld()
+	{
+		return world;
+	}
 
 	// Create basic physics objects
 	PhysBody* CreateRectangle(int x, int y, int width, int height, bodyType type);

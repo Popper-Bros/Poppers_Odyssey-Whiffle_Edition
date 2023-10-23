@@ -93,14 +93,14 @@ bool Player::Start() {
 	Jump_right[6] = { 399,236,30,36 };
 	Jump_right[7] = { 399,236,30,36 };
 
-	Die[0] = { 11, 315, 33, 42 };
-	Die[1] = { 72, 316, 37, 42 };
-	Die[2] = { 134, 318, 42, 43 };
-	Die[3] = { 196, 317, 47, 49 };
+	Die[0] = { 11, 315, 48, 51 };
+	Die[1] = { 72, 316, 48, 51 };
+	Die[2] = { 134, 318, 48, 51 };
+	Die[3] = { 196, 317, 48, 51 };
 	Die[4] = { 260, 320, 48, 51 };
-	Die[5] = { 325, 322, 46, 50 };
-	Die[6] = { 399, 329, 30, 43 };
-	Die[7] = { 464, 332, 28, 38 };
+	Die[5] = { 325, 322, 48, 51 };
+	Die[6] = { 390, 325, 48, 51 };
+	Die[7] = { 454, 326, 48, 51 };
 
 
 	return true;
@@ -232,6 +232,8 @@ bool Player::Update(float dt)
 			if (currentAnimation == Die && currentFrame == 7)
 			{
 				Disable();
+
+				app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
 			}
 		}
 	}
