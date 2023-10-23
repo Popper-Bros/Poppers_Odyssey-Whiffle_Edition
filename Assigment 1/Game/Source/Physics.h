@@ -69,6 +69,7 @@ public:
 	bool PreUpdate();
 	bool PostUpdate();
 	bool CleanUp();
+	//te cargas el lo que vendria a ser el pavo sabes
 	void ChupaBody(b2World* world, b2Body* body);
 	b2World* GetWorld()
 	{
