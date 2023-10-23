@@ -34,8 +34,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void restartScene();
-
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
