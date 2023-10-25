@@ -33,39 +33,39 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 12, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 11, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
 	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
 
-	Move_right.PushBack({ 14, 16, 29, 31 });
-	Move_right.PushBack({ 79,18,25,31 });
-	Move_right.PushBack({ 147,20,22,29 });
-	Move_right.PushBack({ 212,17,22,32 });
-	Move_right.PushBack({ 269,16,31,30 });
-	Move_right.PushBack({ 334,18,28,31 });
-	Move_right.PushBack({ 404,20,21,29 });
-	Move_right.PushBack({ 469,17,20,32 });
-	
+	Move_right.PushBack({ 14, 16, 31,32 });
+	Move_right.PushBack({ 79,18,31,32 });
+	Move_right.PushBack({ 147,20,31,32 });
+	Move_right.PushBack({ 212,17,31,32 });
+	Move_right.PushBack({ 269,16,31,32 });
+	Move_right.PushBack({ 334,18,31,32 });
+	Move_right.PushBack({ 404,20,31,32 });
+	Move_right.PushBack({ 469,17,31,32 });
 
-	Move_left.PushBack({ 471, 80, 29, 31 });
-	Move_left.PushBack({ 410,82,25,31 });
-	Move_left.PushBack({ 345,84,22,29 });
-	Move_left.PushBack({ 280,81,22,32 });
-	Move_left.PushBack({ 214,80,31,30 });
-	Move_left.PushBack({ 152,82,28,31 });
-	Move_left.PushBack({ 89,84,21,29 });
-	Move_left.PushBack({ 25,81,20,32 });
 
-	Idle_right.PushBack({ 15, 149, 26, 28 });
-	Idle_right.PushBack({ 78, 148, 26, 29 });
-	Idle_right.PushBack({ 143, 147, 25, 30 });
+	Move_left.PushBack({ 471, 80, 31, 32 });
+	Move_left.PushBack({ 410,82,31,32 });
+	Move_left.PushBack({ 345,84,31,32 });
+	Move_left.PushBack({ 280,81,31,32 });
+	Move_left.PushBack({ 214,80,31,32 });
+	Move_left.PushBack({ 152,82,31,32 });
+	Move_left.PushBack({ 89,84,31,32 });
+	Move_left.PushBack({ 25,81,31,32 });
+
+	Idle_right.PushBack({ 15, 149, 28, 30 });
+	Idle_right.PushBack({ 78, 148, 28, 30 });
+	Idle_right.PushBack({ 143, 147, 28, 30 });
 	Idle_right.PushBack({ 143, 147, 25, 30 });
 	Idle_right.PushBack({ 206, 147, 28, 30 });
-	Idle_right.PushBack({ 271, 147, 26, 30 });
-	Idle_right.PushBack({ 271, 147, 26, 30 });
-	Idle_right.PushBack({ 335, 149, 26, 28 });
+	Idle_right.PushBack({ 271, 147, 28, 30 });
+	Idle_right.PushBack({ 271, 147, 28, 30 });
+	Idle_right.PushBack({ 335, 149, 28, 30 });
 
 	Idle_left.PushBack({ 345, 197, 26, 28 });
 	Idle_left.PushBack({ 281, 196, 26, 29 });

@@ -27,16 +27,18 @@ public:
 
 	bool CleanUp();
 
+	void OnCollision(PhysBody* physA, PhysBody* physB);
+
 public:
 
 	bool isPicked = false;
 	state Picked = state::PICKED_FALSE;
+	PhysBody* pbody;
 
 private:
 
 	SDL_Texture* texture;
 	const char* texturePath;
-	PhysBody* pbody;
 };
 
 #endif // __ITEM_H__

@@ -30,6 +30,7 @@ bool Item::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	pbody = app->physics->CreateRectangle(position.x, position.y, 12, 16, bodyType::DYNAMIC);
+	pbody->listener = this;
 	pbody->ctype = ColliderType::ITEM;
 
 	return true;
@@ -42,16 +43,27 @@ bool Item::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 8;
 
 	app->render->DrawTexture(texture, position.x, position.y);
-	switch (Picked)
+
+	if (isPicked)
 	{
-	case state::PICKED_TRUE:
-		isPicked = true;
-		break;
-	case state::PICKED_FALSE:
-		isPicked = false;
-		break;
+		Disable();
+		app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
 	}
 	return true;
+}
+
+void Item::OnCollision(PhysBody* physA, PhysBody* physB)
+{
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+		LOG("Collision ITEM con PLAYER");
+
+		isPicked = true;
+
+		break;
+	}
+		
 }
 
 bool Item::CleanUp()
