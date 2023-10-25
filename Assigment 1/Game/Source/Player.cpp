@@ -47,8 +47,7 @@ bool Player::Start() {
 	Move_right.PushBack({ 334,18,28,31 });
 	Move_right.PushBack({ 404,20,21,29 });
 	Move_right.PushBack({ 469,17,20,32 });
-	Move_right.loop = true;
-	Move_right.speed = 0.1f;
+	
 
 	Move_left.PushBack({ 471, 80, 29, 31 });
 	Move_left.PushBack({ 410,82,25,31 });
@@ -111,6 +110,13 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
+	Move_right.speed = 0.01f * dt;
+	Move_left.speed = 0.01f * dt;
+	Idle_right.speed = 0.01f * dt;
+	Idle_left.speed = 0.01f * dt;
+	Jump_right.speed = 0.01f * dt;
+	Jump_left.speed = 0.01f * dt;
+	Die.speed = 0.01f * dt;
 	if(isAlive)
 	{ 
 		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
@@ -298,7 +304,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::WALL:
 		if(!godmode) pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
-		LOG("Collision UNKNOWN");
+		LOG("Collision WALL");
 		break;
 	case ColliderType::FLOOR:
 		if (vel.y > 0)jumping = false;

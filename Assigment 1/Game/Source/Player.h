@@ -72,6 +72,7 @@ public:
 
 	Animation* currentAnimation = &Idle_right;
 	Animation Move_left, Move_right, Jump_left, Jump_right, Idle_left, Idle_right, Die;
+	
 };
 
 #endif // __PLAYER_H__

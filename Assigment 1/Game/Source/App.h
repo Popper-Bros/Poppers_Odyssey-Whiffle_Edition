@@ -45,6 +45,7 @@ public:
 	// Add a new module to handle
 	void AddModule(Module* module);
 
+
 	// Exposing some properties for reading
 	int GetArgc() const;
 	const char* GetArgv(int index) const;
