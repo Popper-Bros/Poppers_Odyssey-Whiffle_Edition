@@ -156,16 +156,6 @@ bool Player::Update(float dt)
 			currentDirection = Direction::IDLE_L;
 		}
 
-		frameCounter += frameSpeed;
-
-		/*if (frameCounter >= NUM_FRAMES) {
-			frameCounter = 0.0f;
-			currentFrame++;
-
-			if (currentFrame >= NUM_FRAMES) {
-				currentFrame = 0;
-			}
-		}*/
 		// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
 		vel.x = 0;
 
@@ -235,12 +225,6 @@ bool Player::Update(float dt)
 			break;
 
 		}
-		/*if (!isAlive)
-		{
-			currentAnimation = &Die;
-			LOG("DEAD");
-		}*/
-
 		
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -258,25 +242,11 @@ bool Player::Update(float dt)
 			pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
 			isAlive = true;
 			Die.Reset();
-			CleanUp();
 		}
 	}
 	
 	return true;
 }
-/*
-		if (currentAnimation != nullptr) {
-			if (!isAlive) frameSpeed = 1;
-			destRect = currentAnimation[currentFrame];
-			app->render->DrawTexture(texture, position.x, position.y, &destRect);
-
-			if (currentAnimation == Die && currentFrame == 7)
-			{
-				Disable();
-
-				app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
-			}
-		}*/
 
 
 
