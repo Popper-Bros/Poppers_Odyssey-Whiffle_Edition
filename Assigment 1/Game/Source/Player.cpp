@@ -39,68 +39,71 @@ bool Player::Start() {
 
 	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
 
-	Move_derecha[0] = { 14, 16, 29, 31 };
-	Move_derecha[1] = { 79,18,25,31 };
-	Move_derecha[2] = { 147,20,22,29 };
-	Move_derecha[3] = { 212,17,22,32 };
-	Move_derecha[4] = { 269,16,31,30 };
-	Move_derecha[5] = { 334,18,28,31 };
-	Move_derecha[6] = { 404,20,21,29 };
-	Move_derecha[7] = { 469,17,20,32 };
+	Move_right.PushBack({ 14, 16, 29, 31 });
+	Move_right.PushBack({ 79,18,25,31 });
+	Move_right.PushBack({ 147,20,22,29 });
+	Move_right.PushBack({ 212,17,22,32 });
+	Move_right.PushBack({ 269,16,31,30 });
+	Move_right.PushBack({ 334,18,28,31 });
+	Move_right.PushBack({ 404,20,21,29 });
+	Move_right.PushBack({ 469,17,20,32 });
+	Move_right.loop = true;
+	Move_right.speed = 0.1f;
 
-	Move_izquierda[0] = { 471, 80, 29, 31 };
-	Move_izquierda[1] = { 410,82,25,31 };
-	Move_izquierda[2] = { 345,84,22,29 };
-	Move_izquierda[3] = { 280,81,22,32 };
-	Move_izquierda[4] = { 214,80,31,30 };
-	Move_izquierda[5] = { 152,82,28,31 };
-	Move_izquierda[6] = { 89,84,21,29 };
-	Move_izquierda[7] = { 25,81,20,32 };
+	Move_left.PushBack({ 471, 80, 29, 31 });
+	Move_left.PushBack({ 410,82,25,31 });
+	Move_left.PushBack({ 345,84,22,29 });
+	Move_left.PushBack({ 280,81,22,32 });
+	Move_left.PushBack({ 214,80,31,30 });
+	Move_left.PushBack({ 152,82,28,31 });
+	Move_left.PushBack({ 89,84,21,29 });
+	Move_left.PushBack({ 25,81,20,32 });
 
-	Idle_right[0] = { 15, 149, 26, 28 };
-	Idle_right[1] = { 78, 148, 26, 29 };
-	Idle_right[2] = { 143, 147, 25, 30 };
-	Idle_right[3] = { 143, 147, 25, 30 };
-	Idle_right[4] = { 206, 147, 28, 30 };
-	Idle_right[5] = { 271, 147, 26, 30 };
-	Idle_right[6] = { 271, 147, 26, 30 };
-	Idle_right[7] = { 335, 149, 26, 28 };
+	Idle_right.PushBack({ 15, 149, 26, 28 });
+	Idle_right.PushBack({ 78, 148, 26, 29 });
+	Idle_right.PushBack({ 143, 147, 25, 30 });
+	Idle_right.PushBack({ 143, 147, 25, 30 });
+	Idle_right.PushBack({ 206, 147, 28, 30 });
+	Idle_right.PushBack({ 271, 147, 26, 30 });
+	Idle_right.PushBack({ 271, 147, 26, 30 });
+	Idle_right.PushBack({ 335, 149, 26, 28 });
 
-	Idle_left[0] = { 345, 197, 26, 28 };
-	Idle_left[1] = { 281, 196, 26, 29 };
-	Idle_left[2] = { 218, 195, 25, 30 };
-	Idle_left[3] = { 218, 195, 25, 30 };
-	Idle_left[4] = { 152, 195, 28, 30 };
-	Idle_left[5] = { 89, 195, 26, 30 };
-	Idle_left[6] = { 89, 195, 26, 30 };
-	Idle_left[7] = { 25, 197, 26, 28 };
+	Idle_left.PushBack({ 345, 197, 26, 28 });
+	Idle_left.PushBack({ 281, 196, 26, 29 });
+	Idle_left.PushBack({ 218, 195, 25, 30 });
+	Idle_left.PushBack({ 218, 195, 25, 30 });
+	Idle_left.PushBack({ 152, 195, 28, 30 });
+	Idle_left.PushBack({ 89, 195, 26, 30 });
+	Idle_left.PushBack({ 89, 195, 26, 30 });
+	Idle_left.PushBack({ 25, 197, 26, 28 });
 
-	Jump_left[0] = { 252,271,28,35 };
-	Jump_left[1] = { 252,271,28,35 };
-	Jump_left[2] = { 252,271,28,35 };
-	Jump_left[3] = { 252,271,28,35 };
-	Jump_left[4] = { 252,271,28,35 };
-	Jump_left[5] = { 252,271,28,35 };
-	Jump_left[6] = { 252,271,28,35 };
-	Jump_left[7] = { 252,271,28,35 };
+	Jump_left.PushBack({ 252,271,28,35 });
+	Jump_left.PushBack({ 252,271,28,35 });
+	Jump_left.PushBack({ 252,271,28,35 });
+	Jump_left.PushBack({ 252,271,28,35 });
+	Jump_left.PushBack({ 252,271,28,35 });
+	Jump_left.PushBack({ 252,271,28,35 });
+	Jump_left.PushBack({ 252,271,28,35 });
+	Jump_left.PushBack({ 252,271,28,35 });
 
-	Jump_right[0] = { 399,236,30,36 };
-	Jump_right[1] = { 399,236,30,36 };
-	Jump_right[2] = { 399,236,30,36 };
-	Jump_right[3] = { 399,236,30,36 };
-	Jump_right[4] = { 399,236,30,36 };
-	Jump_right[5] = { 399,236,30,36 };
-	Jump_right[6] = { 399,236,30,36 };
-	Jump_right[7] = { 399,236,30,36 };
+	Jump_right.PushBack({ 399,236,30,36 });
+	Jump_right.PushBack({ 399,236,30,36 });
+	Jump_right.PushBack({ 399,236,30,36 });
+	Jump_right.PushBack({ 399,236,30,36 });
+	Jump_right.PushBack({ 399,236,30,36 });
+	Jump_right.PushBack({ 399,236,30,36 });
+	Jump_right.PushBack({ 399,236,30,36 });
+	Jump_right.PushBack({ 399,236,30,36 });
 
-	Die[0] = { 11, 315, 48, 51 };
-	Die[1] = { 72, 316, 48, 51 };
-	Die[2] = { 134, 318, 48, 51 };
-	Die[3] = { 196, 317, 48, 51 };
-	Die[4] = { 260, 320, 48, 51 };
-	Die[5] = { 325, 322, 48, 51 };
-	Die[6] = { 390, 325, 48, 51 };
-	Die[7] = { 454, 326, 48, 51 };
+	Die.PushBack({ 11, 315, 48, 51 });
+	Die.PushBack({ 72, 316, 48, 51 });
+	Die.PushBack({ 134, 318, 48, 51 });
+	Die.PushBack({ 196, 317, 48, 51 });
+	Die.PushBack({ 260, 320, 48, 51 });
+	Die.PushBack({ 325, 322, 48, 51 });
+	Die.PushBack({ 390, 325, 48, 51 });
+	Die.PushBack({ 454, 326, 48, 51 });
+	Die.loop = false;
 
 
 	return true;
@@ -108,143 +111,163 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		godmode =! godmode;
-	}
-
-	if (falling) {
-		countF = (countF + 1);
-		pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
-	}
-
-	if (countF >= 40.0f) {
-		falling = false;
-	}
-
-	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
-	
-	
-
-	if (godmode) {
-		vel.y = 0;
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && !jumping) {
-			vel.y = -speed * dt; // Moverse hacia arriba
+	if(isAlive)
+	{ 
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+			godmode = !godmode;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !jumping) {
-			vel.y = speed * dt; // Moverse hacia arriba
+
+		if (falling) {
+			countF = (countF + 1);
+			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 		}
-		pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
-	}
 
-	if (currentDirection == Direction::RIGHT || currentDirection == Direction::JUMP_R && !jumping)
-	{
-		currentDirection = Direction::IDLE_R;
-	}
-	else if (currentDirection == Direction::LEFT || currentDirection == Direction::JUMP_L && !jumping)
-	{
-		currentDirection = Direction::IDLE_L;
-	}
-
-	frameCounter += frameSpeed;
-
-	if (frameCounter >= NUM_FRAMES) {
-		frameCounter = 0.0f;
-		currentFrame++;
-
-		if (currentFrame >= NUM_FRAMES) {
-			currentFrame = 0;
+		if (countF >= 40.0f) {
+			falling = false;
 		}
-	}
-	// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
-	vel.x = 0;
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel.x = -speed * dt; // Moverse a la izquierda
-		currentDirection = Direction::LEFT;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel.x = speed * dt; // Moverse a la derecha
-		currentDirection = Direction::RIGHT;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godmode && !falling && !jumping && vel.y<0.5f && vel.y>-0.5f && collidingPlat) {
-		countF = 0.0f;
-		falling = true;
-	}
-
-	// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !godmode && !falling && vel.y<0.5f && vel.y>-0.5f) {
-		pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
-		jumping = true;
-		vel.y = -10.0f; // Aplicar impulso vertical al saltar
-	}
+		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
 
-	if (!jumping && !falling && !godmode) {
-		pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
-	}
 
-	pbody->body->SetLinearVelocity(vel);
+		if (godmode) {
+			vel.y = 0;
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && !jumping) {
+				vel.y = -speed * dt; // Moverse hacia arriba
+			}
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !jumping) {
+				vel.y = speed * dt; // Moverse hacia arriba
+			}
+			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
+		}
 
-	//Update player position in pixels
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-
-	if (jumping||(vel.y>0.05f)||falling)
-	{
-		if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
+		if (currentDirection == Direction::RIGHT || currentDirection == Direction::JUMP_R && !jumping)
 		{
-			currentDirection = Direction::JUMP_R;
+			currentDirection = Direction::IDLE_R;
 		}
-		else if (currentDirection == Direction::LEFT || currentDirection == Direction::IDLE_L)
+		else if (currentDirection == Direction::LEFT || currentDirection == Direction::JUMP_L && !jumping)
 		{
-			currentDirection = Direction::JUMP_L;
+			currentDirection = Direction::IDLE_L;
 		}
+
+		frameCounter += frameSpeed;
+
+		/*if (frameCounter >= NUM_FRAMES) {
+			frameCounter = 0.0f;
+			currentFrame++;
+
+			if (currentFrame >= NUM_FRAMES) {
+				currentFrame = 0;
+			}
+		}*/
+		// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
+		vel.x = 0;
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			vel.x = -speed * dt; // Moverse a la izquierda
+			currentDirection = Direction::LEFT;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			vel.x = speed * dt; // Moverse a la derecha
+			currentDirection = Direction::RIGHT;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godmode && !falling && !jumping && vel.y<0.5f && vel.y>-0.5f && collidingPlat) {
+			countF = 0.0f;
+			falling = true;
+		}
+
+		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !godmode && !falling && vel.y<0.5f && vel.y>-0.5f) {
+			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
+			jumping = true;
+			vel.y = -10.0f; // Aplicar impulso vertical al saltar
+		}
+
+
+		if (!jumping && !falling && !godmode) {
+			pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
+		}
+
+		pbody->body->SetLinearVelocity(vel);
+
+		//Update player position in pixels
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+
+		if (jumping || (vel.y > 0.05f) || falling)
+		{
+			if (currentDirection == Direction::RIGHT || currentDirection == Direction::IDLE_R)
+			{
+				currentDirection = Direction::JUMP_R;
+			}
+			else if (currentDirection == Direction::LEFT || currentDirection == Direction::IDLE_L)
+			{
+				currentDirection = Direction::JUMP_L;
+			}
+		}
+		switch (currentDirection)
+		{
+		case Direction::IDLE_R:
+			currentAnimation = &Idle_right;
+			break;
+		case Direction::IDLE_L:
+			currentAnimation = &Idle_left;
+			break;
+		case Direction::LEFT:
+			currentAnimation = &Move_left;
+			break;
+		case Direction::RIGHT:
+			currentAnimation = &Move_right;
+			break;
+		case Direction::JUMP_R:
+			currentAnimation = &Jump_right;
+			break;
+		case Direction::JUMP_L:
+			currentAnimation = &Jump_left;
+			break;
+
+		}
+		/*if (!isAlive)
+		{
+			currentAnimation = &Die;
+			LOG("DEAD");
+		}*/
+
+		
+		currentAnimation->Update();
+		SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(texture, position.x, position.y, &rect);
 	}
-	switch (currentDirection)
+	else
 	{
-	case Direction::IDLE_R:
-		currentAnimation = Idle_right;
-		break;
-	case Direction::IDLE_L:
-		currentAnimation = Idle_left;
-		break;
-	case Direction::LEFT:
-		currentAnimation = Move_izquierda;
-		break;
-	case Direction::RIGHT:
-		currentAnimation = Move_derecha;
-		break;
-	case Direction::JUMP_R:
-		currentAnimation = Jump_right;
-		break;
-	case Direction::JUMP_L:
-		currentAnimation = Jump_left;
-		break;
-	}
-
-	if (!isAlive)
-	{
-		currentAnimation = Die;
-		LOG("DEAD");
-	}
-
-	if (currentAnimation != nullptr) {
-		if (!isAlive) frameSpeed = 1;
-		destRect = currentAnimation[currentFrame];
-		app->render->DrawTexture(texture, position.x, position.y, &destRect);
-
-		if (currentAnimation == Die && currentFrame == 7)
+		currentAnimation = &Die;
+		currentAnimation->Update();
+		SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(texture, position.x, position.y, &rect);
+		if (currentAnimation->HasFinished())
 		{
 			Disable();
-
 			app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
 		}
 	}
-
+	
 	return true;
 }
+/*
+		if (currentAnimation != nullptr) {
+			if (!isAlive) frameSpeed = 1;
+			destRect = currentAnimation[currentFrame];
+			app->render->DrawTexture(texture, position.x, position.y, &destRect);
+
+			if (currentAnimation == Die && currentFrame == 7)
+			{
+				Disable();
+
+				app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
+			}
+		}*/
 
 
 
