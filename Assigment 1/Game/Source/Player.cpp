@@ -252,10 +252,13 @@ bool Player::Update(float dt)
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
+		
 		if (currentAnimation->HasFinished())
 		{
-			Disable();
-			app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
+			pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
+			isAlive = true;
+			Die.Reset();
+			CleanUp();
 		}
 	}
 	
