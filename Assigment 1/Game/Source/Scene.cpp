@@ -38,7 +38,7 @@ bool Scene::Awake(pugi::xml_node& config)
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
 	}
-
+	playerConfig = config.child("player");
 	return ret;
 }
 
@@ -97,7 +97,13 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT) {
 		/*app->physics->ChupaBody(app->physics->GetWorld(), player->pbody->body);
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);*/
-		player->pbody->body->SetTransform({PIXEL_TO_METERS (80),PIXEL_TO_METERS(120)},0);
+		if (!player->isAlive) {
+			app->entityManager->DestroyEntity(player);
+			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+			player->parameters = playerConfig;
+			player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
+		}
+		else player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
 
 	}
 	// Renders the image in the center of the screen 
