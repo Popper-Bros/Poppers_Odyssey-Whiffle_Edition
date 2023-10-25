@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Point.h"
+#include "Animation.h"
 #include "SDL/include/SDL.h"
 
 
@@ -31,7 +32,6 @@ public:
 
 	bool Update(float dt);
 
-	/*bool PostUpdate();*/
 
 	bool CleanUp();
 
@@ -53,23 +53,25 @@ public:
 	float countF = 0.0f;
 	bool isAlive = true;
 
-	const int NUM_FRAMES = 8;
-	int currentFrame = 0;
+	/*const int NUM_FRAMES = 8;*/
+	/*int currentFrame = 0;*/
 	float frameCounter = 0.0f;
 	int frameSpeed = 2;
 	bool collidingPlat;
 
-	SDL_Rect destRect;
+	/*SDL_Rect destRect;
 	SDL_Rect Move_derecha[8];
 	SDL_Rect Move_izquierda[8];
 	SDL_Rect Idle_right[8];
 	SDL_Rect Idle_left[8];
 	SDL_Rect Jump_right[8];
 	SDL_Rect Jump_left[8];
-	SDL_Rect Die[8];
+	SDL_Rect Die[8];*/
 
 	Direction currentDirection = Direction::IDLE_R;
-	SDL_Rect* currentAnimation = Idle_right;
+
+	Animation* currentAnimation = &Idle_right;
+	Animation Move_left, Move_right, Jump_left, Jump_right, Idle_left, Idle_right, Die;
 };
 
 #endif // __PLAYER_H__
