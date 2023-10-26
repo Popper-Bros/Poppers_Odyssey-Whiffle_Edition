@@ -58,23 +58,21 @@ bool Player::Start() {
 	Move_left.PushBack({ 89,84,31,32 });
 	Move_left.PushBack({ 25,81,31,32 });
 
-	Idle_right.PushBack({ 15, 149, 28, 30 });
-	Idle_right.PushBack({ 78, 148, 28, 30 });
-	Idle_right.PushBack({ 143, 147, 28, 30 });
-	Idle_right.PushBack({ 143, 147, 25, 30 });
-	Idle_right.PushBack({ 206, 147, 28, 30 });
-	Idle_right.PushBack({ 271, 147, 28, 30 });
-	Idle_right.PushBack({ 271, 147, 28, 30 });
-	Idle_right.PushBack({ 335, 149, 28, 30 });
+	Idle_right.PushBack({ 12, 146, 28, 31 });
+	Idle_right.PushBack({ 77, 146, 28, 31 });
+	Idle_right.PushBack({ 140, 146, 28, 31 });
+	Idle_right.PushBack({ 269, 146, 28, 31 });
+	Idle_right.PushBack({ 206, 146, 28, 31 });
+	Idle_right.PushBack({ 269, 146, 28, 31 });
+	Idle_right.PushBack({ 333, 146, 28, 31 });
 
-	Idle_left.PushBack({ 345, 197, 26, 28 });
-	Idle_left.PushBack({ 281, 196, 26, 29 });
-	Idle_left.PushBack({ 218, 195, 25, 30 });
-	Idle_left.PushBack({ 218, 195, 25, 30 });
-	Idle_left.PushBack({ 152, 195, 28, 30 });
-	Idle_left.PushBack({ 89, 195, 26, 30 });
-	Idle_left.PushBack({ 89, 195, 26, 30 });
-	Idle_left.PushBack({ 25, 197, 26, 28 });
+	Idle_left.PushBack({ 343, 195, 28, 31 });
+	Idle_left.PushBack({ 279, 195, 28, 31 });
+	Idle_left.PushBack({ 215, 195, 28, 31 });
+	Idle_left.PushBack({ 89, 195, 28, 31 });
+	Idle_left.PushBack({ 152, 195, 28, 31 });
+	Idle_left.PushBack({ 87, 195, 28, 31 });
+	Idle_left.PushBack({ 23, 195, 28, 31 });
 
 	Jump_left.PushBack({ 252,271,28,35 });
 	Jump_left.PushBack({ 252,271,28,35 });
@@ -237,11 +235,22 @@ bool Player::Update(float dt)
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
 		
-		if (currentAnimation->HasFinished())
+		static int deathAnimationFrame = 0;
+		static const int DEATH_ANIMATION_END_FRAME = 7;
+
+		if (currentAnimation->GetCurrentFrameIndex() >= DEATH_ANIMATION_END_FRAME)
 		{
-			pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
-			isAlive = true;
-			Die.Reset();
+			if (deathAnimationFrame == 0)
+			{
+				deathAnimationFrame = 1;
+			}
+			else
+			{
+				isAlive = true;
+				deathAnimationFrame = 0;
+				currentAnimation->Reset();
+				pbody->body->SetTransform({ PIXEL_TO_METERS(80), PIXEL_TO_METERS(120) }, 0);
+			}
 		}
 	}
 	
@@ -280,7 +289,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision WALL");
 		break;
 	case ColliderType::FLOOR:
-		if (vel.y > 0)jumping = false;
+		jumping = false;
 		falling = false;
 
 		collidingPlat = false;

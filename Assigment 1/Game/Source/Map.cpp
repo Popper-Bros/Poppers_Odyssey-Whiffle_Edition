@@ -333,7 +333,7 @@ bool Map::LoadColliders(pugi::xml_node& layerNode) {
                 int y = tileIndex / mapData.width;
 
                 // Crear un collider para el tile rojo en la posición (x, y)
-                PhysBody* collider = app->physics->CreateRectangle(x * mapData.tileWidth + 16, y * mapData.tileHeight + 16, mapData.tileWidth, mapData.tileHeight, STATIC);
+                PhysBody* collider = app->physics->CreateRectangle(x * mapData.tileWidth + 16.1f, y * mapData.tileHeight + 16, mapData.tileWidth, mapData.tileHeight, STATIC);
                 collider->ctype = ColliderType::PLATFORM; // Define el tipo de collider según tu necesidad
             }
             else if (gid == 2) {
@@ -351,7 +351,7 @@ bool Map::LoadColliders(pugi::xml_node& layerNode) {
                 int y = tileIndex / mapData.width;
 
                 // Crear un collider para el tile rojo en la posición (x, y)
-                PhysBody* collider = app->physics->CreateRectangle(x * mapData.tileWidth + 16, y * mapData.tileHeight + 16, mapData.tileWidth, mapData.tileHeight, STATIC);
+                PhysBody* collider = app->physics->CreateRectangle(x * mapData.tileWidth + 16, y * mapData.tileHeight + 16, mapData.tileWidth+1, mapData.tileHeight, STATIC);
                 collider->ctype = ColliderType::FLOOR; // Define el tipo de collider según tu necesidad
             }
             else if (gid == 4) {
