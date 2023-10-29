@@ -291,6 +291,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::FLOOR:
 		jumping = false;
 		falling = false;
+		pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 
 		collidingPlat = false;
 		LOG("Collision FLOOR");
