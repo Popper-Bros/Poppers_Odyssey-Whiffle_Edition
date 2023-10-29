@@ -47,6 +47,7 @@ public:
 
 	PhysBody* pbody;
 	int sniff;
+	int fall;
 	bool jumping=false;
 	bool falling = false;
 	bool godmode = false;

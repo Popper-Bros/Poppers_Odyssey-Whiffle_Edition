@@ -38,6 +38,7 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 
 	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
+	faall = app->audio->LoadFx("Assets/Audio/Fx/Falling Scream.ogg");
 
 	Move_right.PushBack({ 14, 16, 31,32 });
 	Move_right.PushBack({ 79,18,31,32 });
@@ -235,22 +236,12 @@ bool Player::Update(float dt)
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
 		
-		static int deathAnimationFrame = 0;
-		static const int DEATH_ANIMATION_END_FRAME = 7;
 
-		if (currentAnimation->GetCurrentFrameIndex() >= DEATH_ANIMATION_END_FRAME)
+		if (currentAnimation->GetCurrentFrameIndex() >= 7)
 		{
-			if (deathAnimationFrame == 0)
-			{
-				deathAnimationFrame = 1;
-			}
-			else
-			{
-				isAlive = true;
-				deathAnimationFrame = 0;
-				currentAnimation->Reset();
-				pbody->body->SetTransform({ PIXEL_TO_METERS(80), PIXEL_TO_METERS(120) }, 0);
-			}
+			isAlive = true;
+			currentAnimation->Reset();
+			pbody->body->SetTransform({ PIXEL_TO_METERS(80), PIXEL_TO_METERS(120) }, 0);
 		}
 	}
 	
