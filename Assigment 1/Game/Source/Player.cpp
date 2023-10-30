@@ -33,7 +33,7 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 9, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
@@ -121,7 +121,7 @@ bool Player::Update(float dt)
 	if (position.x > 1930 && position.y < 260) {
 		win = true;
 		app->scene->checkpoint = 0;
-		pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
+		pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 	}
 	if(isAlive)
 	{ 
@@ -165,45 +165,42 @@ bool Player::Update(float dt)
 		// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
 		vel.x = 0;
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !fell) {
 			vel.x = -speed * dt; // Moverse a la izquierda
 			currentDirection = Direction::LEFT;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !fell) {
 			vel.x = speed * dt; // Moverse a la derecha
 			currentDirection = Direction::RIGHT;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godmode && !falling && !jumping && vel.y<0.5f && vel.y>-0.5f && collidingPlat) {
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !fell && !godmode && !falling && !jumping && vel.y<0.5f && vel.y>-0.5f && collidingPlat) {
 			countF = 0.0f;
 			falling = true;
 		}
 
 		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !godmode && !falling && vel.y<0.5f && vel.y>-0.5f) {
-			app->audio->PlayFx(sniff);
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !fell && !jumping && !godmode && !falling && vel.y<0.5f && vel.y>-0.5f) {
+			app->audio->PlayFx(jump);
 			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 			jumping = true;
 			vel.y = -10.0f; // Aplicar impulso vertical al saltar
 		}
-		contador += 0.1f*dt;
-		LOG("%f", contador);
 		if (position.y >= 786 && !fell) {
-			app->audio->PlayFx(fall,15);
+			app->audio->PlayFx(fall,60);
 			fell = true;
-			contador = 0.0f;
 		}
 		if(fell){
 			if (app->audio->FxEnd(fall)) {
-				if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(100) }, 0);
-				else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(100) }, 0);
+				if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+				else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
 				fell=false;
 			}
 			
 		}
 		
-
+		LOG("%i", position.y);
 		if (!jumping && !falling && !godmode) {
 			pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 		}
@@ -254,7 +251,7 @@ bool Player::Update(float dt)
 	}
 	else
 	{
-		app->audio->PlayFx(blood);
+		app->audio->PlayFx(blood,24);
 		currentAnimation = &Die;
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -265,8 +262,8 @@ bool Player::Update(float dt)
 		{
 			isAlive = true;
 			currentAnimation->Reset();
-			if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(100) }, 0);
-			else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(100) }, 0);
+			if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+			else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
 		}
 	}
 	return true;
@@ -306,7 +303,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::FLOOR:
 		jumping = false;
 		falling = false;
-		pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
+		if(!godmode)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 
 		collidingPlat = false;
 		LOG("Collision FLOOR");
