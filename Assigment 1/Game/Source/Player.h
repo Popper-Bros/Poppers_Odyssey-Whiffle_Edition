@@ -46,8 +46,7 @@ public:
 	SDL_Texture* texture = NULL;
 
 	PhysBody* pbody;
-	int sniff;
-	int fall;
+	int sniff, fall, jump;
 	bool jumping=false;
 	bool falling = false;
 	bool godmode = false;

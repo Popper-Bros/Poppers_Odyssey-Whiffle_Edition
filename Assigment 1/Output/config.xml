@@ -26,6 +26,7 @@
 	
     <item x="272" y="672" texturepath="Assets/Textures/popper.png"/>
 	<item x="624" y="544" texturepath="Assets/Textures/popper.png"/>
+	<item x="912" y="672" texturepath="Assets/Textures/popper.png"/>
 	<item x="1552" y="480" texturepath="Assets/Textures/popper.png"/>
   </scene>
 

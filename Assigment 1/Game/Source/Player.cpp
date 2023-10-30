@@ -38,7 +38,8 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 
 	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
-	fall = app->audio->LoadFx("Assets/Audio/Fx/Falling Scream.ogg");
+	fall = app->audio->LoadFx("Assets/Audio/Fx/fall.ogg");
+	jump = app->audio->LoadFx("Assets/Audio/Fx/jump.ogg");
 
 	Move_right.PushBack({ 11, 15, 32, 34 });
 	Move_right.PushBack({ 72,17,32, 34 });
@@ -175,6 +176,7 @@ bool Player::Update(float dt)
 
 		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && !godmode && !falling && vel.y<0.5f && vel.y>-0.5f) {
+			app->audio->PlayFx(sniff);
 			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 			jumping = true;
 			vel.y = -10.0f; // Aplicar impulso vertical al saltar
