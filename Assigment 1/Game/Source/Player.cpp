@@ -241,10 +241,10 @@ bool Player::Update(float dt)
 		{
 			isAlive = true;
 			currentAnimation->Reset();
-			pbody->body->SetTransform({ PIXEL_TO_METERS(80), PIXEL_TO_METERS(120) }, 0);
+			if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
+			else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(120) }, 0);
 		}
 	}
-	
 	return true;
 }
 
