@@ -117,9 +117,10 @@ bool Player::Update(float dt)
 	Jump_right.speed = 0.01f * dt;
 	Jump_left.speed = 0.01f * dt;
 	Die.speed = 0.01f * dt;
-	if (position.x > 1928 && position.y < 250)
-	{
+	if (position.x > 1930 && position.y < 260) {
 		win = true;
+		app->scene->checkpoint = 0;
+		pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
 	}
 	if(isAlive)
 	{ 
@@ -194,12 +195,13 @@ bool Player::Update(float dt)
 		}
 		if(fell){
 			if (contador > 1260.0f) {
-				if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
-				else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(120) }, 0);
+				if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(100) }, 0);
+				else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(100) }, 0);
 				fell=false;
 			}
 			
 		}
+		
 
 		if (!jumping && !falling && !godmode) {
 			pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
@@ -261,8 +263,8 @@ bool Player::Update(float dt)
 		{
 			isAlive = true;
 			currentAnimation->Reset();
-			if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
-			else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(120) }, 0);
+			if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(100) }, 0);
+			else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(100) }, 0);
 		}
 	}
 	return true;

@@ -22,7 +22,7 @@
   </audio>
 
   <scene>
-    <player x="80" y="120" rataTexturepath="Assets/Textures/Spritesheet.png"/>
+    <player x="80" y="100" rataTexturepath="Assets/Textures/Spritesheet.png"/>
 	
     <item x="272" y="672" texturepath="Assets/Textures/popper.png"/>
 	<item x="624" y="544" texturepath="Assets/Textures/popper.png"/>

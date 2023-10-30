@@ -57,7 +57,8 @@ bool Map::Update(float dt)
                     app->render->DrawTexture(tileset->texture,
                         pos.x,
                         pos.y,
-                        &r);
+                        &r,
+                        mapLayerItem->data->parallax);
                 }
             }
         }
@@ -273,6 +274,13 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     layer->name = node.attribute("name").as_string();
     layer->width = node.attribute("width").as_int();
     layer->height = node.attribute("height").as_int();
+
+    if (node.attribute("Parallax")) {
+        layer->parallax = node.attribute("parallax").as_float();
+    }
+    else {
+        layer->parallax = 1.0f;
+    }
 
     LoadProperties(node, layer->properties);
 

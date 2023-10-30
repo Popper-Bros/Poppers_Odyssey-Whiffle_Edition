@@ -101,16 +101,16 @@ bool Scene::Update(float dt)
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive) {
-		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
+		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(100) }, 0);
 		checkpoint == 0;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && player->isAlive) {
-		player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(120) }, 0);
+		player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(100) }, 0);
 		checkpoint == 1;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN&&player->isAlive){
-		if (checkpoint==0) player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
-		else if (checkpoint == 1) player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(120) }, 0);
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN&&player->isAlive&&player->fell==false){
+		if (checkpoint==0) player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(100) }, 0);
+		else if (checkpoint == 1) player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(100) }, 0);
 	}
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
