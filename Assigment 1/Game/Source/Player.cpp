@@ -40,6 +40,7 @@ bool Player::Start() {
 	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
 	fall = app->audio->LoadFx("Assets/Audio/Fx/fall.ogg");
 	jump = app->audio->LoadFx("Assets/Audio/Fx/jump.ogg");
+	blood = app->audio->LoadFx("Assets/Audio/Fx/blood.ogg");
 
 	Move_right.PushBack({ 11, 15, 32, 34 });
 	Move_right.PushBack({ 72,17,32, 34 });
@@ -253,6 +254,7 @@ bool Player::Update(float dt)
 	}
 	else
 	{
+		app->audio->PlayFx(blood);
 		currentAnimation = &Die;
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
