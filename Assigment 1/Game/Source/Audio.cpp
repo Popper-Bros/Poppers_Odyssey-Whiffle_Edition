@@ -162,11 +162,11 @@ unsigned int Audio::LoadFx(const char* path)
 }
 
 // Play WAV
-bool Audio::PlayFx(unsigned int id, int repeat)
+bool Audio::PlayFx(unsigned int id, int volume, int repeat)
 {
 	bool ret = false;
 	
-	int volume = 15;
+	
 
 	volume = (volume < 0) ? 0 : (volume > MIX_MAX_VOLUME) ? MIX_MAX_VOLUME : volume;
 
@@ -181,8 +181,9 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 
 	if (id > 0 && id <= fx.Count())
 	{
-		Mix_PlayChannel(-1, fx[id - 1], repeat);
+		channel = Mix_PlayChannel(-1, fx[id - 1], repeat);
 	}
+
 
 
 	return ret;
@@ -190,28 +191,12 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 bool Audio::FxEnd(unsigned int id) {
 
 
-	// Intenta reproducir el efecto de sonido en un canal temporal
-	int channel = Mix_PlayChannel(-1, fx[id - 1], 0);
-	if (channel == -1)
-	{
-		// Error al reproducir el efecto de sonido, devuelve true como señal de error
-		//LOG("Cannot play wav %s. Mix_GetError(): %s", path, Mix_GetError());
-		return true;
-	}
-
-
-	// Espera un corto período de tiempo para asegurarse de que Mix_Playing haya tenido tiempo de actualizar
-	SDL_Delay(10);
-
-
 	// Verifica si el efecto de sonido está reproduciéndose
-	if (Mix_Playing(channel) != 0)
+	if (Mix_Playing(channel) == 0)
 	{
 		// El efecto de sonido está reproduciéndose, devuelve false
-		return false;
+		return true;
 	}
+	return false;
 
-
-	// El efecto de sonido ha terminado de reproducirse, devuelve true
-	return true;
 }
