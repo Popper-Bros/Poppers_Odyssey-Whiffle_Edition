@@ -52,6 +52,7 @@ public:
 	bool godmode = false;
 	float countF = 0.0f;
 	bool isAlive = true;
+	bool win = false;
 
 	/*const int NUM_FRAMES = 8;*/
 	/*int currentFrame = 0;*/

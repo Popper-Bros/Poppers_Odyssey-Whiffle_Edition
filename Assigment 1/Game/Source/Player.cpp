@@ -117,6 +117,10 @@ bool Player::Update(float dt)
 	Jump_right.speed = 0.01f * dt;
 	Jump_left.speed = 0.01f * dt;
 	Die.speed = 0.01f * dt;
+	if (position.x > 1928 && position.y < 250)
+	{
+		win = true;
+	}
 	if(isAlive)
 	{ 
 		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
