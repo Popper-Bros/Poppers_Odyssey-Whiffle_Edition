@@ -35,6 +35,7 @@ public:
 	bool CleanUp();
 
 	int checkpoint;
+	
 
 private:
 	SDL_Texture* img;

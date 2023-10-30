@@ -99,6 +99,7 @@ bool Scene::Update(float dt)
 	{
 		checkpoint = 1;
 	}
+	
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive) {
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
 		checkpoint == 0;
@@ -113,7 +114,7 @@ bool Scene::Update(float dt)
 	}
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
-
+	
 	return true;
 }
 
