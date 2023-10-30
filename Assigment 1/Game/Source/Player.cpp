@@ -33,7 +33,7 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 11, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 9, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
