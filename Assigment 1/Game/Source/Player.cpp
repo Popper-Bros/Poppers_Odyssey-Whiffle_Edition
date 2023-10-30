@@ -40,40 +40,40 @@ bool Player::Start() {
 	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
 	fall = app->audio->LoadFx("Assets/Audio/Fx/Falling Scream.ogg");
 
-	Move_right.PushBack({ 14, 16, 31,32 });
-	Move_right.PushBack({ 79,18,31,32 });
-	Move_right.PushBack({ 147,20,31,32 });
-	Move_right.PushBack({ 212,17,31,32 });
-	Move_right.PushBack({ 269,16,31,32 });
-	Move_right.PushBack({ 334,18,31,32 });
-	Move_right.PushBack({ 404,20,31,32 });
-	Move_right.PushBack({ 469,17,31,32 });
+	Move_right.PushBack({ 11, 15, 32, 34 });
+	Move_right.PushBack({ 72,17,32, 34 });
+	Move_right.PushBack({ 137,17,32, 34 });
+	Move_right.PushBack({ 202,17,32, 34 });
+	Move_right.PushBack({ 268,14,32, 34 });
+	Move_right.PushBack({ 330,17,32, 34 });
+	Move_right.PushBack({ 393,17,32, 34 });
+	Move_right.PushBack({ 457,17,32, 34 });
+	
 
+	Move_left.PushBack({ 468, 79, 32, 34 });
+	Move_left.PushBack({ 403,81,32, 34 });
+	Move_left.PushBack({ 335,81,32, 34 });
+	Move_left.PushBack({ 270,81,32, 34 });
+	Move_left.PushBack({ 213,78 ,32, 34 });
+	Move_left.PushBack({ 148,81,32, 34 });
+	Move_left.PushBack({ 78,81,32, 34 });
+	Move_left.PushBack({ 13,81,32, 34 });
 
-	Move_left.PushBack({ 471, 80, 31, 32 });
-	Move_left.PushBack({ 410,82,31,32 });
-	Move_left.PushBack({ 345,84,31,32 });
-	Move_left.PushBack({ 280,81,31,32 });
-	Move_left.PushBack({ 214,80,31,32 });
-	Move_left.PushBack({ 152,82,31,32 });
-	Move_left.PushBack({ 89,84,31,32 });
-	Move_left.PushBack({ 25,81,31,32 });
+	Idle_right.PushBack({ 12, 148, 29, 31 });
+	Idle_right.PushBack({ 77, 148, 29, 31 });
+	Idle_right.PushBack({ 140, 148, 29, 31 });
+	Idle_right.PushBack({ 269, 148, 29, 31 });
+	Idle_right.PushBack({ 206, 148, 29, 31 });
+	Idle_right.PushBack({ 269, 148, 29, 31 });
+	Idle_right.PushBack({ 333, 148, 29, 31 });
 
-	Idle_right.PushBack({ 12, 146, 28, 31 });
-	Idle_right.PushBack({ 77, 146, 28, 31 });
-	Idle_right.PushBack({ 140, 146, 28, 31 });
-	Idle_right.PushBack({ 269, 146, 28, 31 });
-	Idle_right.PushBack({ 206, 146, 28, 31 });
-	Idle_right.PushBack({ 269, 146, 28, 31 });
-	Idle_right.PushBack({ 333, 146, 28, 31 });
-
-	Idle_left.PushBack({ 343, 195, 28, 31 });
-	Idle_left.PushBack({ 279, 195, 28, 31 });
-	Idle_left.PushBack({ 215, 195, 28, 31 });
-	Idle_left.PushBack({ 89, 195, 28, 31 });
-	Idle_left.PushBack({ 152, 195, 28, 31 });
-	Idle_left.PushBack({ 87, 195, 28, 31 });
-	Idle_left.PushBack({ 23, 195, 28, 31 });
+	Idle_left.PushBack({ 343, 196, 29, 31 });
+	Idle_left.PushBack({ 279, 196, 29, 31 });
+	Idle_left.PushBack({ 215, 196, 29, 31 });
+	Idle_left.PushBack({ 89, 196, 29, 31 });
+	Idle_left.PushBack({ 152, 196, 29, 31 });
+	Idle_left.PushBack({ 87, 196, 29, 31 });
+	Idle_left.PushBack({ 23, 196, 29, 31 });
 
 	Jump_left.PushBack({ 252,271,28,35 });
 	Jump_left.PushBack({ 252,271,28,35 });
