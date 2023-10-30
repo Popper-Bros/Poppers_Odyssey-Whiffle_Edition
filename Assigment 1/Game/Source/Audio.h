@@ -34,6 +34,8 @@ public:
 
 	bool FxEnd(unsigned int id);
 
+	int channel;
+
 private:
 
 	_Mix_Music* music;

@@ -194,7 +194,7 @@ bool Player::Update(float dt)
 			contador = 0.0f;
 		}
 		if(fell){
-			if (contador > 1260.0f) {
+			if (app->audio->FxEnd(fall)) {
 				if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(100) }, 0);
 				else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(100) }, 0);
 				fell=false;
