@@ -189,7 +189,7 @@ bool Player::Update(float dt)
 		contador += 0.1f*dt;
 		LOG("%f", contador);
 		if (position.y >= 786 && !fell) {
-			app->audio->PlayFx(fall);
+			app->audio->PlayFx(fall,15);
 			fell = true;
 			contador = 0.0f;
 		}
