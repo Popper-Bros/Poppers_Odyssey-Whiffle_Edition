@@ -38,7 +38,7 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 
 	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
-	faall = app->audio->LoadFx("Assets/Audio/Fx/Falling Scream.ogg");
+	fall = app->audio->LoadFx("Assets/Audio/Fx/Falling Scream.ogg");
 
 	Move_right.PushBack({ 14, 16, 31,32 });
 	Move_right.PushBack({ 79,18,31,32 });
