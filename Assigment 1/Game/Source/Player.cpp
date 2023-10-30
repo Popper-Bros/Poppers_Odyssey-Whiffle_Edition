@@ -185,7 +185,21 @@ bool Player::Update(float dt)
 			jumping = true;
 			vel.y = -10.0f; // Aplicar impulso vertical al saltar
 		}
-
+		contador += 0.1f*dt;
+		LOG("%f", contador);
+		if (position.y >= 786 && !fell) {
+			app->audio->PlayFx(fall);
+			fell = true;
+			contador = 0.0f;
+		}
+		if(fell){
+			if (contador > 1260.0f) {
+				if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(120) }, 0);
+				else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(120) }, 0);
+				fell=false;
+			}
+			
+		}
 
 		if (!jumping && !falling && !godmode) {
 			pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
