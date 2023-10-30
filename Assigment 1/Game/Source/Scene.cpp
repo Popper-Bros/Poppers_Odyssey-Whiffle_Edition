@@ -23,6 +23,7 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
+	app->audio->PlayMusic("Assets/Audio/Music/music.wav", 1.0f);
 	LOG("Loading Scene");
 	bool ret = true;
 
