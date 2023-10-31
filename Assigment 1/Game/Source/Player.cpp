@@ -200,7 +200,6 @@ bool Player::Update(float dt)
 			
 		}
 		
-		LOG("%i", position.y);
 		if (!jumping && !falling && !godmode) {
 			pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 		}

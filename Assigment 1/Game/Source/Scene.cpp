@@ -82,6 +82,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
 	float camSpeed = 0.125f; 
 
 	//if(app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
@@ -98,6 +99,10 @@ bool Scene::Update(float dt)
 	if (player->position.x > 925 && player->position.y < 200)
 	{
 		checkpoint = 1;
+	}
+	if (player->position.x < 150)
+	{
+		checkpoint = 0;
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {
