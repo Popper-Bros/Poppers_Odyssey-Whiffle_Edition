@@ -23,7 +23,6 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
-	app->audio->PlayMusic("Assets/Audio/Music/music.wav", 1.0f);
 	LOG("Loading Scene");
 	bool ret = true;
 
@@ -31,7 +30,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	// Check https://pugixml.org/docs/quickstart.html#access
 	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{
-		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
 	}
 
@@ -50,7 +49,7 @@ bool Scene::Start()
 	//img = app->tex->Load("Assets/Textures/test.png");
 	
 	//Music is commented so that you can add your own music
-	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	//app->audio->PlayMusic("Assets/Audio/Music/music.wav", 1.0f);
 
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
@@ -82,6 +81,13 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	if (player->isAlive) {
+		playerAlive = true;
+	}
+	else {
+
+		playerAlive = false;
+	}
 
 	float camSpeed = 0.125f; 
 

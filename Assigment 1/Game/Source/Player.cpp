@@ -185,7 +185,7 @@ bool Player::Update(float dt)
 			app->audio->PlayFx(jump);
 			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 			jumping = true;
-			vel.y = -10.0f; // Aplicar impulso vertical al saltar
+			vel.y = -0.625f * dt; // Aplicar impulso vertical al saltar
 		}
 		if (position.y >= 786 && !fell) {
 			app->audio->PlayFx(fall,60);
@@ -250,13 +250,13 @@ bool Player::Update(float dt)
 	}
 	else
 	{
-		app->audio->PlayFx(blood,24);
+		pbody->body->GetFixtureList()->SetSensor(true);
+		if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood,24);
 		currentAnimation = &Die;
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
 		
-
 		if (currentAnimation->GetCurrentFrameIndex() >= 7)
 		{
 			isAlive = true;
@@ -285,7 +285,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision ITEM");
 		app->audio->PlayFx(sniff);
 		if (vel.y > 0)jumping = false;
-		state::PICKED_TRUE;
+		if(isAlive) state::PICKED_TRUE;
 		collidingPlat = false;
 		break;
 	case ColliderType::PLATFORM:
@@ -296,13 +296,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::WALL:
-		if(!godmode) pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
+		if(!godmode && isAlive) pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 		LOG("Collision WALL");
 		break;
 	case ColliderType::FLOOR:
 		jumping = false;
 		falling = false;
-		if(!godmode)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
+		if(!godmode&&isAlive)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
 
 		collidingPlat = false;
 		LOG("Collision FLOOR");

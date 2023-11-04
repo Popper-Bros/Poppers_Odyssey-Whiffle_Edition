@@ -58,9 +58,7 @@ void Item::OnCollision(PhysBody* physA, PhysBody* physB)
 	{
 	case ColliderType::PLAYER:
 		LOG("Collision ITEM con PLAYER");
-
-		isPicked = true;
-
+		if(app->scene->playerAlive) isPicked = true;
 		break;
 	}
 		

@@ -36,6 +36,7 @@ public:
 
 	int checkpoint;
 	
+	bool playerAlive = true;
 
 private:
 	SDL_Texture* img;
@@ -43,6 +44,7 @@ private:
 	uint texW, texH;
 	uint windowW, windowH;
 	Player* player;
+	Item* item;
 	pugi::xml_node playerConfig;
 };
 
