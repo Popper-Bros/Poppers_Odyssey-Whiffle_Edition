@@ -1,0 +1,10 @@
+Work Organization:
+
+For this assignment, we didn't use any tools to help us organize. We worked on some parts together and divided the other tasks. For example:
+
+Adrià handled the sprites, animations, and created the collision functions...
+
+Dídac took care of the debug keys, respawn conditions, some physics aspects, and the map...
+
+Overall, we both worked hard and didn't feel like we were shouldering each other's workload.
+
