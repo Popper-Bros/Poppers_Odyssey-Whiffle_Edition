@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Item.h"
+#include "Enemy.h"
 
 struct SDL_Texture;
 
@@ -45,7 +46,9 @@ private:
 	uint windowW, windowH;
 	Player* player;
 	Item* item;
+	Enemy* enemy;
 	pugi::xml_node playerConfig;
+	pugi::xml_node enemyConfig;
 };
 
 #endif // __SCENE_H__

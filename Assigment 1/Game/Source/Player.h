@@ -55,8 +55,6 @@ public:
 	bool isAlive = true;
 	bool win = false;
 
-	/*const int NUM_FRAMES = 8;*/
-	/*int currentFrame = 0;*/
 	float frameCounter = 0.0f;
 	int frameSpeed = 2;
 	bool collidingPlat;

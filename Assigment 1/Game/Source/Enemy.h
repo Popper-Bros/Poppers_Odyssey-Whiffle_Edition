@@ -8,15 +8,15 @@
 
 
 struct SDL_Texture;
-//enum class Direction
-//{
-//	IDLE_R,
-//	IDLE_L,
-//	LEFT,
-//	RIGHT,
-//	JUMP_R,
-//	JUMP_L,
-//};
+enum class EnemyDirection
+{
+	IDLE_R,
+	IDLE_L,
+	LEFT,
+	RIGHT,
+	JUMP_R,
+	JUMP_L,
+};
 
 class Enemy : public Entity
 {
@@ -62,10 +62,16 @@ public:
 	//bool collidingPlat;
 
 
-	///*Direction currentDirection = Direction::IDLE_R;*/
+	SDL_Texture* texture = NULL;
+	const char* texturePathEnemy;
 
-	//Animation* currentAnimation = &Idle_right;
-	//Animation Move_left, Move_right, Jump_left, Jump_right, Idle_left, Idle_right, Die;
+	PhysBody* pbody;
+
+
+	EnemyDirection currentDirection = EnemyDirection::IDLE_L;
+
+	Animation* currentAnimation = &Idle_left;
+	Animation Move_left, Move_right, Jump_left, Jump_right, Idle_left, Idle_right, Die;
 	
 };
 
