@@ -38,58 +38,74 @@ bool Enemy::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
-	Move_right.PushBack({ 11, 15, 32, 34 });
-	Move_right.PushBack({ 72,17,32, 34 });
-	Move_right.PushBack({ 137,17,32, 34 });
-	Move_right.PushBack({ 202,17,32, 34 });
-	Move_right.PushBack({ 268,14,32, 34 });
-	Move_right.PushBack({ 330,17,32, 34 });
-	Move_right.PushBack({ 393,17,32, 34 });
-	Move_right.PushBack({ 457,17,32, 34 });
+	Move_right.PushBack({ 19+(50*0), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 1), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 2), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 3), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 4), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 5), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 6), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 7), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 8), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 9), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 10), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 11), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 12), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 13), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 14), 16, 48, 48 });
+	Move_right.PushBack({ 19 + (50 * 15), 16, 48, 48 });
 
+	Idle_right.PushBack({ 19 + (50 * 0), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 1), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 2), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 3), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 4), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 5), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 6), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 7), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 8), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 9), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 10), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 11), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 12), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 13), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 14), 16, 48, 48 });
+	Idle_right.PushBack({ 19 + (50 * 15), 16, 48, 48 });
 
-	Move_left.PushBack({ 468, 79, 32, 34 });
-	Move_left.PushBack({ 403,81,32, 34 });
-	Move_left.PushBack({ 335,81,32, 34 });
-	Move_left.PushBack({ 270,81,32, 34 });
-	Move_left.PushBack({ 213,78 ,32, 34 });
-	Move_left.PushBack({ 148,81,32, 34 });
-	Move_left.PushBack({ 78,81,32, 34 });
-	Move_left.PushBack({ 13,81,32, 34 });
+	Move_left.PushBack({ 19 + (50 * 0), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 1), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 2), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 3), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 4), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 5), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 6), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 7), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 8), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 9), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 10), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 11), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 12), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 13), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 14), 66, 48, 48 });
+	Move_left.PushBack({ 19 + (50 * 15), 66, 48, 48 });
 
-	Idle_right.PushBack({ 12, 148, 29, 31 });
-	Idle_right.PushBack({ 77, 148, 29, 31 });
-	Idle_right.PushBack({ 140, 148, 29, 31 });
-	Idle_right.PushBack({ 269, 148, 29, 31 });
-	Idle_right.PushBack({ 206, 148, 29, 31 });
-	Idle_right.PushBack({ 269, 148, 29, 31 });
-	Idle_right.PushBack({ 333, 148, 29, 31 });
+	Idle_left.PushBack({ 19 + (50 * 0), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 1), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 2), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 3), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 4), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 5), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 6), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 7), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 8), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 9), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 10), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 11), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 12), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 13), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 14), 66, 48, 48 });
+	Idle_left.PushBack({ 19 + (50 * 15), 66, 48, 48 });
 
-	Idle_left.PushBack({ 343, 196, 29, 31 });
-	Idle_left.PushBack({ 279, 196, 29, 31 });
-	Idle_left.PushBack({ 215, 196, 29, 31 });
-	Idle_left.PushBack({ 89, 196, 29, 31 });
-	Idle_left.PushBack({ 152, 196, 29, 31 });
-	Idle_left.PushBack({ 87, 196, 29, 31 });
-	Idle_left.PushBack({ 23, 196, 29, 31 });
-
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
 
 	Die.PushBack({ 11, 315, 48, 51 });
 	Die.PushBack({ 72, 316, 48, 51 });
@@ -114,8 +130,8 @@ bool Enemy::Update(float dt)
 	Jump_left.speed = 0.01f * dt;
 	Die.speed = 0.01f * dt;
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 22;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 28;
 
 
 	switch (currentDirection)
