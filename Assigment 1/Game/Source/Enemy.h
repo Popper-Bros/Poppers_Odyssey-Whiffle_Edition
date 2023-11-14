@@ -14,8 +14,8 @@ enum class EnemyDirection
 	IDLE_L,
 	LEFT,
 	RIGHT,
-	JUMP_R,
-	JUMP_L,
+	ATTACK_R,
+	ATTACK_L,
 };
 
 class Enemy : public Entity
@@ -41,7 +41,7 @@ public:
 
 
 public:
-	//float speed = 0.2f;
+	float speed = 0.1f;
 	//const char* texturePath;
 	//SDL_Texture* texture = NULL;
 
@@ -52,7 +52,11 @@ public:
 	//bool godmode = false;
 	//bool fell = false;
 	//float countF = 0.0f;
-	//bool isAlive = true;
+	bool isAlive = true;
+	bool isMovingLeft = false;
+	bool isMovingRight = false;
+	bool isAttacking = false;
+	float cd = 3.0f;
 	//bool win = false;
 
 	///*const int NUM_FRAMES = 8;*/
@@ -71,7 +75,7 @@ public:
 	EnemyDirection currentDirection = EnemyDirection::IDLE_L;
 
 	Animation* currentAnimation = &Idle_left;
-	Animation Move_left, Move_right, Jump_left, Jump_right, Idle_left, Idle_right, Die;
+	Animation Move_left, Move_right, Jump_left, Jump_right, Idle_left, Idle_right, Die_right, Die_left,Attack_right,Attack_left;
 	
 };
 

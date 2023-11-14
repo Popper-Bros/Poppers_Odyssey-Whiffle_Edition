@@ -24,7 +24,7 @@
   <scene>
     <player x="80" y="166" rataTexturepath="Assets/Textures/Spritesheet.png"/>
 	  
-	<Enemy x="272" y="672" enemyTexturepath="Assets/Textures/sombra.png"/>
+	<Enemy x="812" y="672" enemyTexturepath="Assets/Textures/sombra.png"/>
 	
     <item x="272" y="672" texturepath="Assets/Textures/popper.png"/>
 	<item x="624" y="544" texturepath="Assets/Textures/popper.png"/>

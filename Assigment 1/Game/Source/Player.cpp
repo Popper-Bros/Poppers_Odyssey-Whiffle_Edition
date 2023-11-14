@@ -316,5 +316,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
+	case ColliderType::ENEMY:
+		if (vel.y > 0)jumping = false;
+		falling = false;
+		if (!godmode) isAlive = false;
+		LOG("Collision ENEMY");
+		break;
 	}
 }

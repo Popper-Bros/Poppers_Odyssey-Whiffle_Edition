@@ -39,6 +39,8 @@ public:
 	
 	bool playerAlive = true;
 
+	iPoint getPlayerPos();
+
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

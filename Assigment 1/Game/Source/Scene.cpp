@@ -149,6 +149,10 @@ bool Scene::PostUpdate()
 	return ret;
 }
 
+iPoint Scene::getPlayerPos() {
+	return player->position;
+}
+
 // Called before quitting
 bool Scene::CleanUp()
 {
