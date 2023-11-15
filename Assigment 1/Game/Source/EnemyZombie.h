@@ -1,5 +1,5 @@
-#ifndef __ENEMY_H__
-#define __ENEMY_H__
+#ifndef __EnemyZombie_H__
+#define __EnemyZombie_H__
 
 #include "Entity.h"
 #include "Point.h"
@@ -8,7 +8,7 @@
 
 
 struct SDL_Texture;
-enum class EnemyDirection
+enum class EnemyZombieDirection
 {
 	IDLE_R,
 	IDLE_L,
@@ -18,13 +18,13 @@ enum class EnemyDirection
 	ATTACK_L,
 };
 
-class Enemy : public Entity
+class EnemyZombie : public Entity
 {
 public:
 
-	Enemy();
+	EnemyZombie();
 	
-	virtual ~Enemy();
+	virtual ~EnemyZombie();
 
 	bool Awake();
 
@@ -67,16 +67,16 @@ public:
 
 
 	SDL_Texture* texture = NULL;
-	const char* texturePathEnemy;
+	const char* texturePathEnemyZombie;
 
 	PhysBody* pbody;
 
 
-	EnemyDirection currentDirection = EnemyDirection::IDLE_L;
+	EnemyZombieDirection currentDirection = EnemyZombieDirection::IDLE_L;
 
 	Animation* currentAnimation = &Idle_left;
 	Animation Move_left, Move_right, Jump_left, Jump_right, Idle_left, Idle_right, Die_right, Die_left,Attack_right,Attack_left;
 	
 };
 
-#endif // __ENEMY_H__
+#endif // __EnemyZombie_H__

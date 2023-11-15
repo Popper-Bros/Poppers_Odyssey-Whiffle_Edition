@@ -41,12 +41,19 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	playerConfig = config.child("player");
 
-	if (config.child("Enemy")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("Enemy");
+	if (config.child("EnemyShadow")) {
+		enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+		enemy->parameters = config.child("EnemyShadow");
 	}
 
-	enemyConfig = config.child("Enemy");
+	enemyShadowConfig = config.child("EnemyShadow");
+
+	if (config.child("EnemyZombie")) {
+		enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+		enemy2->parameters = config.child("EnemyZombie");
+	}
+
+	enemyZombieConfig = config.child("EnemyZombie");
 
 	return ret;
 }

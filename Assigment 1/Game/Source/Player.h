@@ -49,7 +49,7 @@ public:
 	int sniff, fall, jump, blood;
 	bool jumping=false;
 	bool falling = false;
-	bool godmode = true;
+	bool godmode = false;
 	bool fell = false;
 	float countF = 0.0f;
 	bool isAlive = true;

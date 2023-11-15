@@ -1,4 +1,4 @@
-#include "Enemy.h"
+#include "EnemyShadow.h"
 #include "App.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -11,26 +11,26 @@
 #include "Item.h"
 #include "Player.h"
 
-Enemy::Enemy() : Entity(EntityType::ENEMY)
+EnemyShadow::EnemyShadow() : Entity(EntityType::ENEMYSHADOW)
 {
-	name.Create("Enemy");
+	name.Create("EnemyShadow");
 }
 
-Enemy::~Enemy() {}
+EnemyShadow::~EnemyShadow() {}
 
-bool Enemy::Awake() {
+bool EnemyShadow::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	texturePathEnemy = parameters.attribute("enemyTexturepath").as_string();
+	texturePathEnemyShadow = parameters.attribute("enemyShadowTexturepath").as_string();
 
 	return true;
 }
 
-bool Enemy::Start() {
+bool EnemyShadow::Start() {
 
 	//initilize textures
-	texture = app->tex->Load(texturePathEnemy);
+	texture = app->tex->Load(texturePathEnemyShadow);
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -169,7 +169,7 @@ bool Enemy::Start() {
 	return true;
 }
 
-bool Enemy::Update(float dt)
+bool EnemyShadow::Update(float dt)
 {
 	Move_right.speed = 0.01f * dt;
 	Move_left.speed = 0.01f * dt;
@@ -187,34 +187,34 @@ bool Enemy::Update(float dt)
 
 	if (isAlive) {
 
-		if (currentDirection == EnemyDirection::RIGHT)
+		if (currentDirection == EnemyShadowDirection::RIGHT)
 		{
-			currentDirection = EnemyDirection::IDLE_R;
+			currentDirection = EnemyShadowDirection::IDLE_R;
 		}
-		else if (currentDirection == EnemyDirection::LEFT)
+		else if (currentDirection == EnemyShadowDirection::LEFT)
 		{
-			currentDirection = EnemyDirection::IDLE_L;
+			currentDirection = EnemyShadowDirection::IDLE_L;
 		}
 
 
 		switch (currentDirection)
 		{
-		case EnemyDirection::IDLE_R:
+		case EnemyShadowDirection::IDLE_R:
 			currentAnimation = &Idle_right;
 			break;
-		case EnemyDirection::IDLE_L:
+		case EnemyShadowDirection::IDLE_L:
 			currentAnimation = &Idle_left;
 			break;
-		case EnemyDirection::LEFT:
+		case EnemyShadowDirection::LEFT:
 			currentAnimation = &Move_left;
 			break;
-		case EnemyDirection::RIGHT:
+		case EnemyShadowDirection::RIGHT:
 			currentAnimation = &Move_right;
 			break;
-		case EnemyDirection::ATTACK_R:
+		case EnemyShadowDirection::ATTACK_R:
 			currentAnimation = &Attack_right;
 			break;
-		case EnemyDirection::ATTACK_L:
+		case EnemyShadowDirection::ATTACK_L:
 			currentAnimation = &Attack_left;
 			break;
 
@@ -225,11 +225,11 @@ bool Enemy::Update(float dt)
 		if (((position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= 100) || (position.x - app->scene->getPlayerPos().x > -200 && position.x - app->scene->getPlayerPos().x <= -100))&&isAttacking == false){
 			
 			if (position.x - app->scene->getPlayerPos().x >= 0) {
-				currentDirection = EnemyDirection::LEFT;
+				currentDirection = EnemyShadowDirection::LEFT;
 				isMovingLeft = true;
 			}
 			else {
-				currentDirection = EnemyDirection::RIGHT;
+				currentDirection = EnemyShadowDirection::RIGHT;
 				isMovingRight = true;
 			}
 		}
@@ -252,10 +252,10 @@ bool Enemy::Update(float dt)
 
 		if(isAttacking){
 			if (position.x - app->scene->getPlayerPos().x >= 0) {
-				currentDirection = EnemyDirection::ATTACK_L;
+				currentDirection = EnemyShadowDirection::ATTACK_L;
 			}
 			if (position.x - app->scene->getPlayerPos().x < 0) {
-				currentDirection = EnemyDirection::ATTACK_R;
+				currentDirection = EnemyShadowDirection::ATTACK_R;
 			}
 			if (currentAnimation->GetCurrentFrameIndex() >= 15)
 			{
@@ -294,7 +294,7 @@ bool Enemy::Update(float dt)
 	return true;
 }
 
-void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
+void EnemyShadow::OnCollision(PhysBody* physA, PhysBody* physB)
 {
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
@@ -312,7 +312,7 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 		
 }
 
-bool Enemy::CleanUp()
+bool EnemyShadow::CleanUp()
 {
 	return true;
 }
