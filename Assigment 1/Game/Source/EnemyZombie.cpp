@@ -180,8 +180,8 @@ bool EnemyZombie::Update(float dt)
 		//	vel.x = speed * dt;
 		//}
 
-		if (((position.x - app->scene->getPlayerPos().x < 25 && position.x - app->scene->getPlayerPos().x >= 0) || (position.x - app->scene->getPlayerPos().x > -25 && position.x - app->scene->getPlayerPos().x < 0))) {
-			if (position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30){
+		if (((position.x - app->scene->getPlayerPos().x < 35 && position.x - app->scene->getPlayerPos().x >= 0) || (position.x - app->scene->getPlayerPos().x > -35 && position.x - app->scene->getPlayerPos().x < 0))) {
+			if (position.y - app->scene->getPlayerPos().y >= -45 && position.y - app->scene->getPlayerPos().y <= 45){
 				isAttacking = true;
 				isMovingLeft = false;
 				isMovingRight = false;

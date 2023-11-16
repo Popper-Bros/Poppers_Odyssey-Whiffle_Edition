@@ -24,9 +24,9 @@
   <scene>
     <player x="80" y="166" rataTexturepath="Assets/Textures/Spritesheet.png" Bala_texturePath="Assets/Textures/Shadow_disparo.png"/>
 	  
-	<EnemyShadow x="812" y="672" enemyShadowTexturepath="Assets/Textures/sombra.png"/>
+	<EnemyShadow x="780" y="672" enemyShadowTexturepath="Assets/Textures/sombra.png"/>
 
-	<EnemyZombie x="1930" y="672" enemyZombieTexturepath="Assets/Textures/zombie.png"/>
+	<EnemyZombie x="1945" y="672" enemyZombieTexturepath="Assets/Textures/zombie.png"/>
 	
     <item x="272" y="672" texturepath="Assets/Textures/popper.png"/>
 	<item x="624" y="544" texturepath="Assets/Textures/popper.png"/>
