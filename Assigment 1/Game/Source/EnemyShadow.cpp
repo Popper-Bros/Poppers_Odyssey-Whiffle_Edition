@@ -186,16 +186,16 @@ bool EnemyShadow::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 30;
 
 	if (isAlive) {
-
-		if (currentDirection == EnemyShadowDirection::RIGHT)
-		{
-			currentDirection = EnemyShadowDirection::IDLE_R;
+		if (!isAttacking && !isMovingLeft && !isMovingRight) {
+			if (currentDirection == EnemyShadowDirection::RIGHT || currentDirection == EnemyShadowDirection::ATTACK_R)
+			{
+				currentDirection = EnemyShadowDirection::IDLE_R;
+			}
+			else if (currentDirection == EnemyShadowDirection::LEFT || currentDirection == EnemyShadowDirection::ATTACK_L)
+			{
+				currentDirection = EnemyShadowDirection::IDLE_L;
+			}
 		}
-		else if (currentDirection == EnemyShadowDirection::LEFT)
-		{
-			currentDirection = EnemyShadowDirection::IDLE_L;
-		}
-
 
 		switch (currentDirection)
 		{
@@ -222,7 +222,7 @@ bool EnemyShadow::Update(float dt)
 
 		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
-		if (((position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= 100) || (position.x - app->scene->getPlayerPos().x > -200 && position.x - app->scene->getPlayerPos().x <= -100))&&isAttacking == false){
+		/*if (((position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= 100) || (position.x - app->scene->getPlayerPos().x > -200 && position.x - app->scene->getPlayerPos().x <= -100))&&isAttacking == false){
 			
 			if (position.x - app->scene->getPlayerPos().x >= 0) {
 				currentDirection = EnemyShadowDirection::LEFT;
@@ -241,11 +241,17 @@ bool EnemyShadow::Update(float dt)
 		if (isMovingRight) {
 			vel.x = speed * dt;
 		}
+		*/
 
-		if (((position.x - app->scene->getPlayerPos().x < 100 && position.x - app->scene->getPlayerPos().x >= 0) || (position.x - app->scene->getPlayerPos().x > -100 && position.x - app->scene->getPlayerPos().x < 0)) && (position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30)) {
-			isAttacking = true;
-			isMovingLeft = false;
-			isMovingRight = false;
+		if (((position.x - app->scene->getPlayerPos().x < 100 && position.x - app->scene->getPlayerPos().x >= 0) || (position.x - app->scene->getPlayerPos().x > -100 && position.x - app->scene->getPlayerPos().x < 0))) {
+			if (position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30) {
+				isAttacking = true;
+				isMovingLeft = false;
+				isMovingRight = false;
+			}
+		}
+		else {
+			isAttacking = false;
 		}
 
 		pbody->body->SetLinearVelocity(vel);
@@ -284,7 +290,7 @@ bool EnemyShadow::Update(float dt)
 
 		if (currentAnimation->GetCurrentFrameIndex() >= 11)
 		{
-			Disable();
+			this->Disable();
 			app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
 		}
 

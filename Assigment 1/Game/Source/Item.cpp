@@ -46,7 +46,7 @@ bool Item::Update(float dt)
 
 	if (isPicked)
 	{
-		Disable();
+		this->Disable();
 		app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
 	}
 	return true;

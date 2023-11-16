@@ -44,6 +44,7 @@ bool EnemyZombie::Start() {
 	Idle_right.PushBack({ 6 + (68 * 5), 10, 67, 67 });
 	Idle_right.PushBack({ 6 + (68 * 6), 10, 67, 67 });
 	Idle_right.PushBack({ 6 + (68 * 7), 10, 67, 67 });
+	Idle_right.loop = true;
 
 	Move_right.PushBack({ 6 + (68 * 0), 78, 67, 67 });
 	Move_right.PushBack({ 19 + (68 * 1), 78, 67, 67 });
@@ -71,6 +72,7 @@ bool EnemyZombie::Start() {
 	Idle_left.PushBack({ 959 - (68 * 5), 274, 67, 67 });
 	Idle_left.PushBack({ 959 - (68 * 6), 274, 67, 67 });
 	Idle_left.PushBack({ 959 - (68 * 7), 274, 67, 67 });
+	Idle_left.loop = true;
 
 	Die_right.PushBack({ 8 + (68 * 0), 628, 67, 67 });
 	Die_right.PushBack({ 8 + (68 * 1), 628, 67, 67 });
@@ -119,15 +121,16 @@ bool EnemyZombie::Update(float dt)
 
 	if (isAlive) {
 
-		/*if (currentDirection == EnemyZombieDirection::RIGHT)
-		{
-			currentDirection = EnemyZombieDirection::IDLE_R;
+		if (!isAttacking && !isMovingLeft && !isMovingRight) {
+			if (currentDirection == EnemyZombieDirection::RIGHT || currentDirection == EnemyZombieDirection::ATTACK_R)
+			{
+				currentDirection = EnemyZombieDirection::IDLE_R;
+			}
+			else if (currentDirection == EnemyZombieDirection::LEFT || currentDirection == EnemyZombieDirection::ATTACK_L)
+			{
+				currentDirection = EnemyZombieDirection::IDLE_L;
+			}
 		}
-		else if (currentDirection == EnemyZombieDirection::LEFT)
-		{
-			currentDirection = EnemyZombieDirection::IDLE_L;
-		}*/
-
 
 		switch (currentDirection)
 		{
@@ -157,30 +160,35 @@ bool EnemyZombie::Update(float dt)
 		if (isMovingLeft) isMovingRight = false;
 		if (isMovingRight) isMovingLeft = false;
 
-		if (((position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= 25) || (position.x - app->scene->getPlayerPos().x > -25 && position.x - app->scene->getPlayerPos().x <= -100))&&isAttacking == false){
-			
-			if (position.x - app->scene->getPlayerPos().x >= 0) {
-				currentDirection = EnemyZombieDirection::LEFT;
-				isMovingLeft = true;
+		//if (((position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= 25) || (position.x - app->scene->getPlayerPos().x > -25 && position.x - app->scene->getPlayerPos().x <= -100))&&isAttacking == false){
+		//	
+		//	if (position.x - app->scene->getPlayerPos().x >= 0) {
+		//		currentDirection = EnemyZombieDirection::LEFT;
+		//		isMovingLeft = true;
+		//	}
+		//	else if (position.x - app->scene->getPlayerPos().x < 0) {
+		//		currentDirection = EnemyZombieDirection::RIGHT;
+		//		isMovingRight = true;
+		//	}
+		//}
+
+		//if (isMovingLeft) {
+		//	vel.x = -speed * dt;
+		//}
+
+		//if (isMovingRight) {
+		//	vel.x = speed * dt;
+		//}
+
+		if (((position.x - app->scene->getPlayerPos().x < 25 && position.x - app->scene->getPlayerPos().x >= 0) || (position.x - app->scene->getPlayerPos().x > -25 && position.x - app->scene->getPlayerPos().x < 0))) {
+			if (position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30){
+				isAttacking = true;
+				isMovingLeft = false;
+				isMovingRight = false;
 			}
-			else if (position.x - app->scene->getPlayerPos().x < 0) {
-				currentDirection = EnemyZombieDirection::RIGHT;
-				isMovingRight = true;
-			}
 		}
-
-		if (isMovingLeft) {
-			vel.x = -speed * dt;
-		}
-
-		if (isMovingRight) {
-			vel.x = speed * dt;
-		}
-
-		if (((position.x - app->scene->getPlayerPos().x < 25 && position.x - app->scene->getPlayerPos().x >= 0) || (position.x - app->scene->getPlayerPos().x > -25 && position.x - app->scene->getPlayerPos().x < 0)) && (position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30)) {
-			isAttacking = true;
-			isMovingLeft = false;
-			isMovingRight = false;
+		else {
+			isAttacking = false;
 		}
 
 		pbody->body->SetLinearVelocity(vel);
@@ -192,7 +200,7 @@ bool EnemyZombie::Update(float dt)
 			if (position.x - app->scene->getPlayerPos().x < 0) {
 				currentDirection = EnemyZombieDirection::ATTACK_R;
 			}
-			if (currentAnimation->GetCurrentFrameIndex() >= 15)
+			if (currentAnimation->GetCurrentFrameIndex() >= 4)
 			{
 				isAttacking = false;
 			}
