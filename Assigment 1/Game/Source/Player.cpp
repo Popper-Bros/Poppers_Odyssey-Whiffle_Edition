@@ -25,6 +25,7 @@ bool Player::Awake() {
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("rataTexturepath").as_string();	
 
+	Bala_texturePath = parameters.attribute("Bala_texturePath").as_string();
 	return true;
 }
 
@@ -32,10 +33,13 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	Bala_texture = app->tex->Load(Bala_texturePath);
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
+
+	
 
 	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
 	fall = app->audio->LoadFx("Assets/Audio/Fx/fall.ogg");
@@ -105,6 +109,21 @@ bool Player::Start() {
 	Die.PushBack({ 454, 326, 48, 51 });
 	Die.loop = false;
 
+	shot.PushBack({ 15,8,29,20 });
+	shot.PushBack({ 66,8,32,20 });
+	shot.PushBack({ 121,8,36,20 });
+	shot.PushBack({ 175,8,36,22 });
+	shot.PushBack({ 228,8,34,20 });
+	shot.PushBack({ 279,8,36,20 });
+	shot.PushBack({ 328,8,36,22 });
+
+	shot.loop = true;
+	shot.pingpong = true;
+	shot.speed = 0.1f;
+
+	endShot.PushBack({ 381,6,37,24 });
+	endShot.PushBack({ 436,8,48,40 });
+	endShot.PushBack({ 501,12,46,40 });
 
 	return true;
 }
@@ -180,6 +199,52 @@ bool Player::Update(float dt)
 			falling = true;
 		}
 
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) {
+			disparar = true;
+		}
+
+		SDL_Rect rec = currentShotAnim->GetCurrentFrame();
+		
+		if (disparar && bulletlifetime > 0)
+		{
+			contador++;
+			if (contador <= 2)
+			{
+				bala = app->physics->CreateRectangle(position.x + 32, position.y + 16, rec.w, rec.h, bodyType::KINEMATIC);
+				bala->listener = this;
+				bala->ctype = ColliderType::SHOT;
+				bala->body->IsBullet();
+				bala->body->SetLinearVelocity(b2Vec2(2, 0));
+			}
+
+			
+			
+			//currentShotAnim = &shot;
+
+			balaposx = METERS_TO_PIXELS(bala->body->GetTransform().p.x);
+			balaposy = METERS_TO_PIXELS(bala->body->GetTransform().p.y);
+			
+			//currentShotAnim->Update();
+			//app->render->DrawTexture(Bala_texture, balaposx, balaposy, &rec);
+			bulletlifetime--;
+
+			if (bulletlifetime<=0)
+			{
+				currentShotAnim = &endShot;
+				app->render->DrawTexture(Bala_texture, balaposx - 16, balaposy - 12, &rec);
+				//app->physics->ChupaBody(app->physics->GetWorld(), bala->body);
+				disparar = false;
+				bulletlifetime = 150;
+				contador = 0;
+			}
+		}
+		if (disparar && bulletlifetime > 0)
+		{
+			currentShotAnim = &shot;
+			currentShotAnim->Update();
+			app->render->DrawTexture(Bala_texture, balaposx-16, balaposy-12, &rec);
+		}
+		
 		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !fell && !jumping && !godmode && !falling && vel.y<0.5f && vel.y>-0.5f) {
 			app->audio->PlayFx(jump);
@@ -268,6 +333,10 @@ bool Player::Update(float dt)
 	return true;
 }
 
+void Player::Shoot()
+{
+	
+}
 
 
 bool Player::CleanUp()

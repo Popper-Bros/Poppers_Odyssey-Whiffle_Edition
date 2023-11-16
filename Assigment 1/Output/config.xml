@@ -22,7 +22,7 @@
   </audio>
 
   <scene>
-    <player x="80" y="166" rataTexturepath="Assets/Textures/Spritesheet.png"/>
+    <player x="80" y="166" rataTexturepath="Assets/Textures/Spritesheet.png" Bala_texturePath="Assets/Textures/Shadow_disparo.png"/>
 	  
 	<EnemyShadow x="812" y="672" enemyShadowTexturepath="Assets/Textures/sombra.png"/>
 
