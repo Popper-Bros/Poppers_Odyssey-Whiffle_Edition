@@ -16,6 +16,7 @@ enum class EntityType
 	ITEM,
 	ENEMYSHADOW,
 	ENEMYZOMBIE,
+	PARTICULAS,
 	UNKNOWN
 };
 

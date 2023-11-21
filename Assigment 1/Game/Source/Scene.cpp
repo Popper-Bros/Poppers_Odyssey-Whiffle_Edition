@@ -41,6 +41,13 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	playerConfig = config.child("player");
 
+	if (config.child("Particulas")) {
+		particulas = (Particulas*)app->entityManager->CreateEntity(EntityType::PARTICULAS);
+		particulas->parameters = config.child("Particulas");
+	}
+	particulasConfig = config.child("Particulas");
+
+
 	if (config.child("EnemyShadow")) {
 		enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
 		enemy->parameters = config.child("EnemyShadow");
@@ -125,6 +132,15 @@ bool Scene::Update(float dt)
 	if (player->position.x < 150)
 	{
 		checkpoint = 0;
+	}
+	if (player->disparar)
+	{
+		particulas->Shoot(player->disparar, player->position.x, player->position.y);
+
+		if (player->disparar == false)
+		{
+			particulas->Shoot(player->disparar, player->position.x, player->position.y);
+		}
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {
