@@ -37,12 +37,12 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-	void Shoot();
-
-
+	//void fireBullet();
 
 
 public:
+	PhysBody* bullet;
+
 	float speed = 0.2f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;

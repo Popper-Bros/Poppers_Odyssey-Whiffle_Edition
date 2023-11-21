@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "EnemyShadow.h"
 #include "EnemyZombie.h"
+#include "Particulas.h"
 
 struct SDL_Texture;
 
@@ -51,9 +52,11 @@ private:
 	Item* item;
 	EnemyShadow* enemy;
 	EnemyZombie* enemy2;
+	Particulas* particulas;
 	pugi::xml_node playerConfig;
 	pugi::xml_node enemyShadowConfig;
 	pugi::xml_node enemyZombieConfig;
+	pugi::xml_node particulasConfig;
 };
 
 #endif // __SCENE_H__

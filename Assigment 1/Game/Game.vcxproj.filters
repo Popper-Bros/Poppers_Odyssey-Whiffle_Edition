@@ -24,6 +24,7 @@
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\EnemyShadow.cpp" />
     <ClCompile Include="Source\EnemyZombie.cpp" />
+    <ClCompile Include="Source\Particulas.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +74,7 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\EnemyShadow.h" />
     <ClInclude Include="Source\EnemyZombie.h" />
+    <ClInclude Include="Source\Particulas.h" />
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\PQueue.h" />
   </ItemGroup>

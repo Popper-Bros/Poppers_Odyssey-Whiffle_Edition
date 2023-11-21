@@ -3,6 +3,7 @@
 #include "Item.h"
 #include "EnemyShadow.h"
 #include "EnemyZombie.h"
+#include "Particulas.h"
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
@@ -89,6 +90,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::ITEM:
 		entity = new Item();
+		break;
+	case EntityType::PARTICULAS:
+		entity = new Particulas();
 		break;
 	case EntityType::ENEMYSHADOW:
 		entity = new EnemyShadow();

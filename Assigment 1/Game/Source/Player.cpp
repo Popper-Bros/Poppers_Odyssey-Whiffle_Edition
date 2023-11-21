@@ -202,48 +202,53 @@ bool Player::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) {
 			disparar = true;
 		}
-
-		SDL_Rect rec = currentShotAnim->GetCurrentFrame();
-		
-		if (disparar && bulletlifetime > 0)
+		bulletlifetime--;
+		if (bulletlifetime <= 0)
 		{
-			contador++;
-			if (contador <= 2)
-			{
-				bala = app->physics->CreateRectangle(position.x + 32, position.y + 16, rec.w, rec.h, bodyType::KINEMATIC);
-				bala->listener = this;
-				bala->ctype = ColliderType::SHOT;
-				bala->body->IsBullet();
-				bala->body->SetLinearVelocity(b2Vec2(2, 0));
-			}
-
-			
-			
-			//currentShotAnim = &shot;
-
-			balaposx = METERS_TO_PIXELS(bala->body->GetTransform().p.x);
-			balaposy = METERS_TO_PIXELS(bala->body->GetTransform().p.y);
-			
-			//currentShotAnim->Update();
-			//app->render->DrawTexture(Bala_texture, balaposx, balaposy, &rec);
-			bulletlifetime--;
-
-			if (bulletlifetime<=0)
-			{
-				currentShotAnim = &endShot;
-				app->render->DrawTexture(Bala_texture, balaposx - 16, balaposy - 12, &rec);
-				//app->physics->ChupaBody(app->physics->GetWorld(), bala->body);
-				disparar = false;
-				bulletlifetime = 150;
-				contador = 0;
-			}
+			disparar = false;
+			bulletlifetime = 150;
 		}
-		if (disparar && bulletlifetime > 0)
-		{
-			currentShotAnim = &shot;
-			currentShotAnim->Update();
-			app->render->DrawTexture(Bala_texture, balaposx-16, balaposy-12, &rec);
-		}
+		//SDL_Rect rec = currentShotAnim->GetCurrentFrame();
+		//
+		//if (disparar && bulletlifetime > 0)
+		//{
+		//	contador++;
+		//	if (contador <= 1)
+		//	{
+		//		bala = app->physics->CreateRectangle(position.x + 32, position.y + 16, rec.w, rec.h, bodyType::KINEMATIC);
+		//		bala->listener = this;
+		//		bala->ctype = ColliderType::SHOT;
+		//		bala->body->IsBullet();
+		//		bala->body->SetLinearVelocity(b2Vec2(2, 0));
+		//	}
+
+		//	
+		//	
+		//	//currentShotAnim = &shot;
+
+		//	balaposx = METERS_TO_PIXELS(bala->body->GetTransform().p.x);
+		//	balaposy = METERS_TO_PIXELS(bala->body->GetTransform().p.y);
+		//	
+		//	//currentShotAnim->Update();
+		//	//app->render->DrawTexture(Bala_texture, balaposx, balaposy, &rec);
+		//	bulletlifetime--;
+
+		//	if (bulletlifetime <= 0)
+		//	{
+		//		currentShotAnim = &endShot;
+		//		app->render->DrawTexture(Bala_texture, balaposx - 16, balaposy - 12, &rec);
+		//		app->physics->ChupaBody(app->physics->GetWorld(), bala->body);
+		//		disparar = false;
+		//		bulletlifetime = 150;
+		//		contador = 0;
+		//	}
+		//}
+		//if (disparar && bulletlifetime > 0)
+		//{
+		//	currentShotAnim = &shot;
+		//	currentShotAnim->Update();
+		//	app->render->DrawTexture(Bala_texture, balaposx-16, balaposy-12, &rec);
+		//}
 		
 		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !fell && !jumping && !godmode && !falling && vel.y<0.5f && vel.y>-0.5f) {
@@ -333,10 +338,6 @@ bool Player::Update(float dt)
 	return true;
 }
 
-void Player::Shoot()
-{
-	
-}
 
 
 bool Player::CleanUp()
@@ -391,5 +392,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (!godmode) isAlive = false;
 		LOG("Collision ENEMY");
 		break;
+
 	}
 }
