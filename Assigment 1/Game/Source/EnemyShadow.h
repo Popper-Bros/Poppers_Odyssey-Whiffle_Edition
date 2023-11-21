@@ -56,6 +56,7 @@ public:
 	bool isMovingLeft = false;
 	bool isMovingRight = false;
 	bool isAttacking = false;
+	bool seePlayer = false;
 	float cd = 3.0f;
 	//bool win = false;
 
@@ -70,7 +71,6 @@ public:
 	const char* texturePathEnemyShadow;
 
 	PhysBody* pbody;
-
 
 	EnemyShadowDirection currentDirection = EnemyShadowDirection::IDLE_L;
 

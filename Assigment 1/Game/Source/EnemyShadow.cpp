@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Item.h"
 #include "Player.h"
+#include "Map.h"
 
 EnemyShadow::EnemyShadow() : Entity(EntityType::ENEMYSHADOW)
 {
@@ -222,13 +223,17 @@ bool EnemyShadow::Update(float dt)
 
 		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
-		/*if (((position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= 100) || (position.x - app->scene->getPlayerPos().x > -200 && position.x - app->scene->getPlayerPos().x <= -100))&&isAttacking == false){
-			
-			if (position.x - app->scene->getPlayerPos().x >= 0) {
+		if (((position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= 100) || (position.x - app->scene->getPlayerPos().x > -200 && position.x - app->scene->getPlayerPos().x <= -100)) && isAttacking == false) {
+
+			seePlayer = true;
+		}
+
+		if (seePlayer && !isAttacking) {
+			if(position.x - app->scene->destiny.x >= 0){
 				currentDirection = EnemyShadowDirection::LEFT;
 				isMovingLeft = true;
 			}
-			else {
+			else if (position.x - app->scene->destiny.x < 0) {
 				currentDirection = EnemyShadowDirection::RIGHT;
 				isMovingRight = true;
 			}
@@ -241,8 +246,7 @@ bool EnemyShadow::Update(float dt)
 		if (isMovingRight) {
 			vel.x = speed * dt;
 		}
-		*/
-
+		
 		if (((position.x - app->scene->getPlayerPos().x < 100 && position.x - app->scene->getPlayerPos().x >= 0) || (position.x - app->scene->getPlayerPos().x > -100 && position.x - app->scene->getPlayerPos().x < 0))) {
 			if (position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30) {
 				isAttacking = true;
