@@ -34,11 +34,7 @@
 	<item x="624" y="544" texturepath="Assets/Textures/popper.png"/>
 	<item x="912" y="672" texturepath="Assets/Textures/popper.png"/>
 	<item x="1552" y="480" texturepath="Assets/Textures/popper.png"/>
+	<map path="Assets/Maps/" name="MapTemplate.tmx"/>
   </scene>
-
-  <map>
-    <mapfolder path="Assets/Maps/"/>
-    <mapfile path="Assets/Maps/MapTemplate.tmx"/>
-  </map>
   
 </config>
