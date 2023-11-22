@@ -55,7 +55,7 @@ public:
 	Animation shot,endShot;
 	int balaposx;
 	int balaposy;
-	int bulletlifetime = 200;
+	int bulletlifetime = 150;
 	int contador = 0;
 
 	PhysBody* pbody;

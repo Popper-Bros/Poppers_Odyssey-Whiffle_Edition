@@ -5,6 +5,8 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 
+#define MAX_ACTIVE_PARTICLES 3500
+
 struct SDL_Texture;
 enum class shooting
 {

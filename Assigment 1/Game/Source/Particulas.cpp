@@ -28,11 +28,11 @@ bool Particulas::Awake() {
 bool Particulas::Start() {
 
 	//initilize textures
-	bala = app->physics->CreateRectangle(position.x + 32, position.y + 16, rec.w, rec.h, bodyType::KINEMATIC);
+	/*bala = app->physics->CreateRectangle(position.x + 32, position.y + 16, rec.w, rec.h, bodyType::KINEMATIC);
 	bala->listener = this;
 	bala->ctype = ColliderType::SHOT;
 	bala->body->IsBullet();
-	bala->body->SetLinearVelocity(b2Vec2(2, 0));
+	bala->body->SetLinearVelocity(b2Vec2(2, 0));*/
 
 	shot.PushBack({ 15,8,29,20 });
 	shot.PushBack({ 66,8,32,20 });
@@ -57,12 +57,16 @@ bool Particulas::Start() {
 
 bool Particulas::Update(float dt)
 {
-	balaposx = METERS_TO_PIXELS(bala->body->GetTransform().p.x);
-	balaposy = METERS_TO_PIXELS(bala->body->GetTransform().p.y);
+	if (bala != nullptr)
+	{
+		balaposx = METERS_TO_PIXELS(bala->body->GetTransform().p.x);
+		balaposy = METERS_TO_PIXELS(bala->body->GetTransform().p.y);
+	}
+	
 
-	contador++;
+	bulletlifetime--;
 
-	switch (currentState)
+	/*switch (currentState)
 	{
 	case shooting::ALIVE:
 		currentShotAnim = &shot;
@@ -70,7 +74,7 @@ bool Particulas::Update(float dt)
 	case shooting::DEAD:
 		currentShotAnim = &endShot;
 		break;
-	}
+	}*/
 
 	rec = currentShotAnim->GetCurrentFrame();
 	app->render->DrawTexture(texture, balaposx, balaposy, &rec);
@@ -81,66 +85,31 @@ bool Particulas::Update(float dt)
 
 void Particulas::Shoot(bool disparar, int positionX, int positionY)
 {
-	if (disparar)
+	if (disparar == true && contador <= 1)
 	{
-		bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, 12, 12, bodyType::KINEMATIC);
+		bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, rec.w, rec.h, bodyType::KINEMATIC);
 		bala->listener = this;
 		bala->ctype = ColliderType::SHOT;
 		bala->body->IsBullet();
 		bala->body->SetLinearVelocity(b2Vec2(2, 0));
-		
+		contador++;
 	}
-	else
+
+	if (disparar == false && bala != nullptr)
 	{
-		contador = 0;
 		currentShotAnim = &endShot;
 		app->render->DrawTexture(texture, balaposx - 16, balaposy - 12, &rec);
-		app->physics->ChupaBody(app->physics->GetWorld(), bala->body);
-		disparar = false;
+		this->Disable();
+		app->physics->ChupaBody(app->physics->GetWorld(),bala->body);
+		//disparar = false;
 		bulletlifetime = 150;
-		contador = 0;
+		contador = 0;		
 	}
 }
 
 void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-	//switch (physB->ctype)
-	//{
-
-	//case ColliderType::PLATFORM:
-	//	//if(!jumping)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
-	//	
-	//	LOG("Collision PLATFORM");
-	//	break;
-	//case ColliderType::WALL:
-	//	if (!godmode && isAlive) pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
-	//	LOG("Collision WALL");
-	//	break;
-	//case ColliderType::FLOOR:
-	//	jumping = false;
-	//	falling = false;
-	//	if (!godmode && isAlive)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
-
-	//	collidingPlat = false;
-	//	LOG("Collision FLOOR");
-	//	break;
-	//case ColliderType::SPIKES:
-	//	if (vel.y > 0)jumping = false;
-	//	falling = false;
-	//	if (!godmode) isAlive = false;
-	//	LOG("Collision SPIKES");
-	//	break;
-	//case ColliderType::UNKNOWN:
-	//	LOG("Collision UNKNOWN");
-	//	break;
-	//case ColliderType::ENEMY:
-	//	if (vel.y > 0)jumping = false;
-	//	falling = false;
-	//	if (!godmode) isAlive = false;
-	//	LOG("Collision ENEMY");
-	//	break;
-
-	//}
+	
 		
 }
 

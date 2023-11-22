@@ -137,10 +137,10 @@ bool Scene::Update(float dt)
 	{
 		particulas->Shoot(player->disparar, player->position.x, player->position.y);
 
-		if (player->disparar == false)
-		{
-			particulas->Shoot(player->disparar, player->position.x, player->position.y);
-		}
+	}
+	if (player->disparar == false)
+	{
+		particulas->Shoot(player->disparar, player->position.x, player->position.y);
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {

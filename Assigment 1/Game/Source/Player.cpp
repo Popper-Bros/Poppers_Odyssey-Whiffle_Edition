@@ -203,7 +203,7 @@ bool Player::Update(float dt)
 			disparar = true;
 		}
 		bulletlifetime--;
-		if (bulletlifetime <= 0)
+		if (bulletlifetime == 0)
 		{
 			disparar = false;
 			bulletlifetime = 150;
