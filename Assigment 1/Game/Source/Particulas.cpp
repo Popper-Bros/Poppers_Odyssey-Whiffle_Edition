@@ -64,7 +64,7 @@ bool Particulas::Update(float dt)
 	}
 	
 
-	bulletlifetime--;
+	
 
 	/*switch (currentState)
 	{
@@ -75,10 +75,13 @@ bool Particulas::Update(float dt)
 		currentShotAnim = &endShot;
 		break;
 	}*/
-
-	rec = currentShotAnim->GetCurrentFrame();
-	app->render->DrawTexture(texture, balaposx, balaposy, &rec);
-	currentShotAnim->Update();
+	if (bala != nullptr)
+	{
+		bulletlife--;
+		rec = currentShotAnim->GetCurrentFrame();
+		app->render->DrawTexture(texture, balaposx, balaposy, &rec);
+		currentShotAnim->Update();
+	}
 	
 	return true;
 }
@@ -94,23 +97,40 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY)
 		bala->body->SetLinearVelocity(b2Vec2(2, 0));
 		contador++;
 	}
-
-	if (disparar == false && bala != nullptr)
+	if (bala != nullptr && bulletlife == 0)
+	{
+		app->physics->ChupaBody(app->physics->GetWorld(),bala->body);
+		bulletlife = 150;
+	}
+	if (disparar == false && bala != nullptr && onCollision == false)
 	{
 		currentShotAnim = &endShot;
 		app->render->DrawTexture(texture, balaposx - 16, balaposy - 12, &rec);
 		this->Disable();
-		app->physics->ChupaBody(app->physics->GetWorld(),bala->body);
 		//disparar = false;
-		bulletlifetime = 150;
+		//bulletlife = 150;
 		contador = 0;		
 	}
 }
 
+void Particulas::unShot()
+{
+	currentShotAnim = &endShot;
+	app->render->DrawTexture(texture, balaposx - 16, balaposy - 12, &rec);
+	currentShotAnim->Update();
+	onCollision = false;
+}
+
 void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
 {
+	switch (physB->ctype)
+	{
+	case ColliderType::WALL:
+		unShot();
+		onCollision = true;
+		break;
+	}
 	
-		
 }
 
 bool Particulas::CleanUp()

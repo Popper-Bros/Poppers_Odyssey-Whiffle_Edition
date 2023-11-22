@@ -33,7 +33,11 @@ public:
 
 	void Shoot(bool diparar, int positionX, int positionY);
 
+	void unShot();
+
 public:
+
+	bool onCollision = false;
 
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
@@ -46,7 +50,7 @@ public:
 	Animation shot, endShot;
 	int balaposx;
 	int balaposy;
-	int bulletlifetime = 200;
+	int bulletlife = 150;
 	int contador = 0;
 
 	shooting currentState;
