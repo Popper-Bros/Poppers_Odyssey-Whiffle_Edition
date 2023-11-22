@@ -57,6 +57,9 @@ private:
 	pugi::xml_node enemyShadowConfig;
 	pugi::xml_node enemyZombieConfig;
 	pugi::xml_node particulasConfig;
+
+	SDL_Texture* mouseTileTex = nullptr;
+
 };
 
 #endif // __SCENE_H__

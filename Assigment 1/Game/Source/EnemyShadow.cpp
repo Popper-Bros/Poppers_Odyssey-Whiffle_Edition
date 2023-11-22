@@ -228,16 +228,16 @@ bool EnemyShadow::Update(float dt)
 			seePlayer = true;
 		}
 
-		if (seePlayer && !isAttacking) {
-			if(position.x - app->scene->destiny.x >= 0){
-				currentDirection = EnemyShadowDirection::LEFT;
-				isMovingLeft = true;
-			}
-			else if (position.x - app->scene->destiny.x < 0) {
-				currentDirection = EnemyShadowDirection::RIGHT;
-				isMovingRight = true;
-			}
-		}
+		//if (seePlayer && !isAttacking) {
+		//	if(position.x - app->scene->destiny.x >= 0){
+		//		currentDirection = EnemyShadowDirection::LEFT;
+		//		isMovingLeft = true;
+		//	}
+		//	else if (position.x - app->scene->destiny.x < 0) {
+		//		currentDirection = EnemyShadowDirection::RIGHT;
+		//		isMovingRight = true;
+		//	}
+		//}
 
 		if (isMovingLeft) {
 			vel.x = -speed * dt;
