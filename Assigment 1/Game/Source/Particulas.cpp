@@ -44,7 +44,6 @@ bool Particulas::Start() {
 
 	shot.loop = true;
 	shot.pingpong = true;
-	shot.speed = 0.1f;
 
 	endShot.PushBack({ 381,6,37,24 });
 	endShot.PushBack({ 436,8,48,40 });
@@ -57,6 +56,8 @@ bool Particulas::Start() {
 
 bool Particulas::Update(float dt)
 {
+	shot.speed = 0.01f * dt;
+	endShot.speed = 0.007f * dt;
 	if (bala != nullptr)
 	{
 		balaposx = METERS_TO_PIXELS(bala->body->GetTransform().p.x);
@@ -81,6 +82,17 @@ bool Particulas::Update(float dt)
 		rec = currentShotAnim->GetCurrentFrame();
 		app->render->DrawTexture(texture, balaposx, balaposy, &rec);
 		currentShotAnim->Update();
+		
+	}
+	if (currentShotAnim == &endShot && currentShotAnim->GetCurrentFrameIndex() >= 2)
+	{
+		this->Disable();
+		currentShotAnim->Reset();
+	}
+	if (onCollision)
+	{
+		
+		onCollision = false;
 	}
 	
 	return true;
@@ -88,48 +100,51 @@ bool Particulas::Update(float dt)
 
 void Particulas::Shoot(bool disparar, int positionX, int positionY)
 {
-	if (disparar == true && contador <= 1)
+	if (disparar == true && contador == 0)
 	{
-		bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, rec.w, rec.h, bodyType::KINEMATIC);
+		bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, 15,15, bodyType::KINEMATIC);
+		LOG("!!CREATED!!");
 		bala->listener = this;
 		bala->ctype = ColliderType::SHOT;
 		bala->body->IsBullet();
 		bala->body->SetLinearVelocity(b2Vec2(2, 0));
+
+		BalaInfo nuevaBala(bala, 150);
+		balas.Add(nuevaBala);
 		contador++;
 	}
-	if (bala != nullptr && bulletlife == 0)
-	{
-		app->physics->ChupaBody(app->physics->GetWorld(),bala->body);
-		bulletlife = 150;
-	}
-	if (disparar == false && bala != nullptr && onCollision == false)
+	if (disparar == false && bala != nullptr && onCollision == false && contador != 0)
 	{
 		currentShotAnim = &endShot;
-		app->render->DrawTexture(texture, balaposx - 16, balaposy - 12, &rec);
-		this->Disable();
+		//app->render->DrawTexture(texture, balaposx - 16, balaposy - 12, &rec);
+		app->physics->ChupaBody(app->physics->GetWorld(), bala->body);
+		//this->Disable();
+		//onCollision = true;
+		bulletlife = 150;
 		//disparar = false;
 		//bulletlife = 150;
 		contador = 0;		
 	}
 }
 
-void Particulas::unShot()
-{
-	currentShotAnim = &endShot;
-	app->render->DrawTexture(texture, balaposx - 16, balaposy - 12, &rec);
-	currentShotAnim->Update();
-	onCollision = false;
-}
+//void Particulas::unShot()
+//{
+//	
+//	//currentShotAnim = &endShot;
+//	//app->render->DrawTexture(texture, balaposx - 16, balaposy - 12, &rec);
+//	//currentShotAnim->Update();
+//	//onCollision = false;
+//}
 
 void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-	switch (physB->ctype)
+	/*switch (physB->ctype)
 	{
 	case ColliderType::WALL:
 		unShot();
 		onCollision = true;
 		break;
-	}
+	}*/
 	
 }
 

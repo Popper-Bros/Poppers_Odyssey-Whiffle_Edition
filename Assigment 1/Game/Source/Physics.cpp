@@ -311,6 +311,7 @@ bool Physics::PostUpdate()
 void Physics::ChupaBody(b2World* world, b2Body* body)
 {
 	world->DestroyBody(body);
+	LOG("DESTROYED!!!!!");
 	
 }
 

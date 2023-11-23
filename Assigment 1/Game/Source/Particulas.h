@@ -4,8 +4,18 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include <list>
 
 #define MAX_ACTIVE_PARTICLES 3500
+
+
+struct BalaInfo
+{
+	PhysBody* balaBody;
+	int life;
+
+	BalaInfo(PhysBody* body, int l) : balaBody(body), life(l) {}
+};
 
 struct SDL_Texture;
 enum class shooting
@@ -54,6 +64,8 @@ public:
 	int contador = 0;
 
 	shooting currentState;
+
+	List<BalaInfo> balas;
 
 private:
 
