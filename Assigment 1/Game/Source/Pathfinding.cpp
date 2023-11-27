@@ -169,6 +169,43 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	return ret;
 }
 
+bool PathFinding::Move(const iPoint& currentPos, iPoint& nextPos)
+{
+	// Check if there is a valid path
+	if (lastPath.Count() == 0)
+	{
+		LOG("Error: No valid path available.");
+		return false;
+	}
+
+	// Check if current position is on the path
+	if (currentPos != lastPath[0])
+	{
+		LOG("Error: Current position is not on the path.");
+		return false;
+	}
+
+	// Check if the next position is within the path
+	if (lastPath.Count() > 1)
+	{
+		nextPos = lastPath[1];
+
+		// Shift the elements to the front of the array
+		for (size_t i = 0; i < lastPath.Count() - 1; ++i)
+		{
+			lastPath[i] = lastPath[i + 1];
+		}
+
+		return true;
+	}
+	else
+	{
+		LOG("Error: Reached the end of the path.");
+		lastPath.Clear();  // Clear the path since we've reached the end
+		return false;
+	}
+}
+
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------

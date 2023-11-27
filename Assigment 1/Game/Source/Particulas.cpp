@@ -109,8 +109,8 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY)
 		bala->body->IsBullet();
 		bala->body->SetLinearVelocity(b2Vec2(2, 0));
 
-		BalaInfo nuevaBala(bala, 150);
-		balas.Add(nuevaBala);
+		//BalaInfo nuevaBala(bala, 150);
+		//balas.Add(nuevaBala);
 		contador++;
 	}
 	if (disparar == false && bala != nullptr && onCollision == false && contador != 0)

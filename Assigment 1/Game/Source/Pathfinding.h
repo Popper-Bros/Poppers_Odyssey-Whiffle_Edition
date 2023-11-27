@@ -16,7 +16,7 @@
 // Details: https://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
 
-class PathFinding
+class PathFinding : public Module
 {
 public:
 
@@ -48,6 +48,9 @@ public:
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
+
+	// Move along the generated path
+	bool Move(const iPoint& currentPos, iPoint& nextPos);
 
 private:
 

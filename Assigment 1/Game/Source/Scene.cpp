@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Physics.h"
-
+#include "Pathfinding.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -72,6 +72,9 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
+	//Initialize pathfinding 
+	pathfinding = new PathFinding();
+
 	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
 	//img = app->tex->Load("Assets/Textures/test.png");
 	
@@ -164,21 +167,46 @@ bool Scene::Update(float dt)
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 	
+	// Get the mouse position and obtain the map coordinate
+	iPoint mousePos;
+	app->input->GetMousePosition(mousePos.x, mousePos.y);
+	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x, mousePos.y - app->render->camera.y);
+
 	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
-	iPoint highlightedTileWorld = app->map->MapToWorld(player->position.x, player->position.y);
-	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
+	//iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
+	//app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
+
+	iPoint playerTile = app->map->WorldToMap(player->position.x - app->render->camera.x,
+		player->position.y - app->render->camera.y);
+
+	iPoint enemyTile = app->map->WorldToMap(enemy->position.x - app->render->camera.x,
+		enemy->position.y - app->render->camera.y);
 
 	//If mouse button is pressed modify player position
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-		app->map->pathfinding->CreatePath(enemy->position, player->position);
-	}
+	app->map->pathfinding->CreatePath({ enemyTile.x,enemyTile.y + 1 }, playerTile);
 
 	// L13: Get the latest calculated path and draw
-	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
+	if (app->physics->debug) {
+		const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+		}
+	}
+
+	iPoint nextPosition;
+
+	// Check if there is a valid path
+	if (pathfinding->Move(enemyTile, nextPosition))
 	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+		// Move your object to the nextPosition
+		// Example: MoveObject(currentPosition, nextPosition);
+		LOG("Moving to (%d, %d)", nextPosition.x, nextPosition.y);
+	}
+	else
+	{
+		LOG("No valid path available or reached the end of the path.");
 	}
 
 	return true;
