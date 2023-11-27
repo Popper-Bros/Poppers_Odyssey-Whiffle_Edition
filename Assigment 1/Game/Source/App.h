@@ -19,6 +19,7 @@ class Scene;
 class EntityManager;
 class Map;
 class Physics;
+class PathFinding;
 
 class App
 {
@@ -84,6 +85,7 @@ public:
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;
+	PathFinding* pathfinding;
 
 private:
 

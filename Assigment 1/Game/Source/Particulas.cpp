@@ -134,7 +134,7 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY)
 	balas.Add(nuevaBala);
 	contador++;
 
-	LOG("Número de elementos en la lista de balas: %d", balas.Count());
+	LOG("Nï¿½mero de elementos en la lista de balas: %d", balas.Count());
 	
 
 }

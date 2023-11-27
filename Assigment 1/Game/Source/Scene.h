@@ -43,6 +43,8 @@ public:
 
 	iPoint getPlayerPos();
 
+	PathFinding* pathfinding;
+
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

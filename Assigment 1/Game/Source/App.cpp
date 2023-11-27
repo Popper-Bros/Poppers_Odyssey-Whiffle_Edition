@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Physics.h"
+#include "Pathfinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -33,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	entityManager = new EntityManager();
+	pathfinding = new PathFinding();
 
 
 	// Ordered for awake / Start / Update
@@ -42,8 +44,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(physics);
-	AddModule(scene);
+	AddModule(pathfinding);
 	AddModule(map);
+	AddModule(scene);
 	AddModule(entityManager);
 
 	// Render last to swap buffer
