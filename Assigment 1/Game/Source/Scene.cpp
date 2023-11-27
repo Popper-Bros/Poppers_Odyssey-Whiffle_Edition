@@ -142,7 +142,10 @@ bool Scene::Update(float dt)
 	{
 		checkpoint = 0;
 	}
-	if (player->disparar)
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && player->isAlive) {
+		particulas->Shoot(true, player->position.x+10, player->position.y);
+	}
+	/*if (player->disparar)
 	{
 		particulas->Shoot(player->disparar, player->position.x, player->position.y);
 
@@ -150,7 +153,7 @@ bool Scene::Update(float dt)
 	if (player->disparar == false)
 	{
 		particulas->Shoot(player->disparar, player->position.x, player->position.y);
-	}
+	}*/
 	
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);

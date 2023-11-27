@@ -46,17 +46,6 @@ public:
 	float speed = 0.2f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
-	
-	const char* Bala_texturePath;
-	SDL_Texture* Bala_texture = NULL;
-	PhysBody* bala;
-	bool disparar = false;
-	Animation* currentShotAnim = &shot;
-	Animation shot,endShot;
-	int balaposx;
-	int balaposy;
-	int bulletlifetime = 150;
-	int contador = 0;
 
 	PhysBody* pbody;
 	int sniff, fall, jump, blood;

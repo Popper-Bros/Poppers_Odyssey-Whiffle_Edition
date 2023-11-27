@@ -12,9 +12,21 @@
 struct BalaInfo
 {
 	PhysBody* balaBody;
-	int life;
+	Animation* currentShotAnim;
+	Animation shot, endShot;
+	bool alive;
+	int life = 150;
+	int bucle = 0;
+	int posy, posx;
+	bool collision = false;
 
-	BalaInfo(PhysBody* body, int l) : balaBody(body), life(l) {}
+	BalaInfo() : balaBody(nullptr), alive (nullptr), currentShotAnim(nullptr), shot(), endShot(), life(0), posx(0), posy(0), collision(nullptr) {}
+
+	BalaInfo(PhysBody* body, Animation _shot, Animation _endShot, int _life, int _bucle, int _posx, int _posy, bool _collision)
+		: balaBody(body), shot(_shot), endShot(_endShot), currentShotAnim(&shot), alive(true), life(_life), bucle(_bucle), posx(_posx), posy(_posy), collision(_collision)
+	{
+		
+	}
 };
 
 struct SDL_Texture;
@@ -43,7 +55,6 @@ public:
 
 	void Shoot(bool diparar, int positionX, int positionY);
 
-	void unShot();
 
 public:
 
@@ -51,13 +62,13 @@ public:
 
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
-	SDL_Rect rec;
 
-	PhysBody* bala;
+	/*PhysBody* bala;*/
+	bool alive = false;
 
-	bool disparar = false;
-	Animation* currentShotAnim = &shot;
-	Animation shot, endShot;
+	Animation* currentShotAnim;
+	Animation live, dead;
+
 	int balaposx;
 	int balaposy;
 	int bulletlife = 150;
