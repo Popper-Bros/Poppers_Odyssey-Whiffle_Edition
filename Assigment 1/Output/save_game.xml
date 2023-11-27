@@ -1,11 +1,23 @@
 <?xml version="1.0"?>
-<!-- L02: TODO 4: Create a simulation xml file to read -->
 <game_state>
-	<input />
 	<window />
+	<input />
 	<textures />
 	<audio />
+	<:anonymous />
+	<:anonymous />
+	<:anonymous />
 	<scene />
+	<entitymanager>
+		<item x="264" y="687" />
+		<item x="616" y="559" />
+		<item x="904" y="687" />
+		<item x="1544" y="495" />
+		<Player x="85" y="166" />
+		<item x="0" y="0" />
+		<EnemyShadow x="758" y="664" />
+		<EnemyZombie x="1911" y="644" />
+	</entitymanager>
 	<renderer>
 		<camera x="0" y="0" />
 	</renderer>

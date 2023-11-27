@@ -52,7 +52,6 @@ public:
 	//bool godmode = false;
 	//bool fell = false;
 	//float countF = 0.0f;
-	bool isAlive = true;
 	bool isMovingLeft = false;
 	bool isMovingRight = false;
 	bool isAttacking = false;

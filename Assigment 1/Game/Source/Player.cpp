@@ -142,6 +142,12 @@ bool Player::Update(float dt)
 		app->scene->checkpoint = 0;
 		pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 	}
+
+	if (intoxication > 2) {
+		isAlive = false;
+		intoxication = 0;
+	}
+
 	if(isAlive)
 	{ 
 		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
@@ -357,6 +363,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (vel.y > 0)jumping = false;
 		if(isAlive) state::PICKED_TRUE;
 		collidingPlat = false;
+		intoxication += 1;
 		break;
 	case ColliderType::PLATFORM:
 		//if(!jumping)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions

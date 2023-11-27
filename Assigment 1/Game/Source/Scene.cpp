@@ -183,7 +183,7 @@ bool Scene::Update(float dt)
 		enemy->position.y - app->render->camera.y);
 
 	//If mouse button is pressed modify player position
-	app->map->pathfinding->CreatePath({ enemyTile.x,enemyTile.y + 1 }, playerTile);
+	app->map->pathfinding->CreatePath({ enemyTile.x,enemyTile.y}, playerTile);
 
 	// L13: Get the latest calculated path and draw
 	if (app->physics->debug) {
@@ -195,19 +195,22 @@ bool Scene::Update(float dt)
 		}
 	}
 
-	iPoint nextPosition;
+	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
-	// Check if there is a valid path
-	if (pathfinding->Move(enemyTile, nextPosition))
-	{
-		// Move your object to the nextPosition
-		// Example: MoveObject(currentPosition, nextPosition);
-		LOG("Moving to (%d, %d)", nextPosition.x, nextPosition.y);
-	}
-	else
-	{
-		LOG("No valid path available or reached the end of the path.");
-	}
+	//iPoint nextPosition;
+
+	////Check if there is a valid path
+	//if (pathfinding->Move(enemyTile, nextPosition))
+	//{
+	//	MoveObject(currentPosition, nextPosition);
+	//	LOG("Moving to (%d, %d)", nextPosition.x, nextPosition.y);
+	//}
+	//else
+	//{
+	//	LOG("No valid path available or reached the end of the path.");
+	//}
 
 	return true;
 }

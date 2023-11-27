@@ -7,7 +7,6 @@
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
-
 #include "Defs.h"
 #include "Log.h"
 
@@ -139,4 +138,28 @@ bool EntityManager::Update(float dt)
 	}
 
 	return ret;
+}
+
+bool EntityManager::LoadState(pugi::xml_node node) {
+	for (int i = 0; i < app->entityManager->entities.Count(); i++)
+	{
+		app->entityManager->entities[i]->position.x = node.child("entitymanager").attribute("x").as_int();
+		app->entityManager->entities[i]->position.y = node.child("entitymanager").attribute("y").as_int();
+	}
+
+	return true;
+}
+
+bool EntityManager::SaveState(pugi::xml_node node) {
+	//pugi::xml_node entNode = node.append_child("entitymanager");
+	for (int i = 0; i < app->entityManager->entities.Count(); i++)
+	{
+		pugi::xml_node entNode = node.append_child(app->entityManager->entities[i]->name.GetString());
+		entNode.append_attribute("x").set_value(app->entityManager->entities[i]->position.x);
+		entNode.append_attribute("y").set_value(app->entityManager->entities[i]->position.y);
+	}
+
+
+
+	return true;
 }
