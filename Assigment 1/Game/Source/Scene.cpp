@@ -173,26 +173,16 @@ bool Scene::Update(float dt)
 		if (checkpoint==0) player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 		else if (checkpoint == 1) player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
 	}
-	// Renders the image in the center of the screen 
-	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
-	
-	// Get the mouse position and obtain the map coordinate
-	iPoint mousePos;
-	app->input->GetMousePosition(mousePos.x, mousePos.y);
-	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x, mousePos.y - app->render->camera.y);
 
-	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
-	//iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
-	//app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
+	iPoint playerTile = app->map->WorldToMap(player->position.x, player->position.y - app->render->camera.y);
 
-	iPoint playerTile = app->map->WorldToMap(player->position.x - app->render->camera.x,
-		player->position.y - app->render->camera.y);
+	iPoint enemyTile = app->map->WorldToMap(enemy->position.x, enemy->position.y - app->render->camera.y);
 
-	iPoint enemyTile = app->map->WorldToMap(enemy->position.x - app->render->camera.x,
-		enemy->position.y - app->render->camera.y);
+
+	app->render->DrawTexture(mouseTileTex, playerTile.x, playerTile.y);
 
 	//If mouse button is pressed modify player position
-	app->map->pathfinding->CreatePath({ enemyTile.x,enemyTile.y}, playerTile);
+	app->map->pathfinding->CreatePath(enemyTile, playerTile);
 
 	// L13: Get the latest calculated path and draw
 	if (app->physics->debug) {
