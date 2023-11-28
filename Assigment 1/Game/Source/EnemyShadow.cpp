@@ -172,6 +172,7 @@ bool EnemyShadow::Start() {
 
 bool EnemyShadow::Update(float dt)
 {
+	cd -= dt * 0.1;
 	Move_right.speed = 0.01f * dt;
 	Move_left.speed = 0.01f * dt;
 	Idle_right.speed = 0.01f * dt;
@@ -187,7 +188,7 @@ bool EnemyShadow::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 30;
 
 	if (isAlive) {
-		if (!isAttacking && !isMovingLeft && !isMovingRight) {
+		if (!isAttackingRight && !isAttackingLeft && !isMovingLeft && !isMovingRight) {
 			if (currentDirection == EnemyShadowDirection::RIGHT || currentDirection == EnemyShadowDirection::ATTACK_R)
 			{
 				currentDirection = EnemyShadowDirection::IDLE_R;
@@ -223,54 +224,37 @@ bool EnemyShadow::Update(float dt)
 
 		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
-		if (((position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= 100) || (position.x - app->scene->getPlayerPos().x > -200 && position.x - app->scene->getPlayerPos().x <= -100)) && isAttacking == false) {
+		if (position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= -200) {
 
 			seePlayer = true;
 		}
-
-		//if (seePlayer && !isAttacking) {
-		//	if(position.x - app->scene->destiny.x >= 0){
-		//		currentDirection = EnemyShadowDirection::LEFT;
-		//		isMovingLeft = true;
-		//	}
-		//	else if (position.x - app->scene->destiny.x < 0) {
-		//		currentDirection = EnemyShadowDirection::RIGHT;
-		//		isMovingRight = true;
-		//	}
-		//}
-
-		if (isMovingLeft) {
-			vel.x = -speed * dt;
-		}
-
-		if (isMovingRight) {
-			vel.x = speed * dt;
+		else {
+			seePlayer = false;
 		}
 		
-		if (((position.x - app->scene->getPlayerPos().x < 100 && position.x - app->scene->getPlayerPos().x >= 0) || (position.x - app->scene->getPlayerPos().x > -100 && position.x - app->scene->getPlayerPos().x < 0))) {
-			if (position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30) {
-				isAttacking = true;
-				isMovingLeft = false;
-				isMovingRight = false;
+		if (seePlayer && position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30) {
+			isMovingLeft = false;
+			isMovingRight = false;
+			if (((position.x - app->scene->getPlayerPos().x < 100 && position.x - app->scene->getPlayerPos().x >= 0))) {
+				isAttackingLeft = true;
+			}
+			else if (position.x - app->scene->getPlayerPos().x > -100 && position.x - app->scene->getPlayerPos().x < 0) {
+				isAttackingRight = true;
 			}
 		}
+		
 		else {
-			isAttacking = false;
+			isAttackingRight = false;
+			isAttackingLeft = false;
 		}
 
 		pbody->body->SetLinearVelocity(vel);
 
-		if(isAttacking){
-			if (position.x - app->scene->getPlayerPos().x >= 0) {
-				currentDirection = EnemyShadowDirection::ATTACK_L;
-			}
-			if (position.x - app->scene->getPlayerPos().x < 0) {
-				currentDirection = EnemyShadowDirection::ATTACK_R;
-			}
-			if (currentAnimation->GetCurrentFrameIndex() >= 15)
-			{
-				isAttacking = false;
-			}
+		if(isAttackingLeft){
+			currentDirection = EnemyShadowDirection::ATTACK_L;
+		}
+		else if (isAttackingRight) {
+			currentDirection = EnemyShadowDirection::ATTACK_R;
 		}
 		
 		currentAnimation->Update();

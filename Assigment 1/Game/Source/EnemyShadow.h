@@ -54,7 +54,8 @@ public:
 	//float countF = 0.0f;
 	bool isMovingLeft = false;
 	bool isMovingRight = false;
-	bool isAttacking = false;
+	bool isAttackingLeft = false;
+	bool isAttackingRight = false;
 	bool seePlayer = false;
 	float cd = 3.0f;
 	//bool win = false;

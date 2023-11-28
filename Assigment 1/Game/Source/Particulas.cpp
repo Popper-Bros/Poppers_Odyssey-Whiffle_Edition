@@ -97,7 +97,7 @@ bool Particulas::Update(float dt)
 	return true;
 }
 
-void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type)
+void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type, int direction)
 {
 		
 	PhysBody* bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, 7, 7, bodyType::DYNAMIC);
@@ -106,7 +106,13 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type)
 	bala->ctype = ColliderType::SHOT;
 	bala->body->GetFixtureList()->SetDensity(0.1f);
 	bala->body->SetGravityScale(0.0f); // Reducir la influencia de la gravedad
-	b2Vec2 initialVelocity(5.0f, 0.1f); // Ajustar la velocidad inicial
+	b2Vec2 initialVelocity;
+	if (direction == 1) {
+		initialVelocity = { 5.0f, 0.1f}; // Ajustar la velocidad inicial
+	}
+	else if (direction == -1) {
+		initialVelocity = { -5.0f, 0.1f }; // Ajustar la velocidad inicial
+	}
 	bala->body->SetLinearVelocity(initialVelocity);
 	
 	

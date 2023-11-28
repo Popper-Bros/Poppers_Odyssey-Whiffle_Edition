@@ -54,7 +54,7 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-	void Shoot(bool diparar, int positionX, int positionY, tipo type);
+	void Shoot(bool diparar, int positionX, int positionY, tipo type, int direction);
 
 
 public:
