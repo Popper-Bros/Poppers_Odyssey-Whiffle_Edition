@@ -28,7 +28,7 @@
 
 	<EnemyZombie x="1945" y="672" enemyZombieTexturepath="Assets/Textures/zombie.png"/>
 	  
-	<Particulas particulasTexturepath ="Assets/Textures/Shadow_disparo.png"/>
+	<Particulas particulasTexturepath ="Assets/Textures/particles.png"/>
 	
     <item x="272" y="672" texturepath="Assets/Textures/popper.png"/>
 	<item x="624" y="544" texturepath="Assets/Textures/popper.png"/>

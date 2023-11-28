@@ -30,10 +30,11 @@ struct BalaInfo
 };
 
 struct SDL_Texture;
-enum class shooting
+enum class tipo
 {
-	ALIVE,
-	DEAD
+	PLAYER_SHOT,
+	ENEMY_SHADOW_SHOT,
+	UNKNOWN
 };
 
 class Particulas : public Entity
@@ -53,7 +54,7 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-	void Shoot(bool diparar, int positionX, int positionY);
+	void Shoot(bool diparar, int positionX, int positionY, tipo type);
 
 
 public:
@@ -63,18 +64,17 @@ public:
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 
-	/*PhysBody* bala;*/
 	bool alive = false;
 
 	Animation* currentShotAnim;
-	Animation live, dead;
+	Animation playerShot, playerShotFinal;
 
 	int balaposx;
 	int balaposy;
 	int bulletlife = 150;
 	int contador = 0;
 
-	shooting currentState;
+	
 
 	List<BalaInfo> balas;
 

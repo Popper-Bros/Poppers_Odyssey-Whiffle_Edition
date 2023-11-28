@@ -28,17 +28,22 @@ bool Particulas::Awake() {
 
 bool Particulas::Start() {
 
-	
 
-	
-	//initilize textures
-	/*bala = app->physics->CreateRectangle(position.x + 32, position.y + 16, rec.w, rec.h, bodyType::KINEMATIC);
-	bala->listener = this;
-	bala->ctype = ColliderType::SHOT;
-	bala->body->IsBullet();
-	bala->body->SetLinearVelocity(b2Vec2(2, 0));*/
+	playerShot.PushBack({ 340,69,10,9 });
+	playerShot.PushBack({ 356,69,10,9 });
+	playerShot.PushBack({ 372,69,10,9 });
+	playerShot.PushBack({ 388,69,10,9 });
+	/*playerShot.PushBack({ 228,8,34,20 });
+	playerShot.PushBack({ 279,8,36,20 });
+	playerShot.PushBack({ 328,8,36,22 });*/
+	playerShot.loop = true;
+	playerShot.pingpong = false;
 
-	
+	playerShotFinal.PushBack({ 196,68,10,10 });
+	playerShotFinal.PushBack({ 212,68,10,10 });
+	playerShotFinal.PushBack({ 228,68,10,10 });
+	playerShotFinal.pingpong = false;
+	playerShotFinal.loop = false;
 
 	texture = app->tex->Load(texturePath);
 
@@ -94,11 +99,10 @@ bool Particulas::Update(float dt)
 	return true;
 }
 
-void Particulas::Shoot(bool disparar, int positionX, int positionY)
+void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type)
 {
-	
-	
-	PhysBody* bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, 15, 15, bodyType::DYNAMIC);
+		
+	PhysBody* bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, 7, 7, bodyType::DYNAMIC);
 	LOG("!!CREATED!!");
 	bala->listener = this;
 	bala->ctype = ColliderType::SHOT;
@@ -107,24 +111,22 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY)
 	b2Vec2 initialVelocity(5.0f, 0.1f); // Ajustar la velocidad inicial
 	bala->body->SetLinearVelocity(initialVelocity);
 	
-
+	
 	BalaInfo nuevaBala(bala, Animation(), Animation(), 150, 1, 0, 0, false);
 		
-	nuevaBala.shot.PushBack({ 15,8,29,20 });
-	nuevaBala.shot.PushBack({ 66,8,32,20 });
-	nuevaBala.shot.PushBack({ 121,8,36,20 });
-	nuevaBala.shot.PushBack({ 175,8,36,22 });
-	nuevaBala.shot.PushBack({ 228,8,34,20 });
-	nuevaBala.shot.PushBack({ 279,8,36,20 });
-	nuevaBala.shot.PushBack({ 328,8,36,22 });
-	nuevaBala.shot.loop = true;
-	nuevaBala.shot.pingpong = false;
-
-	nuevaBala.endShot.PushBack({ 381,6,37,24 });
-	nuevaBala.endShot.PushBack({ 436,8,48,40 });
-	nuevaBala.endShot.PushBack({ 501,12,46,40 });
-	nuevaBala.endShot.pingpong = false;
-	nuevaBala.endShot.loop = false;
+	switch (type)
+	{
+	case tipo::PLAYER_SHOT:
+		nuevaBala.shot = playerShot;
+		nuevaBala.endShot = playerShotFinal;
+		break;
+	case tipo::ENEMY_SHADOW_SHOT:
+		break;
+	case tipo::UNKNOWN:
+		break;
+	default:
+		break;
+	}
 
 	nuevaBala.currentShotAnim = &nuevaBala.shot;
 	nuevaBala.currentShotAnim->Reset();
@@ -135,7 +137,6 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY)
 	contador++;
 
 	LOG("N�mero de elementos en la lista de balas: %d", balas.Count());
-	
 
 }
 
@@ -167,9 +168,14 @@ void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
 				LOG("BALA COLISION PLATFORM");
 				item->data.collision = true;
 				break;
+			case ColliderType::SPIKES:
+
+				LOG("BALA COLISION SPIKE");
+				item->data.collision = true;
+				break;
 			case ColliderType::SHOT:
 
-				LOG("BALA COLISION PLATFORM");
+				LOG("BALA COLISION SHOT");
 				item->data.collision = true;
 				break;
 			}
