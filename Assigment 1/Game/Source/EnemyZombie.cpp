@@ -213,6 +213,7 @@ bool EnemyZombie::Update(float dt)
 
 	else
 	{
+		
 		//pbody->body->GetFixtureList()->SetSensor(true);
 		//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
 		if (currentAnimation == &Idle_right || currentAnimation == &Move_right) {
@@ -225,9 +226,9 @@ bool EnemyZombie::Update(float dt)
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
 
-		if (currentAnimation->GetCurrentFrameIndex() >= 11)
+		if (currentAnimation->GetCurrentFrameIndex() >= 4)
 		{
-			Disable();
+			this->Disable();
 			app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
 		}
 
@@ -247,6 +248,10 @@ void EnemyZombie::OnCollision(PhysBody* physA, PhysBody* physB)
 	case ColliderType::SPIKES:
 		//isAlive = false;
 		LOG("Collision SPIKES");
+		break;
+	case ColliderType::SHOT:
+		isAlive = false;
+		LOG("Collision SHOT");
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");

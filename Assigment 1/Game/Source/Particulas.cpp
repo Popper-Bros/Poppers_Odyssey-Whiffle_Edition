@@ -91,10 +91,8 @@ bool Particulas::Update(float dt)
 				}
 			}
 			item->data.life--;
-			
 		}
 	}
-	
 	
 	return true;
 }
@@ -107,7 +105,7 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type)
 	bala->listener = this;
 	bala->ctype = ColliderType::SHOT;
 	bala->body->GetFixtureList()->SetDensity(0.1f);
-	bala->body->SetGravityScale(0.1f); // Reducir la influencia de la gravedad
+	bala->body->SetGravityScale(0.0f); // Reducir la influencia de la gravedad
 	b2Vec2 initialVelocity(5.0f, 0.1f); // Ajustar la velocidad inicial
 	bala->body->SetLinearVelocity(initialVelocity);
 	
@@ -159,7 +157,7 @@ void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
 			case ColliderType::PLATFORM:
 
 				LOG("BALA COLISION PLATFORM");
-				
+
 				item->data.collision = true;
 
 				break;
@@ -178,8 +176,12 @@ void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
 				LOG("BALA COLISION SHOT");
 				item->data.collision = true;
 				break;
+			case ColliderType::ENEMY:
+
+				LOG("BALA COLISION ENEMY");
+				item->data.collision = true;
+				break;
 			}
-			
 		}
 		
 		

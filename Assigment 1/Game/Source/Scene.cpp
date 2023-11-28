@@ -143,7 +143,7 @@ bool Scene::Update(float dt)
 		checkpoint = 0;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && player->isAlive) {
-		particulas->Shoot(true, player->position.x, player->position.y, tipo::PLAYER_SHOT);
+		particulas->Shoot(true, player->position.x, player->position.y-5, tipo::PLAYER_SHOT);
 		
 	}
 	

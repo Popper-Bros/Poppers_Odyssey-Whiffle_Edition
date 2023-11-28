@@ -280,12 +280,13 @@ bool EnemyShadow::Update(float dt)
 
 	else
 	{
+		
 		//pbody->body->GetFixtureList()->SetSensor(true);
 		//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
-		if (currentAnimation == &Idle_right || currentAnimation == &Move_right) {
+		if (currentAnimation == &Idle_right || currentAnimation == &Move_right || currentAnimation == &Attack_right) {
 			currentAnimation = &Die_right;
 		}
-		if (currentAnimation == &Idle_left || currentAnimation == &Move_left) {
+		if (currentAnimation == &Idle_left || currentAnimation == &Move_left || currentAnimation == &Attack_left) {
 			currentAnimation = &Die_left;
 		}
 		currentAnimation->Update();
@@ -314,6 +315,10 @@ void EnemyShadow::OnCollision(PhysBody* physA, PhysBody* physB)
 	case ColliderType::SPIKES:
 		//isAlive = false;
 		LOG("Collision SPIKES");
+		break;
+	case ColliderType::SHOT:
+		isAlive = false;
+		LOG("Collision SHOT");
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
