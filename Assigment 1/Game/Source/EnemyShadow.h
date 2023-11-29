@@ -75,7 +75,7 @@ public:
 	EnemyShadowDirection currentDirection = EnemyShadowDirection::IDLE_L;
 
 	Animation* currentAnimation = &Idle_left;
-	Animation Jump_left, Jump_right, Idle_left, Idle_right, Die_right, Die_left,Attack_right,Attack_left;
+	Animation Idle_left, Idle_right, Die_right, Die_left,Attack_right,Attack_left;
 	
 };
 

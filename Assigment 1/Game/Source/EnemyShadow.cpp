@@ -28,8 +28,8 @@ bool EnemyShadow::Awake() {
 
 	Idle_right.LoadAnimation("EnemyShadow", "Idle_right");
 	Idle_left.LoadAnimation("EnemyShadow", "Idle_left");
-	Jump_right.LoadAnimation("EnemyShadow", "Jump_right");
-	Jump_left.LoadAnimation("EnemyShadow", "Jump_left");
+	Attack_right.LoadAnimation("EnemyShadow", "Attack_right");
+	Attack_left.LoadAnimation("EnemyShadow", "Attack_left");
 	Die_right.LoadAnimation("EnemyShadow", "Die_right");
 	Die_left.LoadAnimation("EnemyShadow", "Die_left");
 
@@ -51,14 +51,7 @@ bool EnemyShadow::Start() {
 bool EnemyShadow::Update(float dt)
 {
 	cd -= dt * 0.1;
-	Idle_right.speed = 0.01f * dt;
-	Idle_left.speed = 0.01f * dt;
-	Jump_right.speed = 0.01f * dt;
-	Jump_left.speed = 0.01f * dt;
-	Die_left.speed = 0.01f * dt;
-	Die_right.speed = 0.01f * dt;
-	Attack_right.speed = 0.01f * dt;
-	Attack_left.speed = 0.01f * dt;
+
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 22;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 30;
@@ -100,7 +93,7 @@ bool EnemyShadow::Update(float dt)
 
 		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
-		if (position.x - app->scene->getPlayerPos().x < 200 && position.x - app->scene->getPlayerPos().x >= -200) {
+		if (position.x - app->scene->getPlayerPos().x <= 200 && position.x - app->scene->getPlayerPos().x >= -200) {
 
 			seePlayer = true;
 		}
@@ -111,11 +104,13 @@ bool EnemyShadow::Update(float dt)
 		if (seePlayer && position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30) {
 			isMovingLeft = false;
 			isMovingRight = false;
-			if (((position.x - app->scene->getPlayerPos().x < 100 && position.x - app->scene->getPlayerPos().x >= 0))) {
+			if (((position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= 0))) {
 				isAttackingLeft = true;
+				currentDirection = EnemyShadowDirection::ATTACK_L;
 			}
-			else if (position.x - app->scene->getPlayerPos().x > -100 && position.x - app->scene->getPlayerPos().x < 0) {
+			else if (position.x - app->scene->getPlayerPos().x >= -100 && position.x - app->scene->getPlayerPos().x < 0) {
 				isAttackingRight = true;
+				currentDirection = EnemyShadowDirection::ATTACK_R;
 			}
 		}
 		
@@ -126,13 +121,22 @@ bool EnemyShadow::Update(float dt)
 
 		pbody->body->SetLinearVelocity(vel);
 
-		if(isAttackingLeft){
-			currentDirection = EnemyShadowDirection::ATTACK_L;
+		if (seePlayer && !isAttackingLeft && !isAttackingRight) {
+			if (position.x - app->scene->getPlayerPos().x < 0) {
+				isMovingLeft = true;
+				currentDirection = EnemyShadowDirection::RIGHT;
+			}
+			else if (position.x - app->scene->getPlayerPos().x > 0) {
+				isMovingRight = true;
+				currentDirection = EnemyShadowDirection::LEFT;
+			}
+		}
+
+		/*if(isAttackingLeft){
 		}
 		else if (isAttackingRight) {
-			currentDirection = EnemyShadowDirection::ATTACK_R;
 		}
-		
+		*/
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
@@ -143,10 +147,10 @@ bool EnemyShadow::Update(float dt)
 		
 		//pbody->body->GetFixtureList()->SetSensor(true);
 		//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
-		if (currentAnimation == &Idle_right || currentAnimation == &Idle_right || currentAnimation == &Attack_right) {
+		if (currentAnimation == &Idle_right || currentAnimation == &Attack_right) {
 			currentAnimation = &Die_right;
 		}
-		if (currentAnimation == &Idle_left || currentAnimation == &Idle_left || currentAnimation == &Attack_left) {
+		if (currentAnimation == &Idle_left || currentAnimation == &Attack_left) {
 			currentAnimation = &Die_left;
 		}
 		currentAnimation->Update();

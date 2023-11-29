@@ -74,7 +74,7 @@ public:
 	EnemyZombieDirection currentDirection = EnemyZombieDirection::IDLE_L;
 
 	Animation* currentAnimation = &Idle_left;
-	Animation Move_left, Move_right, Jump_left, Jump_right, Idle_left, Idle_right, Die_right, Die_left,Attack_right,Attack_left;
+	Animation Move_left, Move_right, Idle_left, Idle_right, Die_right, Die_left,Attack_right,Attack_left;
 	
 };
 

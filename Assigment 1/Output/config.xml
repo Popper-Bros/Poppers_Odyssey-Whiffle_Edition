@@ -24,7 +24,7 @@
 	<scene>
 		<player x="80" y="166" rataTexturepath="Assets/Textures/Spritesheet.png" Bala_texturePath="Assets/Textures/Shadow_disparo.png">
 			<animations>
-				<Idle_right loop="true" speed ="0.01f * dt">
+				<Idle_right loop="true" speed ="0.15f * dt">
 					<anim x ="12" y =" 148" width =" 29" height ="31"/>
 					<anim x ="77" y =" 148" width =" 29" height ="31"/>
 					<anim x ="140" y =" 148" width =" 29" height ="31"/>
@@ -34,7 +34,7 @@
 					<anim x ="333" y =" 148" width =" 29" height ="31"/>
 				</Idle_right>
 
-				<Idle_left loop="true" speed ="0.01f * dt">
+				<Idle_left loop="true" speed ="0.15f * dt">
 					<anim x ="343" y =" 196" width =" 29" height ="31"/>
 					<anim x ="279" y =" 196" width =" 29" height ="31"/>
 					<anim x ="215" y =" 196" width =" 29" height ="31"/>
@@ -44,7 +44,7 @@
 					<anim x ="23" y =" 196" width =" 29" height ="31"/>
 				</Idle_left>
 
-				<Move_right loop="true" speed ="0.01f * dt">
+				<Move_right loop="true" speed ="0.15f * dt">
 					<anim x ="11" y =" 17" width =" 32" height ="34"/>
 					<anim x ="72" y =" 17" width =" 32" height ="34"/>
 					<anim x ="137" y =" 17" width =" 32" height ="34"/>
@@ -55,7 +55,7 @@
 					<anim x ="457" y =" 17" width =" 32" height ="34"/>
 				</Move_right>
 
-				<Move_left loop="true" speed ="0.01f * dt">
+				<Move_left loop="true" speed ="0.15f * dt">
 					<anim x ="468" y =" 79" width =" 32" height ="34"/>
 					<anim x ="403" y =" 81" width =" 34" height ="34"/>
 					<anim x ="335" y =" 81" width =" 34" height ="34"/>
@@ -66,15 +66,15 @@
 					<anim x ="13" y =" 81" width =" 34" height ="34"/>
 				</Move_left>
 
-				<Jump_left loop="true" speed ="0.01f * dt">
+				<Jump_left loop="true" speed ="0.15f * dt">
 					<anim x ="252" y =" 271" width =" 28" height ="35"/>
 				</Jump_left>
 
-				<Jump_right loop="true" speed ="0.01f * dt">
+				<Jump_right loop="true" speed ="0.15f * dt">
 					<anim x ="399" y =" 236" width =" 30" height ="36"/>
 				</Jump_right>
 
-				<Die loop="false" speed ="0.01f * dt">
+				<Die loop="false" speed ="0.15f * dt">
 					<anim x ="11" y =" 315" width =" 48" height ="51"/>
 					<anim x ="72" y =" 316" width =" 48" height ="51"/>
 					<anim x ="134" y =" 318" width =" 48" height ="51"/>
@@ -89,213 +89,194 @@
 
 		<EnemyShadow x="780" y="672" enemyShadowTexturepath="Assets/Textures/sombra.png">
 			<animations>
-				<Idle_right loop="true" speed ="0.01f * dt">
-					<anim x ="19 + (50 * 0)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 1)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 2)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 3)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 4)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 5)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 6)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 7)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 8)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 9)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 10)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 11)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 12)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 13)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 14)" y =" 16" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 15)" y =" 16" width =" 48" height ="48"/>
+				<Idle_right loop="true" speed ="0.15f * dt">
+					<anim x ="19" y =" 16" width =" 48" height ="48"/>
+					<anim x ="69" y =" 16" width =" 48" height ="48"/>
+					<anim x ="119" y =" 16" width =" 48" height ="48"/>
+					<anim x ="169" y =" 16" width =" 48" height ="48"/>
+					<anim x ="219" y =" 16" width =" 48" height ="48"/>
+					<anim x ="269" y =" 16" width =" 48" height ="48"/>
+					<anim x ="319" y =" 16" width =" 48" height ="48"/>
+					<anim x ="369" y =" 16" width =" 48" height ="48"/>
+					<anim x ="419" y =" 16" width =" 48" height ="48"/>
+					<anim x ="469" y =" 16" width =" 48" height ="48"/>
+					<anim x ="519" y =" 16" width =" 48" height ="48"/>
+					<anim x ="569" y =" 16" width =" 48" height ="48"/>
+					<anim x ="619" y =" 16" width =" 48" height ="48"/>
+					<anim x ="669" y =" 16" width =" 48" height ="48"/>
+					<anim x ="719" y =" 16" width =" 48" height ="48"/>
+					<anim x ="769" y =" 16" width =" 48" height ="48"/>
 				</Idle_right>
 
-				<Idle_right loop="true" speed ="0.01f * dt">
-					<anim x ="769 + (50 * 0)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 1)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 2)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 3)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 4)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 5)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 6)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 7)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 8)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 9)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 10)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 11)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 12)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 13)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 14)" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769 + (50 * 15)" y =" 16" width =" 66" height ="66"/>
-				</Idle_right>
+				<Idle_left loop="true" speed ="0.15f * dt">
+					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+					<anim x ="719" y =" 16" width =" 66" height ="66"/>
+					<anim x ="669" y =" 16" width =" 66" height ="66"/>
+					<anim x ="619" y =" 16" width =" 66" height ="66"/>
+					<anim x ="569" y =" 16" width =" 66" height ="66"/>
+					<anim x ="519" y =" 16" width =" 66" height ="66"/>
+					<anim x ="469" y =" 16" width =" 66" height ="66"/>
+					<anim x ="319" y =" 16" width =" 66" height ="66"/>
+					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+				</Idle_left>
 
-				<Die_right loop="false" speed ="0.01f * dt">
-					<anim x ="19 + (50 * 0)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 1)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 2)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 3)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 4)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 5)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 6)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 7)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 8)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 9)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 10)" y =" 116" width =" 48" height ="48"/>
-					<anim x ="19 + (50 * 11)" y =" 116" width =" 48" height ="48"/>
+				<Die_right loop="false" speed ="0.15f * dt">
+					<anim x ="19 + 0" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 50" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 100" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 150" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 200" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 250" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 300" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 350" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 400" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 450" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 500" y =" 116" width =" 48" height ="48"/>
+					<anim x ="19 + 550" y =" 116" width =" 48" height ="48"/>
 				</Die_right>
 
-				<Die_left loop="false" speed ="0.01f * dt">
-					<anim x ="569 + (50 * 0)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 1)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 2)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 3)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 4)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 5)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 6)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 7)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 8)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 9)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 10)" y =" 166" width =" 48" height ="48"/>
-					<anim x ="569 + (50 * 11)" y =" 166" width =" 48" height ="48"/>
+				<Die_left loop="false" speed ="0.15f * dt">
+					<anim x ="569 - 0" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 50" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 100" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 150" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 200" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 250" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 300" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 350" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 400" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 450" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 500" y =" 166" width =" 48" height ="48"/>
+					<anim x ="569 - 550" y =" 166" width =" 48" height ="48"/>
 				</Die_left>
 
-				<Attack_right loop="true" speed ="0.01f * dt">
-					<anim x ="20 + (45 * 0)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 1)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 2)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 3)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 4)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 5)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 6)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 7)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 8)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 9)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 10)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 11)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 12)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 13)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 14)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 15)" y =" 223" width =" 43" height ="45"/>
+				<Attack_right loop="true" speed ="0.15f * dt">
+					<anim x ="20 + 0" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 45" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 90" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 135" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 180" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 225" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 270" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 315" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 360" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 405" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 450" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 495" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 540" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 585" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 630" y =" 223" width =" 43" height ="45"/>
+					<anim x ="20 + 675" y =" 223" width =" 43" height ="45"/>
 				</Attack_right>
 
-				<Attack_left loop="true" speed ="0.01f * dt">
-					<anim x ="20 + (45 * 0)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 1)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 2)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 3)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 4)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 5)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 6)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 7)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 8)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 9)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 10)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 11)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 12)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 13)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 14)" y =" 223" width =" 43" height ="45"/>
-					<anim x ="20 + (45 * 15)" y =" 223" width =" 43" height ="45"/>
+				<Attack_left loop="true" speed ="0.15f * dt">
+					<anim x ="695 - 0" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 45" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 90" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 135" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 180" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 225" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 270" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 315" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 360" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 405" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 450" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 495" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 540" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 585" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 630" y =" 270" width =" 43" height ="45"/>
+					<anim x ="695 - 675" y =" 270" width =" 43" height ="45"/>
 				</Attack_left>
-				
 			</animations>
-
-			Idle_right.PushBack({ 19 + (50 * 0), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 1), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 2), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 3), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 4), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 5), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 6), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 7), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 8), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 9), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 10), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 11), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 12), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 13), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 14), 16, 48, 48 });
-			Idle_right.PushBack({ 19 + (50 * 15), 16, 48, 48 });
-
-			Idle_left.PushBack({ 769 - (50 * 0), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 1), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 2), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 3), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 4), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 5), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 6), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 7), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 8), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 9), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 10), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 11), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 12), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 13), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 14), 66, 48, 48 });
-			Idle_left.PushBack({ 769 - (50 * 15), 66, 48, 48 });
-
-			Die_right.PushBack({ 19 + (50 * 0), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 1), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 2), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 3), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 4), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 5), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 6), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 7), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 8), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 9), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 10), 116, 48, 48 });
-			Die_right.PushBack({ 19 + (50 * 11), 116, 48, 48 });
-			Die_right.loop = false;
-
-			Die_left.PushBack({ 569 - (50 * 0), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 1), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 2), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 3), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 4), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 5), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 6), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 7), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 8), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 9), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 10), 166, 48, 48 });
-			Die_left.PushBack({ 569 - (50 * 11), 166, 48, 48 });
-			Die_left.loop = false;
-
-			Attack_right.PushBack({ 20 + (45 * 0), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 1), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 2), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 3), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 4), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 5), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 6), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 7), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 8), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 9), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 10), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 11), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 12), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 13), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 14), 223, 43, 45 });
-			Attack_right.PushBack({ 20 + (45 * 15), 223, 43, 45 });
-
-			Attack_left.PushBack({ 695 - (45 * 0), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 1), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 2), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 3), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 4), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 5), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 6), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 7), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 8), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 9), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 10), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 11), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 12), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 13), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 14), 270, 43, 45 });
-			Attack_left.PushBack({ 695 - (45 * 15), 270, 43, 45 });
-
 		</EnemyShadow>
 
-		<EnemyZombie x="1945" y="672" enemyZombieTexturepath="Assets/Textures/zombie.png"/>
+		<EnemyZombie x="1945" y="672" enemyZombieTexturepath="Assets/Textures/zombie.png">
+			<animations>
+				<Idle_right loop="true" speed ="0.15f * dt">
+					<anim x ="6 + 0" y =" 10" width =" 67" height ="67"/>
+					<anim x ="6 + 68" y =" 10" width =" 67" height ="67"/>
+					<anim x ="6 + 136" y =" 10" width =" 67" height ="67"/>
+					<anim x ="6 + 204" y =" 10" width =" 67" height ="67"/>
+					<anim x ="6 + 272" y =" 10" width =" 67" height ="67"/>
+					<anim x ="6 + 340" y =" 10" width =" 67" height ="67"/>
+					<anim x ="6 + 408" y =" 10" width =" 67" height ="67"/>
+					<anim x ="6 + 476" y =" 10" width =" 67" height ="67"/>
+				</Idle_right>
+
+				<Idle_left loop="true" speed ="0.15f * dt">
+					<anim x ="959 - 0" y =" 274" width =" 67" height ="67"/>
+					<anim x ="959 - 68" y =" 274" width =" 67" height ="67"/>
+					<anim x ="959 - 136" y =" 274" width =" 67" height ="67"/>
+					<anim x ="959 - 204" y =" 274" width =" 67" height ="67"/>
+					<anim x ="959 - 272" y =" 274" width =" 67" height ="67"/>
+					<anim x ="959 - 340" y =" 274" width =" 67" height ="67"/>
+					<anim x ="959 - 408" y =" 274" width =" 67" height ="67"/>
+					<anim x ="959 - 476" y =" 274" width =" 67" height ="67"/>
+				</Idle_left>
+
+				<Move_left loop="true" speed ="0.15f * dt">
+					<anim x ="959 - 0" y =" 342" width =" 67" height ="67"/>
+					<anim x ="959 - 68" y =" 342" width =" 67" height ="67"/>
+					<anim x ="959 - 136" y =" 342" width =" 67" height ="67"/>
+					<anim x ="959 - 204" y =" 342" width =" 67" height ="67"/>
+					<anim x ="959 - 272" y =" 342" width =" 67" height ="67"/>
+					<anim x ="959 - 340" y =" 342" width =" 67" height ="67"/>
+					<anim x ="959 - 408" y =" 342" width =" 67" height ="67"/>
+					<anim x ="959 - 476" y =" 342" width =" 67" height ="67"/>
+				</Move_left>
+
+				<Move_right loop="true" speed ="0.15f * dt">
+					<anim x ="6 + 0" y =" 78" width =" 67" height ="67"/>
+					<anim x ="19 + 68" y =" 78" width =" 67" height ="67"/>
+					<anim x ="19 + 136" y =" 78" width =" 67" height ="67"/>
+					<anim x ="19 + 204" y =" 78" width =" 67" height ="67"/>
+					<anim x ="19 + 272" y =" 78" width =" 67" height ="67"/>
+					<anim x ="19 + 340" y =" 78" width =" 67" height ="67"/>
+					<anim x ="19 + 408" y =" 78" width =" 67" height ="67"/>
+					<anim x ="19 + 476" y =" 78" width =" 67" height ="67"/>
+				</Move_right>
+
+				<Die_right loop="false" speed ="0.15f * dt">
+					<anim x ="8 + 0" y =" 628" width =" 67" height ="67"/>
+					<anim x ="8 + 68" y =" 628" width =" 67" height ="67"/>
+					<anim x ="8 + 136" y =" 628" width =" 67" height ="67"/>
+					<anim x ="8 + 204" y =" 628" width =" 67" height ="67"/>
+					<anim x ="8 + 272" y =" 628" width =" 67" height ="67"/>
+				</Die_right>
+
+				<Die_left loop="false" speed ="0.15f * dt">
+					<anim x ="957 - 0" y =" 892" width =" 67" height ="67"/>
+					<anim x ="957 - 68" y =" 892" width =" 67" height ="67"/>
+					<anim x ="957 - 136" y =" 892" width =" 67" height ="67"/>
+					<anim x ="957 - 204" y =" 892" width =" 67" height ="67"/>
+					<anim x ="957 - 272" y =" 892" width =" 67" height ="67"/>
+				</Die_left>
+
+				<Attack_left loop="true" speed ="0.15f * dt">
+					<anim x ="957 - 0" y =" 549" width =" 67" height ="67"/>
+					<anim x ="957 - 68" y =" 549" width =" 67" height ="67"/>
+					<anim x ="957 - 136" y =" 549" width =" 67" height ="67"/>
+					<anim x ="957 - 204" y =" 549" width =" 67" height ="67"/>
+					<anim x ="957 - 272" y =" 549" width =" 67" height ="67"/>
+				</Attack_left>
+
+				<Attack_right loop="true" speed ="0.15f * dt">
+					<anim x ="8 + 0" y =" 285" width =" 67" height ="67"/>
+					<anim x ="8 + 68" y =" 285" width =" 67" height ="67"/>
+					<anim x ="8 + 136" y =" 285" width =" 67" height ="67"/>
+					<anim x ="8 + 204" y =" 285" width =" 67" height ="67"/>
+					<anim x ="8 + 272" y =" 285" width =" 67" height ="67"/>
+				</Attack_right>
+			</animations>
+		</EnemyZombie>
+
 
 		<Particulas particulasTexturepath ="Assets/Textures/particles.png"/>
 
