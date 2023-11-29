@@ -25,6 +25,13 @@ bool Player::Awake() {
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("rataTexturepath").as_string();	
 
+	Move_right.LoadAnimation("player", "Move_right");
+	Move_left.LoadAnimation("player", "Move_left");
+	Idle_right.LoadAnimation("player", "Idle_right");
+	Idle_left.LoadAnimation("player", "Idle_left");
+	Jump_right.LoadAnimation("player", "Jump_right");
+	Jump_left.LoadAnimation("player", "Jump_left");
+	Die.LoadAnimation("player", "Die");
 	
 	return true;
 }
@@ -46,81 +53,11 @@ bool Player::Start() {
 	jump = app->audio->LoadFx("Assets/Audio/Fx/jump.ogg");
 	blood = app->audio->LoadFx("Assets/Audio/Fx/blood.ogg");
 
-	Move_right.PushBack({ 11, 15, 32, 34 });
-	Move_right.PushBack({ 72,17,32, 34 });
-	Move_right.PushBack({ 137,17,32, 34 });
-	Move_right.PushBack({ 202,17,32, 34 });
-	Move_right.PushBack({ 268,14,32, 34 });
-	Move_right.PushBack({ 330,17,32, 34 });
-	Move_right.PushBack({ 393,17,32, 34 });
-	Move_right.PushBack({ 457,17,32, 34 });
-	
-
-	Move_left.PushBack({ 468, 79, 32, 34 });
-	Move_left.PushBack({ 403,81,32, 34 });
-	Move_left.PushBack({ 335,81,32, 34 });
-	Move_left.PushBack({ 270,81,32, 34 });
-	Move_left.PushBack({ 213,78 ,32, 34 });
-	Move_left.PushBack({ 148,81,32, 34 });
-	Move_left.PushBack({ 78,81,32, 34 });
-	Move_left.PushBack({ 13,81,32, 34 });
-
-	Idle_right.PushBack({ 12, 148, 29, 31 });
-	Idle_right.PushBack({ 77, 148, 29, 31 });
-	Idle_right.PushBack({ 140, 148, 29, 31 });
-	Idle_right.PushBack({ 269, 148, 29, 31 });
-	Idle_right.PushBack({ 206, 148, 29, 31 });
-	Idle_right.PushBack({ 269, 148, 29, 31 });
-	Idle_right.PushBack({ 333, 148, 29, 31 });
-
-	Idle_left.PushBack({ 343, 196, 29, 31 });
-	Idle_left.PushBack({ 279, 196, 29, 31 });
-	Idle_left.PushBack({ 215, 196, 29, 31 });
-	Idle_left.PushBack({ 89, 196, 29, 31 });
-	Idle_left.PushBack({ 152, 196, 29, 31 });
-	Idle_left.PushBack({ 87, 196, 29, 31 });
-	Idle_left.PushBack({ 23, 196, 29, 31 });
-
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-	Jump_left.PushBack({ 252,271,28,35 });
-
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-	Jump_right.PushBack({ 399,236,30,36 });
-
-	Die.PushBack({ 11, 315, 48, 51 });
-	Die.PushBack({ 72, 316, 48, 51 });
-	Die.PushBack({ 134, 318, 48, 51 });
-	Die.PushBack({ 196, 317, 48, 51 });
-	Die.PushBack({ 260, 320, 48, 51 });
-	Die.PushBack({ 325, 322, 48, 51 });
-	Die.PushBack({ 390, 325, 48, 51 });
-	Die.PushBack({ 454, 326, 48, 51 });
-	Die.loop = false;
-
 	return true;
 }
 
 bool Player::Update(float dt)
 {
-	Move_right.speed = 0.01f * dt;
-	Move_left.speed = 0.01f * dt;
-	Idle_right.speed = 0.01f * dt;
-	Idle_left.speed = 0.01f * dt;
-	Jump_right.speed = 0.01f * dt;
-	Jump_left.speed = 0.01f * dt;
-	Die.speed = 0.01f * dt;
 	if (position.x > 1930 && position.y < 260) {
 		win = true;
 		app->scene->checkpoint = 0;

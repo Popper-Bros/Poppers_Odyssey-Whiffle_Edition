@@ -25,6 +25,14 @@ bool EnemyShadow::Awake() {
 	position.y = parameters.attribute("y").as_int();
 	texturePathEnemyShadow = parameters.attribute("enemyShadowTexturepath").as_string();
 
+
+	Idle_right.LoadAnimation("EnemyShadow", "Idle_right");
+	Idle_left.LoadAnimation("EnemyShadow", "Idle_left");
+	Jump_right.LoadAnimation("EnemyShadow", "Jump_right");
+	Jump_left.LoadAnimation("EnemyShadow", "Jump_left");
+	Die_right.LoadAnimation("EnemyShadow", "Die_right");
+	Die_left.LoadAnimation("EnemyShadow", "Die_left");
+
 	return true;
 }
 
@@ -37,144 +45,12 @@ bool EnemyShadow::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
-	Move_right.PushBack({ 19+(50*0), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 1), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 2), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 3), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 4), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 5), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 6), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 7), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 8), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 9), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 10), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 11), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 12), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 13), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 14), 16, 48, 48 });
-	Move_right.PushBack({ 19 + (50 * 15), 16, 48, 48 });
-
-	Idle_right.PushBack({ 19 + (50 * 0), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 1), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 2), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 3), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 4), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 5), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 6), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 7), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 8), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 9), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 10), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 11), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 12), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 13), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 14), 16, 48, 48 });
-	Idle_right.PushBack({ 19 + (50 * 15), 16, 48, 48 });
-
-	Move_left.PushBack({ 769 - (50 * 0), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 1), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 2), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 3), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 4), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 5), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 6), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 7), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 8), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 9), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 10), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 11), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 12), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 13), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 14), 66, 48, 48 });
-	Move_left.PushBack({ 769 - (50 * 15), 66, 48, 48 });
-
-	Idle_left.PushBack({ 769 - (50 * 0), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 1), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 2), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 3), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 4), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 5), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 6), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 7), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 8), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 9), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 10), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 11), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 12), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 13), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 14), 66, 48, 48 });
-	Idle_left.PushBack({ 769 - (50 * 15), 66, 48, 48 });
-
-	Die_right.PushBack({ 19 + (50 * 0), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 1), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 2), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 3), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 4), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 5), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 6), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 7), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 8), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 9), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 10), 116, 48, 48 });
-	Die_right.PushBack({ 19 + (50 * 11), 116, 48, 48 });
-	Die_right.loop = false;
-
-	Die_left.PushBack({ 569 - (50 * 0), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 1), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 2), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 3), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 4), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 5), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 6), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 7), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 8), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 9), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 10), 166, 48, 48 });
-	Die_left.PushBack({ 569 - (50 * 11), 166, 48, 48 });
-	Die_left.loop = false;
-
-	Attack_right.PushBack({ 20 + (45 * 0), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 1), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 2), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 3), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 4), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 5), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 6), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 7), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 8), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 9), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 10), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 11), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 12), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 13), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 14), 223, 43, 45 });
-	Attack_right.PushBack({ 20 + (45 * 15), 223, 43, 45 });
-
-	Attack_left.PushBack({ 695 - (45 * 0), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 1), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 2), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 3), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 4), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 5), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 6), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 7), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 8), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 9), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 10), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 11), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 12), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 13), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 14), 270, 43, 45 });
-	Attack_left.PushBack({ 695 - (45 * 15), 270, 43, 45 });
-
 	return true;
 }
 
 bool EnemyShadow::Update(float dt)
 {
 	cd -= dt * 0.1;
-	Move_right.speed = 0.01f * dt;
-	Move_left.speed = 0.01f * dt;
 	Idle_right.speed = 0.01f * dt;
 	Idle_left.speed = 0.01f * dt;
 	Jump_right.speed = 0.01f * dt;
@@ -208,10 +84,10 @@ bool EnemyShadow::Update(float dt)
 			currentAnimation = &Idle_left;
 			break;
 		case EnemyShadowDirection::LEFT:
-			currentAnimation = &Move_left;
+			currentAnimation = &Idle_right;
 			break;
 		case EnemyShadowDirection::RIGHT:
-			currentAnimation = &Move_right;
+			currentAnimation = &Idle_right;
 			break;
 		case EnemyShadowDirection::ATTACK_R:
 			currentAnimation = &Attack_right;
@@ -267,10 +143,10 @@ bool EnemyShadow::Update(float dt)
 		
 		//pbody->body->GetFixtureList()->SetSensor(true);
 		//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
-		if (currentAnimation == &Idle_right || currentAnimation == &Move_right || currentAnimation == &Attack_right) {
+		if (currentAnimation == &Idle_right || currentAnimation == &Idle_right || currentAnimation == &Attack_right) {
 			currentAnimation = &Die_right;
 		}
-		if (currentAnimation == &Idle_left || currentAnimation == &Move_left || currentAnimation == &Attack_left) {
+		if (currentAnimation == &Idle_left || currentAnimation == &Idle_left || currentAnimation == &Attack_left) {
 			currentAnimation = &Die_left;
 		}
 		currentAnimation->Update();
