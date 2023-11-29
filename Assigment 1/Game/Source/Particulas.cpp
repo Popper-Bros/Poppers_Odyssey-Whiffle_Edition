@@ -33,9 +33,6 @@ bool Particulas::Start() {
 	playerShot.PushBack({ 356,69,10,9 });
 	playerShot.PushBack({ 372,69,10,9 });
 	playerShot.PushBack({ 388,69,10,9 });
-	/*playerShot.PushBack({ 228,8,34,20 });
-	playerShot.PushBack({ 279,8,36,20 });
-	playerShot.PushBack({ 328,8,36,22 });*/
 	playerShot.loop = true;
 	playerShot.pingpong = false;
 
@@ -45,18 +42,55 @@ bool Particulas::Start() {
 	playerShotFinal.pingpong = false;
 	playerShotFinal.loop = false;
 
+	SDL_FLIP_HORIZONTAL;
+	enemyShadowShot.PushBack({ 0,409,31,19 });
+	enemyShadowShot.PushBack({ 44,409,31,19 });
+	enemyShadowShot.PushBack({ 91,409,31,19 });
+	enemyShadowShot.PushBack({ 137,409,31,19 });
+	enemyShadowShot.PushBack({ 179,409,31,19 });
+	enemyShadowShot.PushBack({ 224,409,31,19 });
+	enemyShadowShot.PushBack({ 265,409,31,19 });
+	enemyShadowShot.loop = true;
+	enemyShadowShot.pingpong = false;
+
+	enemyShadowShotFinal.PushBack({ 309,408,32,20 });
+	enemyShadowShotFinal.PushBack({ 355,409,42,35 });
+	enemyShadowShotFinal.PushBack({ 410,413,39,34 });
+	enemyShadowShotFinal.loop = false;
+	enemyShadowShotFinal.pingpong = false;
+
+	enemyShadowShotLeft.PushBack({ 501,493,31,19 });
+	enemyShadowShotLeft.PushBack({ 458,493,31,19 });
+	enemyShadowShotLeft.PushBack({ 412,493,31,19 });
+	enemyShadowShotLeft.PushBack({ 366,493,31,19 });
+	enemyShadowShotLeft.PushBack({ 322,493,31,19 });
+	enemyShadowShotLeft.PushBack({ 279,493,31,19 });
+	enemyShadowShotLeft.PushBack({ 238,493,31,19 });
+	enemyShadowShotLeft.loop = true;
+	enemyShadowShotLeft.pingpong = false;
+
+	enemyShadowShotFinalLeft.PushBack({ 193,492,32,20 });
+	enemyShadowShotFinalLeft.PushBack({ 137,493,42,35 });
+	enemyShadowShotFinalLeft.PushBack({ 85,497,39,34 });
+	enemyShadowShotFinalLeft.loop = false;
+	enemyShadowShotFinalLeft.pingpong = false;
+
+
+
 	texture = app->tex->Load(texturePath);
 
 	return true;
 }
 
-bool Particulas::Update(float dt)
+
+
+bool Particulas::Update(float dt) 
 {
+	
 
-
-	for (ListItem<BalaInfo>* item = balas.start; item; item = item->next)
+	for (ListItem<BalaInfo>* item = balas.start; item; item = item->next) // Recorre la lista de balas
 	{
-		if (item->data.balaBody != nullptr && item->data.balaBody->body != nullptr)
+		if (item->data.balaBody != nullptr && item->data.balaBody->body != nullptr) // Si la bala existe y su cuerpo existe
 		{
 			item->data.shot.speed = 0.01f * dt;
 			item->data.endShot.speed = 0.007f * dt;
@@ -79,12 +113,12 @@ bool Particulas::Update(float dt)
 
 
 
-			if (item->data.life < 1 || item->data.collision == true )
+			if (item->data.life < 1 || item->data.collision == true ) // Si la bala ha colisionado o ha llegado al final de su vida
 			{
 
 				item->data.currentShotAnim = &item->data.endShot;
 				item->data.balaBody->body->SetLinearVelocity(b2Vec2_zero);
-				if (item->data.currentShotAnim == &item->data.endShot && item->data.currentShotAnim->HasFinished())
+				if (item->data.currentShotAnim == &item->data.endShot && item->data.currentShotAnim->HasFinished()) 
 				{
 					item->data.alive = false;
 					CleanUp();
@@ -97,21 +131,22 @@ bool Particulas::Update(float dt)
 	return true;
 }
 
-void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type, int direction)
+void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type, int direction) // Disparar la bala en la posicion x, y con el tipo de bala y la direccion
 {
 		
-	PhysBody* bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, 7, 7, bodyType::DYNAMIC);
+	PhysBody* bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, 7, 7, bodyType::DYNAMIC); 
 	LOG("!!CREATED!!");
 	bala->listener = this;
 	bala->ctype = ColliderType::SHOT;
 	bala->body->GetFixtureList()->SetDensity(0.1f);
 	bala->body->SetGravityScale(0.0f); // Reducir la influencia de la gravedad
+
 	b2Vec2 initialVelocity;
 	if (direction == 1) {
-		initialVelocity = { 5.0f, 0.1f}; // Ajustar la velocidad inicial
+		initialVelocity = { 5.0f, 0.1f}; // Ajustar la velocidad inicial a la derecha
 	}
 	else if (direction == -1) {
-		initialVelocity = { -5.0f, 0.1f }; // Ajustar la velocidad inicial
+		initialVelocity = { -5.0f, 0.1f }; // Ajustar la velocidad inicial a la izuqierda
 	}
 	bala->body->SetLinearVelocity(initialVelocity);
 	
@@ -125,6 +160,17 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type, i
 		nuevaBala.endShot = playerShotFinal;
 		break;
 	case tipo::ENEMY_SHADOW_SHOT:
+		
+		if (direction == 1)
+		{
+			nuevaBala.shot = enemyShadowShot;
+			nuevaBala.endShot = enemyShadowShotFinal;
+		}
+		else if (direction == -1)
+		{
+			nuevaBala.shot = enemyShadowShotLeft;
+			nuevaBala.endShot = enemyShadowShotFinalLeft;
+		}
 		break;
 	case tipo::UNKNOWN:
 		break;

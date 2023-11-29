@@ -67,7 +67,7 @@ public:
 	bool alive = false;
 
 	Animation* currentShotAnim;
-	Animation playerShot, playerShotFinal;
+	Animation playerShot, playerShotFinal, enemyShadowShot, enemyShadowShotLeft, enemyShadowShotFinal, enemyShadowShotFinalLeft;
 
 	int balaposx;
 	int balaposy;

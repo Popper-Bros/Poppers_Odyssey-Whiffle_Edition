@@ -154,11 +154,11 @@ bool Scene::Update(float dt)
 
 	if (enemy->isAttackingRight && enemy->Attack_right.GetCurrentFrameIndex() == 8 && enemy->cd<=0.0f) {
 		enemy->cd = 20.0f;
-		particulas->Shoot(true, enemy->position.x, enemy->position.y, tipo::PLAYER_SHOT, 1);
+		particulas->Shoot(true, enemy->position.x, enemy->position.y, tipo::ENEMY_SHADOW_SHOT,1);
 	}
 	else if (enemy->isAttackingLeft && enemy->Attack_left.GetCurrentFrameIndex() == 8 && enemy->cd <= 0.0f) {
 		enemy->cd = 20.0f;
-		particulas->Shoot(true, enemy->position.x - 42, enemy->position.y, tipo::PLAYER_SHOT, -1);
+		particulas->Shoot(true, enemy->position.x - 42, enemy->position.y, tipo::ENEMY_SHADOW_SHOT,-1);
 	}	
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {
@@ -179,8 +179,7 @@ bool Scene::Update(float dt)
 	iPoint enemyTile = app->map->WorldToMap(enemy->position.x, enemy->position.y - app->render->camera.y);
 
 
-	app->render->DrawTexture(mouseTileTex, playerTile.x, playerTile.y);
-
+	
 	//If mouse button is pressed modify player position
 	app->map->pathfinding->CreatePath(enemyTile, playerTile);
 
