@@ -233,7 +233,8 @@ bool EnemyShadow::Update(float dt)
 		}
 		
 		if (seePlayer && position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30) {
-			isMoving = false;
+			isMovingLeft = false;
+			isMovingRight = false;
 			if (((position.x - app->scene->getPlayerPos().x < 100 && position.x - app->scene->getPlayerPos().x >= 0))) {
 				isAttackingLeft = true;
 			}

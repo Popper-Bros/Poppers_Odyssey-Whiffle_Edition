@@ -52,7 +52,8 @@ public:
 	//bool godmode = false;
 	//bool fell = false;
 	//float countF = 0.0f;
-	bool isMoving = false;
+	bool isMovingLeft = false;
+	bool isMovingRight = false;
 	bool isAttackingLeft = false;
 	bool isAttackingRight = false;
 	bool seePlayer = false;
