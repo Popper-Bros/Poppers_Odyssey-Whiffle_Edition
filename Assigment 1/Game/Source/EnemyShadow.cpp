@@ -221,7 +221,7 @@ void EnemyShadow::OnCollision(PhysBody* physA, PhysBody* physB)
 		//isAlive = false;
 		LOG("Collision SPIKES");
 		break;
-	case ColliderType::SHOT:
+	case ColliderType::PLAYER_SHOT:
 		isAlive = false;
 		LOG("Collision SHOT");
 		break;

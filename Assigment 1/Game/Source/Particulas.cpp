@@ -66,7 +66,19 @@ bool Particulas::Update(float dt)
 			}
 			SDL_Rect rec;
 			rec = item->data.currentShotAnim->GetCurrentFrame();
-			app->render->DrawTexture(texture, item->data.posx, item->data.posy, &rec);
+			int a;
+			int b;
+			if (item->data.balaBody->ctype == ColliderType::PLAYER_SHOT)
+			{
+				a = 5;
+				b = 5;
+			}
+			else if (item->data.balaBody->ctype == ColliderType::ENEMY_SHOT)
+			{
+				a = 10;
+				b = 10;
+			}
+			app->render->DrawTexture(texture, item->data.posx-a, item->data.posy-b, &rec);
 			item->data.currentShotAnim->Update();
 
 
@@ -89,13 +101,24 @@ bool Particulas::Update(float dt)
 	return true;
 }
 
-void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type, int direction) // Disparar la bala en la posicion x, y con el tipo de bala y la direccion
+void Particulas::Shoot(bool disparar, int positionX, int positionY, int direction, ColliderType coll) // Disparar la bala en la posicion x, y con el tipo de bala y la direccion
 {
-		
-	PhysBody* bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, 7, 7, bodyType::DYNAMIC); 
+	int width;
+	int height;
+	if (coll == ColliderType::PLAYER_SHOT)
+	{
+		width = 7;
+		height = 7;
+	}
+	else if (coll == ColliderType::ENEMY_SHOT)
+	{
+		width = 20;
+		height = 20;
+	}
+	PhysBody* bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, width, height, bodyType::DYNAMIC);
 	LOG("!!CREATED!!");
 	bala->listener = this;
-	bala->ctype = ColliderType::SHOT;
+	bala->ctype = coll;
 	bala->body->GetFixtureList()->SetDensity(0.1f);
 	bala->body->SetGravityScale(0.0f); // Reducir la influencia de la gravedad
 
@@ -111,13 +134,13 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type, i
 	
 	BalaInfo nuevaBala(bala, Animation(), Animation(), 150, 1, 0, 0, false);
 		
-	switch (type)
+	switch (coll)
 	{
-	case tipo::PLAYER_SHOT:
+	case ColliderType::PLAYER_SHOT:
 		nuevaBala.shot = playerShot;
 		nuevaBala.endShot = playerShotFinal;
 		break;
-	case tipo::ENEMY_SHADOW_SHOT:
+	case ColliderType::ENEMY_SHOT:
 		
 		if (direction == 1)
 		{
@@ -130,7 +153,7 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, tipo type, i
 			nuevaBala.endShot = enemyShadowShotFinalLeft;
 		}
 		break;
-	case tipo::UNKNOWN:
+	case ColliderType::UNKNOWN:
 		break;
 	default:
 		break;
@@ -181,7 +204,7 @@ void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
 				LOG("BALA COLISION SPIKE");
 				item->data.collision = true;
 				break;
-			case ColliderType::SHOT:
+			case ColliderType::PLAYER_SHOT:
 
 				LOG("BALA COLISION SHOT");
 				item->data.collision = true;

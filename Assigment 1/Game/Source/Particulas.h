@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Physics.h"
 #include <list>
 
 #define MAX_ACTIVE_PARTICLES 3500
@@ -54,7 +55,7 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-	void Shoot(bool diparar, int positionX, int positionY, tipo type, int direction);
+	void Shoot(bool diparar, int positionX, int positionY, int direction, ColliderType coll);
 
 
 public:
