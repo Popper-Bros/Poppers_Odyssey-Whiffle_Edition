@@ -39,6 +39,8 @@ public:
 
 	void MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path);
 
+	void attack();
+
 public:
 	float speed = 1.0f;
 	//const char* texturePath;

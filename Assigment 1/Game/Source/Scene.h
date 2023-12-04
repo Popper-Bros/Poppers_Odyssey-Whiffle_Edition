@@ -47,6 +47,8 @@ public:
 
 	iPoint playerTile;
 
+	Particulas* particulas;
+
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
@@ -56,7 +58,6 @@ private:
 	Item* item;
 	EnemyShadow* enemy;
 	EnemyZombie* enemy2;
-	Particulas* particulas;
 	pugi::xml_node playerConfig;
 	pugi::xml_node enemyShadowConfig;
 	pugi::xml_node enemyZombieConfig;

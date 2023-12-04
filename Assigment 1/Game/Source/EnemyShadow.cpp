@@ -62,15 +62,15 @@ bool EnemyShadow::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 30;
 
 	if (isAlive) {
-		if (!isAttackingRight && !isAttackingLeft && !isMovingLeft && !isMovingRight) {
-			if (currentDirection == EnemyShadowDirection::RIGHT || currentDirection == EnemyShadowDirection::ATTACK_R)
+		if (!isAttackingRight && !isAttackingLeft) {
+			/*if (currentDirection == EnemyShadowDirection::RIGHT || currentDirection == EnemyShadowDirection::ATTACK_R)
 			{
 				currentDirection = EnemyShadowDirection::IDLE_R;
 			}
 			else if (currentDirection == EnemyShadowDirection::LEFT || currentDirection == EnemyShadowDirection::ATTACK_L)
 			{
 				currentDirection = EnemyShadowDirection::IDLE_L;
-			}
+			}*/
 		}
 
 		switch (currentDirection)
@@ -82,7 +82,7 @@ bool EnemyShadow::Update(float dt)
 			currentAnimation = &Idle_left;
 			break;
 		case EnemyShadowDirection::LEFT:
-			currentAnimation = &Idle_right;
+			currentAnimation = &Idle_left;
 			break;
 		case EnemyShadowDirection::RIGHT:
 			currentAnimation = &Idle_right;
@@ -105,22 +105,9 @@ bool EnemyShadow::Update(float dt)
 			seePlayer = false;
 		}
 		
-		if (seePlayer && position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30) {
-			isMovingLeft = false;
-			isMovingRight = false;
-			if (((position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= 0))) {
-				isAttackingLeft = true;
-				currentDirection = EnemyShadowDirection::ATTACK_L;
-			}
-			else if (position.x - app->scene->getPlayerPos().x >= -100 && position.x - app->scene->getPlayerPos().x < 0) {
-				isAttackingRight = true;
-				currentDirection = EnemyShadowDirection::ATTACK_R;
-			}
-		}
-		
-		else {
-			isAttackingRight = false;
-			isAttackingLeft = false;
+		if (seePlayer && position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && 
+			position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30 && cd <= 0.0f) {
+			attack();
 		}
 
 		pbody->body->SetLinearVelocity(vel);
@@ -149,6 +136,17 @@ bool EnemyShadow::Update(float dt)
 
 		if(isMovingLeft||isMovingRight){
 			MoveTowardsNextNode(enemyTile,speed,path);
+		}
+
+		if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 8) {
+			app->scene->particulas->Shoot(true, position.x, position.y, tipo::ENEMY_SHADOW_SHOT, -1);
+			isAttackingLeft = false;
+			currentDirection = EnemyShadowDirection::LEFT;
+		}
+		if (isAttackingRight && Attack_right.GetCurrentFrameIndex() == 8) {
+			app->scene->particulas->Shoot(true, position.x, position.y, tipo::ENEMY_SHADOW_SHOT, 1);
+			isAttackingRight = false;
+			currentDirection = EnemyShadowDirection::RIGHT;
 		}
 		
 		currentAnimation->Update();
@@ -235,4 +233,20 @@ void EnemyShadow::OnCollision(PhysBody* physA, PhysBody* physB)
 bool EnemyShadow::CleanUp()
 {
 	return true;
+}
+
+void EnemyShadow::attack() {
+
+	Attack_right.Reset();
+	Attack_left.Reset();
+
+	if (((position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= 0))) {
+		isAttackingLeft = true;
+		currentDirection = EnemyShadowDirection::ATTACK_L;
+	}
+	else if (position.x - app->scene->getPlayerPos().x >= -100 && position.x - app->scene->getPlayerPos().x < 0) {
+		isAttackingRight = true;
+		currentDirection = EnemyShadowDirection::ATTACK_R;
+	}
+	cd = 20.0f;
 }
