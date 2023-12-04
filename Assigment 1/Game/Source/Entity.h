@@ -5,6 +5,7 @@
 #include "SString.h"
 #include "Input.h"
 #include "Render.h"
+#include "DynArray.h"
 
 
 class PhysBody;
@@ -75,9 +76,15 @@ public:
 		}
 	}
 
+	void MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path) {
+
+	}
+
 	virtual void OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	};
+
+
 
 public:
 
@@ -91,6 +98,8 @@ public:
 	iPoint position;       
 	bool renderable = true;
 	bool isAlive = true;
+
+	SDL_Texture* mouseTileTex = nullptr;
 };
 
 #endif // __ENTITY_H__
