@@ -139,12 +139,12 @@ bool EnemyShadow::Update(float dt)
 		}
 
 		if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 8) {
-			app->scene->particulas->Shoot(true, position.x, position.y, tipo::ENEMY_SHADOW_SHOT, -1);
+			app->scene->particulas->Shoot(true, position.x-2, position.y+16, -1, ColliderType::ENEMY_SHOT);
 			isAttackingLeft = false;
 			currentDirection = EnemyShadowDirection::LEFT;
 		}
 		if (isAttackingRight && Attack_right.GetCurrentFrameIndex() == 8) {
-			app->scene->particulas->Shoot(true, position.x, position.y, tipo::ENEMY_SHADOW_SHOT, 1);
+			app->scene->particulas->Shoot(true, position.x+42, position.y+16, 1, ColliderType::ENEMY_SHOT);
 			isAttackingRight = false;
 			currentDirection = EnemyShadowDirection::RIGHT;
 		}

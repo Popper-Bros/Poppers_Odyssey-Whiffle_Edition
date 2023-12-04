@@ -142,21 +142,12 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && player->isAlive) {
 		if (player->currentAnimation == &player->Idle_right || player->currentAnimation == &player->Move_right || player->currentAnimation == &player->Jump_right) {
-			particulas->Shoot(true, player->position.x, player->position.y - 5,1, ColliderType::PLAYER_SHOT );
+			particulas->Shoot(true, player->position.x+32, player->position.y +11,1, ColliderType::PLAYER_SHOT );
 		}
 		else if (player->currentAnimation == &player->Idle_left || player->currentAnimation == &player->Move_left || player->currentAnimation == &player->Jump_left) {
-			particulas->Shoot(true, player->position.x - 32, player->position.y - 5,-1, ColliderType::PLAYER_SHOT);
+			particulas->Shoot(true, player->position.x, player->position.y +11,-1, ColliderType::PLAYER_SHOT);
 		}
 	}
-
-	if (enemy->isAttackingRight && enemy->Attack_right.GetCurrentFrameIndex() == 8 && enemy->cd<=0.0f) {
-		enemy->cd = 20.0f;
-		particulas->Shoot(true, enemy->position.x, enemy->position.y, 1, ColliderType::ENEMY_SHOT);
-	}
-	else if (enemy->isAttackingLeft && enemy->Attack_left.GetCurrentFrameIndex() == 8 && enemy->cd <= 0.0f) {
-		enemy->cd = 20.0f;
-		particulas->Shoot(true, enemy->position.x - 42, enemy->position.y, -1, ColliderType::ENEMY_SHOT);
-	}	
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);

@@ -105,6 +105,8 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, int directio
 {
 	int width;
 	int height;
+	int a;
+	int b;
 	if (coll == ColliderType::PLAYER_SHOT)
 	{
 		width = 7;
@@ -115,7 +117,7 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, int directio
 		width = 20;
 		height = 20;
 	}
-	PhysBody* bala = app->physics->CreateRectangle(positionX + 32, positionY + 16, width, height, bodyType::DYNAMIC);
+	PhysBody* bala = app->physics->CreateRectangle(positionX, positionY, width, height, bodyType::DYNAMIC);
 	LOG("!!CREATED!!");
 	bala->listener = this;
 	bala->ctype = coll;
