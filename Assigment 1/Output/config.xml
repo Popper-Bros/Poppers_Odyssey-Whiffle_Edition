@@ -278,7 +278,51 @@
 		</EnemyZombie>
 
 
-		<Particulas particulasTexturepath ="Assets/Textures/particles.png"/>
+		<Particulas particulasTexturepath ="Assets/Textures/particles.png">	
+			<animations>
+				<playerShot loop="true" speed ="0.15f * dt">
+					<anim x ="340" y =" 69" width =" 10" height ="9"/>
+					<anim x ="356" y =" 69" width =" 10" height ="9"/>
+					<anim x ="372" y =" 69" width =" 10" height ="9"/>
+					<anim x ="388" y =" 69" width =" 10" height ="9"/>
+				</playerShot>
+				
+				<playerShotFinal loop="false" speed ="0.15f * dt">
+					<anim x ="196" y =" 68" width =" 10" height ="10"/>
+					<anim x ="212" y =" 68" width =" 10" height ="10"/>
+					<anim x ="228" y =" 68" width =" 10" height ="10"/>
+				</playerShotFinal>
+				<enemyShadowShot loop="true" speed ="0.15f * dt">
+					<anim x ="0" y =" 409" width =" 31" height ="19"/>
+					<anim x ="44" y =" 409" width =" 31" height ="19"/>
+					<anim x ="91" y =" 409" width =" 31" height ="19"/>
+					<anim x ="137" y =" 409" width =" 31" height ="19"/>
+					<anim x ="179" y =" 409" width =" 31" height ="19"/>
+					<anim x ="224" y =" 409" width =" 31" height ="19"/>
+					<anim x ="265" y =" 409" width =" 31" height ="19"/>
+				</enemyShadowShot>
+				<enemyShadowShotFinal loop="false" speed ="0.15f * dt">
+					<anim x ="309" y =" 408" width =" 32" height ="20"/>
+					<anim x ="355" y =" 409" width =" 42" height ="35"/>
+					<anim x ="410" y =" 413" width =" 39" height ="34"/>
+				</enemyShadowShotFinal>
+			<enemyShadowShotLeft loop="true" speed ="0.15f * dt">
+					<anim x ="501" y =" 493" width =" 31" height ="19"/>
+					<anim x ="458" y =" 493" width =" 31" height ="19"/>
+					<anim x ="412" y =" 493" width =" 31" height ="19"/>
+					<anim x ="366" y =" 493" width =" 31" height ="19"/>
+					<anim x ="322" y =" 493" width =" 31" height ="19"/>
+					<anim x ="279" y =" 493" width =" 31" height ="19"/>
+					<anim x ="238" y =" 493" width =" 31" height ="19"/>
+			</enemyShadowShotLeft>
+			<enemyShadowShotFinalLeft loop="false" speed ="0.15f * dt">
+					<anim x ="193" y =" 492" width =" 32" height ="20"/>
+					<anim x ="137" y =" 493" width =" 42" height ="35"/>
+					<anim x ="85" y =" 497" width =" 39" height ="34"/>
+			</enemyShadowShotFinalLeft>
+			
+		</animations>
+	</Particulas>
 
 		<item x="272" y="672" texturepath="Assets/Textures/popper.png"/>
 		<item x="624" y="544" texturepath="Assets/Textures/popper.png"/>

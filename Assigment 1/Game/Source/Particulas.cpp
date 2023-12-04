@@ -23,58 +23,16 @@ bool Particulas::Awake() {
 	//position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("particulasTexturepath").as_string();
 
+	playerShot.LoadAnimation("Particulas", "playerShot");
+	playerShotFinal.LoadAnimation("Particulas", "playerShotFinal");
+	enemyShadowShot.LoadAnimation("Particulas", "enemyShadowShot");
+	enemyShadowShotFinal.LoadAnimation("Particulas", "enemyShadowShotFinal");
+	enemyShadowShotLeft.LoadAnimation("Particulas", "enemyShadowShotLeft");
+	enemyShadowShotFinalLeft.LoadAnimation("Particulas", "enemyShadowShotFinalLeft");
 	return true;
 }
 
 bool Particulas::Start() {
-
-
-	playerShot.PushBack({ 340,69,10,9 });
-	playerShot.PushBack({ 356,69,10,9 });
-	playerShot.PushBack({ 372,69,10,9 });
-	playerShot.PushBack({ 388,69,10,9 });
-	playerShot.loop = true;
-	playerShot.pingpong = false;
-
-	playerShotFinal.PushBack({ 196,68,10,10 });
-	playerShotFinal.PushBack({ 212,68,10,10 });
-	playerShotFinal.PushBack({ 228,68,10,10 });
-	playerShotFinal.pingpong = false;
-	playerShotFinal.loop = false;
-
-	SDL_FLIP_HORIZONTAL;
-	enemyShadowShot.PushBack({ 0,409,31,19 });
-	enemyShadowShot.PushBack({ 44,409,31,19 });
-	enemyShadowShot.PushBack({ 91,409,31,19 });
-	enemyShadowShot.PushBack({ 137,409,31,19 });
-	enemyShadowShot.PushBack({ 179,409,31,19 });
-	enemyShadowShot.PushBack({ 224,409,31,19 });
-	enemyShadowShot.PushBack({ 265,409,31,19 });
-	enemyShadowShot.loop = true;
-	enemyShadowShot.pingpong = false;
-
-	enemyShadowShotFinal.PushBack({ 309,408,32,20 });
-	enemyShadowShotFinal.PushBack({ 355,409,42,35 });
-	enemyShadowShotFinal.PushBack({ 410,413,39,34 });
-	enemyShadowShotFinal.loop = false;
-	enemyShadowShotFinal.pingpong = false;
-
-	enemyShadowShotLeft.PushBack({ 501,493,31,19 });
-	enemyShadowShotLeft.PushBack({ 458,493,31,19 });
-	enemyShadowShotLeft.PushBack({ 412,493,31,19 });
-	enemyShadowShotLeft.PushBack({ 366,493,31,19 });
-	enemyShadowShotLeft.PushBack({ 322,493,31,19 });
-	enemyShadowShotLeft.PushBack({ 279,493,31,19 });
-	enemyShadowShotLeft.PushBack({ 238,493,31,19 });
-	enemyShadowShotLeft.loop = true;
-	enemyShadowShotLeft.pingpong = false;
-
-	enemyShadowShotFinalLeft.PushBack({ 193,492,32,20 });
-	enemyShadowShotFinalLeft.PushBack({ 137,493,42,35 });
-	enemyShadowShotFinalLeft.PushBack({ 85,497,39,34 });
-	enemyShadowShotFinalLeft.loop = false;
-	enemyShadowShotFinalLeft.pingpong = false;
-
 
 
 	texture = app->tex->Load(texturePath);
