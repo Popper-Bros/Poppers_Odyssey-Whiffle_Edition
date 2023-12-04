@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Animation.h"
+#include "DynArray.h"
 #include "SDL/include/SDL.h"
 
 
@@ -32,16 +33,14 @@ public:
 
 	bool Update(float dt);
 
-
 	bool CleanUp();
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-
-
+	void MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path);
 
 public:
-	float speed = 0.1f;
+	float speed = 1.0f;
 	//const char* texturePath;
 	//SDL_Texture* texture = NULL;
 
@@ -66,6 +65,9 @@ public:
 	//int frameSpeed = 2;
 	//bool collidingPlat;
 
+	iPoint enemyTile;
+
+	const DynArray<iPoint>* path;
 
 	SDL_Texture* texture = NULL;
 	const char* texturePathEnemyShadow;

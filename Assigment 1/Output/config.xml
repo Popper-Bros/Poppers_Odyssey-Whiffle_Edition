@@ -109,22 +109,22 @@
 				</Idle_right>
 
 				<Idle_left loop="true" speed ="0.15f * dt">
-					<anim x ="769" y =" 16" width =" 66" height ="66"/>
-					<anim x ="719" y =" 16" width =" 66" height ="66"/>
-					<anim x ="669" y =" 16" width =" 66" height ="66"/>
-					<anim x ="619" y =" 16" width =" 66" height ="66"/>
-					<anim x ="569" y =" 16" width =" 66" height ="66"/>
-					<anim x ="519" y =" 16" width =" 66" height ="66"/>
-					<anim x ="469" y =" 16" width =" 66" height ="66"/>
-					<anim x ="319" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769" y =" 16" width =" 66" height ="66"/>
-					<anim x ="769" y =" 16" width =" 66" height ="66"/>
+					<anim x ="769" y =" 66" width =" 48" height ="48"/>
+					<anim x ="719" y =" 66" width =" 48" height ="48"/>
+					<anim x ="669" y =" 66" width =" 48" height ="48"/>
+					<anim x ="619" y =" 66" width =" 48" height ="48"/>
+					<anim x ="569" y =" 66" width =" 48" height ="48"/>
+					<anim x ="519" y =" 66" width =" 48" height ="48"/>
+					<anim x ="469" y =" 66" width =" 48" height ="48"/>
+					<anim x ="419" y =" 66" width =" 48" height ="48"/>
+					<anim x ="369" y =" 66" width =" 48" height ="48"/>
+					<anim x ="319" y =" 66" width =" 48" height ="48"/>
+					<anim x ="269" y =" 66" width =" 48" height ="48"/>
+					<anim x ="219" y =" 66" width =" 48" height ="48"/>
+					<anim x ="169" y =" 66" width =" 48" height ="48"/>
+					<anim x ="119" y =" 66" width =" 48" height ="48"/>
+					<anim x ="69" y =" 66" width =" 48" height ="48"/>
+					<anim x ="19" y =" 66" width =" 48" height ="48"/>
 				</Idle_left>
 
 				<Die_right loop="false" speed ="0.15f * dt">
@@ -159,8 +159,8 @@
 
 				<Attack_right loop="true" speed ="0.15f * dt">
 					<anim x ="20" y =" 223" width =" 43" height ="45"/>
-					<anim x ="75" y =" 223" width =" 43" height ="45"/>
-					<anim x ="70" y =" 223" width =" 43" height ="45"/>
+					<anim x ="65" y =" 223" width =" 43" height ="45"/>
+					<anim x ="110" y =" 223" width =" 43" height ="45"/>
 					<anim x ="155" y =" 223" width =" 43" height ="45"/>
 					<anim x ="200" y =" 223" width =" 43" height ="45"/>
 					<anim x ="245" y =" 223" width =" 43" height ="45"/>
@@ -187,7 +187,7 @@
 					<anim x ="380" y =" 270" width =" 43" height ="45"/>
 					<anim x ="335" y =" 270" width =" 43" height ="45"/>
 					<anim x ="290" y =" 270" width =" 43" height ="45"/>
-					<anim x ="235" y =" 270" width =" 43" height ="45"/>
+					<anim x ="245" y =" 270" width =" 43" height ="45"/>
 					<anim x ="200" y =" 270" width =" 43" height ="45"/>
 					<anim x ="155" y =" 270" width =" 43" height ="45"/>
 					<anim x ="110" y =" 270" width =" 43" height ="45"/>

@@ -52,6 +52,9 @@ public:
 	// Move along the generated path
 	bool Move(const iPoint& currentPos, iPoint& nextPos);
 
+	// we store the created path here
+	DynArray<iPoint> lastPath;
+
 private:
 
 	// size of the map
@@ -61,8 +64,7 @@ private:
 	// all map walkability values [0..255]
 	uchar* map;
 
-	// we store the created path here
-	DynArray<iPoint> lastPath;
+
 };
 
 // forward declaration

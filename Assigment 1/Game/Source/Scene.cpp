@@ -98,9 +98,6 @@ bool Scene::Start()
 		app->map->mapData.tileheight,
 		app->map->mapData.tilesets.Count());
 
-	// Texture to highligh mouse position 
-	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
-
 	return true;
 }
 
@@ -174,24 +171,9 @@ bool Scene::Update(float dt)
 		else if (checkpoint == 1) player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
 	}
 
-	iPoint playerTile = app->map->WorldToMap(player->position.x, player->position.y - app->render->camera.y);
+	playerTile = app->map->WorldToMap(25+player->position.x, player->position.y - app->render->camera.y);
+		
 
-	iPoint enemyTile = app->map->WorldToMap(enemy->position.x, enemy->position.y - app->render->camera.y);
-
-
-	
-	//If mouse button is pressed modify player position
-	app->map->pathfinding->CreatePath(enemyTile, playerTile);
-
-	// L13: Get the latest calculated path and draw
-	if (app->physics->debug) {
-		const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-		for (uint i = 0; i < path->Count(); ++i)
-		{
-			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
-		}
-	}
 
 	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
