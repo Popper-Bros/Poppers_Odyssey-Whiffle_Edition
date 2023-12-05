@@ -270,6 +270,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (!godmode) isAlive = false;
 		LOG("Collision SHOT");
 		break;
+	case ColliderType::ENEMY:
+		if (vel.y > 0)jumping = false;
+		falling = false;
+		if (!godmode) isAlive = false;
+		LOG("Collision ENEMY");
+		break;
 
 	}
 }

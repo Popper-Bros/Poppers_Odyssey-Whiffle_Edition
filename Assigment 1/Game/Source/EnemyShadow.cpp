@@ -75,12 +75,6 @@ bool EnemyShadow::Update(float dt)
 
 		switch (currentDirection)
 		{
-		case EnemyShadowDirection::IDLE_R:
-			currentAnimation = &Idle_right;
-			break;
-		case EnemyShadowDirection::IDLE_L:
-			currentAnimation = &Idle_left;
-			break;
 		case EnemyShadowDirection::LEFT:
 			currentAnimation = &Idle_left;
 			break;
@@ -88,7 +82,7 @@ bool EnemyShadow::Update(float dt)
 			currentAnimation = &Idle_right;
 			break;
 		case EnemyShadowDirection::ATTACK_R:
-			currentAnimation = &Attack_right;
+			currentAnimation = &Attack_right; 
 			break;
 		case EnemyShadowDirection::ATTACK_L:
 			currentAnimation = &Attack_left;
@@ -115,13 +109,15 @@ bool EnemyShadow::Update(float dt)
 		if (seePlayer && !isAttackingLeft && !isAttackingRight) {
 			if (position.x - app->scene->getPlayerPos().x < 0) {
 				isMovingRight = true;
+				isMovingLeft = false;
 			}
 			else if (position.x - app->scene->getPlayerPos().x > 0) {
 				isMovingLeft = true;
+				isMovingRight = false;
 			}
 		}
 
-		enemyTile = app->map->WorldToMap(20+position.x, 20+position.y - app->render->camera.y);
+		enemyTile = app->map->WorldToMap(20+position.x, 25+position.y - app->render->camera.y);
 		app->map->pathfinding->CreatePath(enemyTile, app->scene->playerTile);
 		path = app->map->pathfinding->GetLastPath();
 

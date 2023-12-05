@@ -11,8 +11,6 @@
 struct SDL_Texture;
 enum class EnemyShadowDirection
 {
-	IDLE_R,
-	IDLE_L,
 	LEFT,
 	RIGHT,
 	ATTACK_R,
@@ -76,7 +74,7 @@ public:
 
 	PhysBody* pbody;
 
-	EnemyShadowDirection currentDirection = EnemyShadowDirection::IDLE_L;
+	EnemyShadowDirection currentDirection = EnemyShadowDirection::LEFT;
 
 	Animation* currentAnimation = &Idle_left;
 	Animation Idle_left, Idle_right, Die_right, Die_left,Attack_right,Attack_left;
