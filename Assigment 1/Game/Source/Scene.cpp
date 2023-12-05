@@ -140,14 +140,14 @@ bool Scene::Update(float dt)
 		checkpoint = 0;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && player->isAlive) {
+	/*if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && player->isAlive) {
 		if (player->currentAnimation == &player->Idle_right || player->currentAnimation == &player->Move_right || player->currentAnimation == &player->Jump_right) {
 			particulas->Shoot(true, player->position.x+32, player->position.y +11,1, ColliderType::PLAYER_SHOT );
 		}
 		else if (player->currentAnimation == &player->Idle_left || player->currentAnimation == &player->Move_left || player->currentAnimation == &player->Jump_left) {
 			particulas->Shoot(true, player->position.x, player->position.y +11,-1, ColliderType::PLAYER_SHOT);
 		}
-	}
+	}*/
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);

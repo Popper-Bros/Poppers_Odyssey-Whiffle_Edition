@@ -63,6 +63,9 @@ public:
 	int frameSpeed = 2;
 	bool collidingPlat;
 
+	float cooldown = 0.0f;
+	bool isShooting = false;
+	bool canShoot = true;
 
 	Direction currentDirection = Direction::IDLE_R;
 

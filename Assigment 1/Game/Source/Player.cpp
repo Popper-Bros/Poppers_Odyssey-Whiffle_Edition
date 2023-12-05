@@ -45,8 +45,7 @@ bool Player::Start() {
 	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
-
-	
+		
 
 	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
 	fall = app->audio->LoadFx("Assets/Audio/Fx/fall.ogg");
@@ -125,7 +124,36 @@ bool Player::Update(float dt)
 			countF = 0.0f;
 			falling = true;
 		}
+		
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && isAlive) {
+			if (cooldown <= 0 && canShoot)
+			{
 
+				for (int i = 0; i <= 1; i++)
+				{
+					if (currentAnimation == &Idle_right || currentAnimation == &Move_right || currentAnimation == &Jump_right) {
+						app->scene->particulas->Shoot(true, position.x + 32 - (i * 15), position.y + 15 + (i * 5), 1, ColliderType::PLAYER_SHOT);
+					}
+					else if (currentAnimation == &Idle_left || currentAnimation == &Move_left || currentAnimation == &Jump_left) {
+						app->scene->particulas->Shoot(true, position.x + (i * 15), position.y + 11 + (i * 9), -1, ColliderType::PLAYER_SHOT);
+					}
+				}
+				isShooting = true;
+				canShoot = false;
+				cooldown = 10.0f;
+			}
+		}
+
+		if (isShooting)
+		{
+			cooldown -= 0.008f * dt;
+			LOG("COOLDOWN %.5f", cooldown);
+			if (cooldown <= 0)
+			{
+				canShoot = true;
+				isShooting = false;
+			}
+		}
 		
 		// Aplicar la velocidad al cuerpo del jugador solo si no está saltando
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !fell && !jumping && !godmode && !falling && vel.y<0.5f && vel.y>-0.5f) {
@@ -268,6 +296,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (vel.y > 0)jumping = false;
 		falling = false;
 		if (!godmode) isAlive = false;
+		LOG("Collision SHOT");
+		break;
+	case ColliderType::PLAYER_SHOT:
 		LOG("Collision SHOT");
 		break;
 

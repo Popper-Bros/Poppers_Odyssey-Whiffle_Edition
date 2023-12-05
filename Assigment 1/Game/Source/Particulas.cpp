@@ -109,8 +109,8 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, int directio
 	int b;
 	if (coll == ColliderType::PLAYER_SHOT)
 	{
-		width = 7;
-		height = 7;
+		width = 5;
+		height = 5;
 	}
 	else if (coll == ColliderType::ENEMY_SHOT)
 	{
@@ -121,7 +121,7 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, int directio
 	LOG("!!CREATED!!");
 	bala->listener = this;
 	bala->ctype = coll;
-	bala->body->GetFixtureList()->SetDensity(0.1f);
+	bala->body->GetFixtureList()->SetDensity(0.01f);
 	bala->body->SetGravityScale(0.0f); // Reducir la influencia de la gravedad
 
 	b2Vec2 initialVelocity;
@@ -169,7 +169,7 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, int directio
 	balas.Add(nuevaBala);
 	contador++;
 
-	LOG("N�mero de elementos en la lista de balas: %d", balas.Count());
+	LOG("Numero de elementos en la lista de balas: %d", balas.Count());
 
 }
 
@@ -216,13 +216,23 @@ void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
 				LOG("BALA COLISION ENEMY");
 				item->data.collision = true;
 				break;
+			case ColliderType::PLAYER:
+				if (physA->ctype == ColliderType::PLAYER_SHOT)
+				{
+					physA->body->GetFixtureList()->SetSensor(true);
+					//item->data.balaBody->body->GetFixtureList()->SetSensor(true);
+				}
+				
+				else
+				{
+					item->data.collision = true;
+				}
+				LOG("BALA COLISION PLAYER");
+				
+				break;
 			}
 		}
-		
-		
 	}
-	
-	
 }
 
 bool Particulas::CleanUp()
