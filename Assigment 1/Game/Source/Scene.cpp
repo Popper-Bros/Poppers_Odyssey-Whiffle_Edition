@@ -202,10 +202,10 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 	if (node.child("EnemyShadow")) {
 		if (node.child("EnemyShadow").attribute("isAlive").as_bool() == true && enemy->isAlive == false) {
-			enemy->texturepath = node.child("EnemyShadow").attribute("texturepath").as_string();
 			enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
 			enemy->isAlive = true;
 			enemy->Awake();
+			enemy->texturepath = node.child("EnemyShadow").attribute("texturepath").as_string();
 			enemy->Start();
 		}
 		enemy->position.x = node.child("EnemyShadow").attribute("x").as_int();
