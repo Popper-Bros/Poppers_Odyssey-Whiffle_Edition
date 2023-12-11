@@ -38,7 +38,6 @@ public:
 private:
 
 	SDL_Texture* texture;
-	const char* texturepath;
 };
 
 #endif // __ITEM_H__

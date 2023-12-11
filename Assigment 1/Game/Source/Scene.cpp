@@ -140,15 +140,6 @@ bool Scene::Update(float dt)
 		checkpoint = 0;
 	}
 
-	/*if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && player->isAlive) {
-		if (player->currentAnimation == &player->Idle_right || player->currentAnimation == &player->Move_right || player->currentAnimation == &player->Jump_right) {
-			particulas->Shoot(true, player->position.x+32, player->position.y +11,1, ColliderType::PLAYER_SHOT );
-		}
-		else if (player->currentAnimation == &player->Idle_left || player->currentAnimation == &player->Move_left || player->currentAnimation == &player->Jump_left) {
-			particulas->Shoot(true, player->position.x, player->position.y +11,-1, ColliderType::PLAYER_SHOT);
-		}
-	}*/
-
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 		checkpoint == 0;
@@ -164,24 +155,10 @@ bool Scene::Update(float dt)
 
 	playerTile = app->map->WorldToMap(25+player->position.x, player->position.y - app->render->camera.y);
 		
-
-
 	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
-	//iPoint nextPosition;
-
-	////Check if there is a valid path
-	//if (pathfinding->Move(enemyTile, nextPosition))
-	//{
-	//	MoveObject(currentPosition, nextPosition);
-	//	LOG("Moving to (%d, %d)", nextPosition.x, nextPosition.y);
-	//}
-	//else
-	//{
-	//	LOG("No valid path available or reached the end of the path.");
-	//}
 
 	return true;
 }
@@ -255,7 +232,7 @@ bool Scene::SaveState(pugi::xml_node node) {
 		entNode.append_attribute("x").set_value(app->entityManager->entities[i]->position.x);
 		entNode.append_attribute("y").set_value(app->entityManager->entities[i]->position.y);
 		entNode.append_attribute("isAlive").set_value(app->entityManager->entities[i]->isAlive);
-		//entNode.append_attribute("texturepath").set_value(app->entityManager->entities[i]->texturepath);
+		entNode.append_attribute("texturepath").set_value(app->entityManager->entities[i]->texturepath);
 	}
 
 	return true;

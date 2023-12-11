@@ -4,18 +4,15 @@
 	<input />
 	<textures />
 	<audio />
-	<:anonymous />
-	<:anonymous />
-	<:anonymous />
 	<scene>
-		<item x="264" y="687" isAlive="true" />
-		<item x="616" y="559" isAlive="true" />
-		<item x="904" y="687" isAlive="true" />
-		<item x="1544" y="495" isAlive="true" />
-		<Player x="63" y="166" isAlive="true" />
-		<item x="0" y="0" isAlive="true" />
-		<EnemyShadow x="758" y="664" isAlive="true" />
-		<EnemyZombie x="1911" y="644" isAlive="true" />
+		<item x="264" y="687" isAlive="true" texturepath="Assets/Textures/popper.png" />
+		<item x="616" y="559" isAlive="true" texturepath="Assets/Textures/popper.png" />
+		<item x="904" y="687" isAlive="true" texturepath="Assets/Textures/popper.png" />
+		<item x="1544" y="495" isAlive="true" texturepath="Assets/Textures/popper.png" />
+		<Player x="398" y="614" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" />
+		<item x="0" y="0" isAlive="true" texturepath="Assets/Textures/particles.png" />
+		<EnemyShadow x="758" y="664" isAlive="true" texturepath="Assets/Textures/sombra.png" />
+		<EnemyZombie x="1911" y="644" isAlive="true" texturepath="Assets/Textures/zombie.png" />
 	</scene>
 	<entitymanager />
 	<renderer>

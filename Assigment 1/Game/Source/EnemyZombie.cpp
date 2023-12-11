@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Item.h"
 #include "Player.h"
+#include "Map.h"
 
 EnemyZombie::EnemyZombie() : Entity(EntityType::ENEMYZOMBIE)
 {
@@ -46,18 +47,21 @@ bool EnemyZombie::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
+	// Texture to highligh mouse position 
+	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 	return true;
 }
 
 bool EnemyZombie::Update(float dt)
 {
+	cd -= dt * 0.1;
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 33;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 50;
 
 	if (isAlive) {
 
-		if (!isAttacking && !isMovingLeft && !isMovingRight) {
+		if (!isAttackingLeft && !isAttackingRight && !isMovingLeft && !isMovingRight) {
 			if (currentDirection == EnemyZombieDirection::RIGHT || currentDirection == EnemyZombieDirection::ATTACK_R)
 			{
 				currentDirection = EnemyZombieDirection::IDLE_R;
@@ -93,33 +97,55 @@ bool EnemyZombie::Update(float dt)
 
 		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
-		if (isMovingLeft) isMovingRight = false;
-		if (isMovingRight) isMovingLeft = false;
-
-		if (((position.x - app->scene->getPlayerPos().x < 35 && position.x - app->scene->getPlayerPos().x >= 0) || (position.x - app->scene->getPlayerPos().x > -35 && position.x - app->scene->getPlayerPos().x < 0))) {
-			if (position.y - app->scene->getPlayerPos().y >= -45 && position.y - app->scene->getPlayerPos().y <= 45){
-				isAttacking = true;
-				isMovingLeft = false;
-				isMovingRight = false;
+		if (position.x - app->scene->getPlayerPos().x <= 200 && position.x - app->scene->getPlayerPos().x >= -200) {
+			seePlayer = true;
+			app->map->pathfinding->CreatePath(enemyTile, app->scene->playerTile);
+			path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
+			if (app->physics->debug) {
+				for (uint i = 0; i < path->Count(); ++i)
+				{
+					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+					app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+				}
 			}
 		}
 		else {
-			isAttacking = false;
+			seePlayer = false;
+		}
+
+		if (position.x - app->scene->getPlayerPos().x <= 40 && position.x - app->scene->getPlayerPos().x >= -40 && cd<=0.0f) {
+			attack();
 		}
 
 		pbody->body->SetLinearVelocity(vel);
 
-		if(isAttacking){
-			if (position.x - app->scene->getPlayerPos().x >= 0) {
-				currentDirection = EnemyZombieDirection::ATTACK_L;
-			}
+		if (seePlayer && !isAttackingLeft && !isAttackingRight) {
 			if (position.x - app->scene->getPlayerPos().x < 0) {
-				currentDirection = EnemyZombieDirection::ATTACK_R;
+				isMovingRight = true;
+				isMovingLeft = false;
+				currentDirection = EnemyZombieDirection::RIGHT;
 			}
-			if (currentAnimation->GetCurrentFrameIndex() >= 4)
-			{
-				isAttacking = false;
+			else if (position.x - app->scene->getPlayerPos().x > 0) {
+				isMovingLeft = true;
+				isMovingRight = false;
+				currentDirection = EnemyZombieDirection::LEFT;
 			}
+		}
+
+
+		enemyTile = app->map->WorldToMap(20 + position.x, 30 + position.y - app->render->camera.y);
+
+		if(isMovingLeft||isMovingRight){
+			MoveTowardsNextNode(enemyTile,speed,path);
+		}
+
+		if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 4) {
+			isAttackingLeft = false;
+			Attack_left.Reset();
+		}
+		if (isAttackingRight && Attack_right.GetCurrentFrameIndex() == 4) {
+			isAttackingRight = false;
+			Attack_right.Reset();
 		}
 		
 		currentAnimation->Update();
@@ -150,8 +176,30 @@ bool EnemyZombie::Update(float dt)
 
 	}
 
-
 	return true;
+}
+
+void EnemyZombie::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path) {
+	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
+	if (path->Count() > 0) {
+		iPoint nextNode;
+		if (app->map->pathfinding->Move(enemyTile, nextNode)) {
+			// Determine direction from the player to the next node
+			int dx = nextNode.x - enemyTile.x;
+			int dy = nextNode.y - enemyTile.y;
+
+			// Determine the direction based on the sign of dx and dy
+			if (dx > 0) {
+				vel = { speed,0 };
+			}
+			else if (dx < 0) {
+				vel = { -speed,0 };
+			}
+
+			enemyTile = nextNode;
+		}
+	}
+	pbody->body->SetLinearVelocity(vel);
 }
 
 void EnemyZombie::OnCollision(PhysBody* physA, PhysBody* physB)
@@ -179,4 +227,17 @@ void EnemyZombie::OnCollision(PhysBody* physA, PhysBody* physB)
 bool EnemyZombie::CleanUp()
 {
 	return true;
+}
+
+void EnemyZombie::attack() {
+
+	if (position.x - app->scene->getPlayerPos().x >= 0) {
+		isAttackingLeft = true;
+		currentDirection = EnemyZombieDirection::ATTACK_L;
+	}
+	else if (position.x - app->scene->getPlayerPos().x < 0) {
+		isAttackingRight = true;
+		currentDirection = EnemyZombieDirection::ATTACK_R;
+	}
+	cd = 200.0f;
 }

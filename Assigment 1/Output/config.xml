@@ -234,13 +234,13 @@
 
 				<Move_right loop="true" speed ="0.15f * dt">
 					<anim x ="6" y =" 78" width =" 67" height ="67"/>
-					<anim x ="87" y =" 78" width =" 67" height ="67"/>
-					<anim x ="155" y =" 78" width =" 67" height ="67"/>
-					<anim x ="223" y =" 78" width =" 67" height ="67"/>
-					<anim x ="291" y =" 78" width =" 67" height ="67"/>
-					<anim x ="359" y =" 78" width =" 67" height ="67"/>
-					<anim x ="427" y =" 78" width =" 67" height ="67"/>
-					<anim x ="495" y =" 78" width =" 67" height ="67"/>
+					<anim x ="74" y =" 78" width =" 67" height ="67"/>
+					<anim x ="142" y =" 78" width =" 67" height ="67"/>
+					<anim x ="210" y =" 78" width =" 67" height ="67"/>
+					<anim x ="278" y =" 78" width =" 67" height ="67"/>
+					<anim x ="346" y =" 78" width =" 67" height ="67"/>
+					<anim x ="414" y =" 78" width =" 67" height ="67"/>
+					<anim x ="482" y =" 78" width =" 67" height ="67"/>
 				</Move_right>
 
 				<Die_right loop="false" speed ="0.15f * dt">

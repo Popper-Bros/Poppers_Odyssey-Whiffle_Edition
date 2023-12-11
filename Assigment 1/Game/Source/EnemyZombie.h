@@ -37,11 +37,13 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	void MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path);
 
+	void attack();
 
 
 public:
-	float speed = 0.1f;
+	float speed = 1.0f;
 	//const char* texturePath;
 	//SDL_Texture* texture = NULL;
 
@@ -54,8 +56,10 @@ public:
 	//float countF = 0.0f;
 	bool isMovingLeft = false;
 	bool isMovingRight = false;
-	bool isAttacking = false;
+	bool isAttackingRight = false;
+	bool isAttackingLeft = false;
 	float cd = 3.0f;
+	bool seePlayer = false;
 	//bool win = false;
 
 	///*const int NUM_FRAMES = 8;*/
@@ -64,6 +68,9 @@ public:
 	//int frameSpeed = 2;
 	//bool collidingPlat;
 
+	iPoint enemyTile;
+
+	const DynArray<iPoint>* path;
 
 	SDL_Texture* texture = NULL;
 
