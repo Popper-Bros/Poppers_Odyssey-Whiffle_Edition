@@ -22,7 +22,7 @@ bool EnemyZombie::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	texturePathEnemyZombie = parameters.attribute("enemyZombieTexturepath").as_string();
+	texturepath = parameters.attribute("texturepath").as_string();
 
 	Idle_right.LoadAnimation("EnemyZombie", "Idle_right");
 	Idle_left.LoadAnimation("EnemyZombie", "Idle_left");
@@ -40,7 +40,7 @@ bool EnemyZombie::Awake() {
 bool EnemyZombie::Start() {
 
 	//initilize textures
-	texture = app->tex->Load(texturePathEnemyZombie);
+	texture = app->tex->Load(texturepath);
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);
 	pbody->listener = this;

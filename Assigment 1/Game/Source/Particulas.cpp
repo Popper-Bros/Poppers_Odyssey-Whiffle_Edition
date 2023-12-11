@@ -21,7 +21,7 @@ bool Particulas::Awake() {
 	balas.Clear();
 	//position.x = parameters.attribute("x").as_int();
 	//position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("particulasTexturepath").as_string();
+	texturepath = parameters.attribute("texturepath").as_string();
 
 	playerShot.LoadAnimation("Particulas", "playerShot");
 	playerShotFinal.LoadAnimation("Particulas", "playerShotFinal");
@@ -35,7 +35,7 @@ bool Particulas::Awake() {
 bool Particulas::Start() {
 
 
-	texture = app->tex->Load(texturePath);
+	texture = app->tex->Load(texturepath);
 
 	return true;
 }

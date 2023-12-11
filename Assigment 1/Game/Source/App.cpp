@@ -27,14 +27,14 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	win = new Window();
 	input = new Input();
-	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
 	physics = new Physics();
-	scene = new Scene();
-	map = new Map();
-	entityManager = new EntityManager();
 	pathfinding = new PathFinding();
+	map = new Map();
+	scene = new Scene();
+	entityManager = new EntityManager();
+	render = new Render();
 
 
 	// Ordered for awake / Start / Update

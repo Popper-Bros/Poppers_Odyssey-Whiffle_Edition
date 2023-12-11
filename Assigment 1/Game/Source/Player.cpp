@@ -23,7 +23,7 @@ bool Player::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("rataTexturepath").as_string();	
+	texturepath = parameters.attribute("texturepath").as_string();
 
 	Move_right.LoadAnimation("player", "Move_right");
 	Move_left.LoadAnimation("player", "Move_left");
@@ -39,7 +39,7 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//initilize textures
-	texture = app->tex->Load(texturePath);
+	texture = app->tex->Load(texturepath);
 	
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);

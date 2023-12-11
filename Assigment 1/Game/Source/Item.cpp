@@ -20,7 +20,7 @@ bool Item::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
+	texturepath = parameters.attribute("texturepath").as_string();
 
 	return true;
 }
@@ -28,7 +28,7 @@ bool Item::Awake() {
 bool Item::Start() {
 
 	//initilize textures
-	texture = app->tex->Load(texturePath);
+	texture = app->tex->Load(texturepath);
 	pbody = app->physics->CreateRectangle(position.x, position.y, 12, 16, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ITEM;

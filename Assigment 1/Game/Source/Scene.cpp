@@ -199,12 +199,64 @@ bool Scene::PostUpdate()
 
 iPoint Scene::getPlayerPos() {
 	return player->position;
-}
+}	
 
 // Called before quitting
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	return true;
+}
+
+bool Scene::LoadState(pugi::xml_node node) {
+
+	//for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	//{
+	//	item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+	//	item->parameters = itemNode;
+	//}
+
+	if (node.child("Player")) {
+		player->position.x = node.child("Player").attribute("x").as_int();
+		player->position.y = node.child("Player").attribute("y").as_int();
+		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x),PIXEL_TO_METERS(player->position.y) }, 0);
+	}
+
+	if (node.child("EnemyShadow")) {
+		if (node.child("EnemyShadow").attribute("isAlive").as_bool() == true && enemy->isAlive == false) {
+			enemy->texturepath = node.child("EnemyShadow").attribute("texturepath").as_string();
+			enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+			enemy->isAlive = true;
+			enemy->Awake();
+			enemy->Start();
+		}
+		enemy->position.x = node.child("EnemyShadow").attribute("x").as_int();
+		enemy->position.y = node.child("EnemyShadow").attribute("y").as_int();
+
+		enemy->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy->position.x),PIXEL_TO_METERS(enemy->position.y) }, 0);
+
+	}
+
+	if (node.child("EnemyZombie")) {
+		enemy2->position.x = node.child("EnemyZombie").attribute("x").as_int();
+		enemy2->position.y = node.child("EnemyZombie").attribute("y").as_int();
+		enemy2->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy2->position.x),PIXEL_TO_METERS(enemy2->position.y) }, 0);
+	}
+
+	return true;
+}
+
+bool Scene::SaveState(pugi::xml_node node) {
+	//pugi::xml_node entNode = node.append_child("entitymanager");
+	for (int i = 0; i < app->entityManager->entities.Count(); i++)
+	{
+		pugi::xml_node entNode = node.append_child(app->entityManager->entities[i]->name.GetString());
+		entNode.append_attribute("x").set_value(app->entityManager->entities[i]->position.x);
+		entNode.append_attribute("y").set_value(app->entityManager->entities[i]->position.y);
+		entNode.append_attribute("isAlive").set_value(app->entityManager->entities[i]->isAlive);
+		//entNode.append_attribute("texturepath").set_value(app->entityManager->entities[i]->texturepath);
+	}
 
 	return true;
 }

@@ -70,9 +70,6 @@ public:
 	const DynArray<iPoint>* path;
 
 	SDL_Texture* texture = NULL;
-	const char* texturePathEnemyShadow;
-
-	PhysBody* pbody;
 
 	EnemyShadowDirection currentDirection = EnemyShadowDirection::LEFT;
 

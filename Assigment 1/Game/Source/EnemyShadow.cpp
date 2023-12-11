@@ -23,7 +23,7 @@ bool EnemyShadow::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	texturePathEnemyShadow = parameters.attribute("enemyShadowTexturepath").as_string();
+	texturepath = parameters.attribute("texturepath").as_string();
 
 
 	Idle_right.LoadAnimation("EnemyShadow", "Idle_right");
@@ -40,12 +40,11 @@ bool EnemyShadow::Awake() {
 bool EnemyShadow::Start() {
 
 	//initilize textures
-	texture = app->tex->Load(texturePathEnemyShadow);
+	texture = app->tex->Load(texturepath);
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
-
 
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");

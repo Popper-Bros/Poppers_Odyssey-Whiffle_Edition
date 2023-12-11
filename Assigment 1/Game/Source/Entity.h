@@ -95,9 +95,11 @@ public:
 
 	// Possible properties, it depends on how generic we
 	// want our Entity class, maybe it's not renderable...
-	iPoint position;       
+	iPoint position;
+	PhysBody* pbody;
 	bool renderable = true;
 	bool isAlive = true;
+	const char* texturepath;
 
 	SDL_Texture* mouseTileTex = nullptr;
 };

@@ -62,7 +62,6 @@ public:
 
 	bool onCollision = false;
 
-	const char* texturePath;
 	SDL_Texture* texture = NULL;
 
 	bool alive = false;

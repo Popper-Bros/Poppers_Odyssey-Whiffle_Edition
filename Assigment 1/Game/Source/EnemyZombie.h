@@ -66,10 +66,6 @@ public:
 
 
 	SDL_Texture* texture = NULL;
-	const char* texturePathEnemyZombie;
-
-	PhysBody* pbody;
-
 
 	EnemyZombieDirection currentDirection = EnemyZombieDirection::IDLE_L;
 

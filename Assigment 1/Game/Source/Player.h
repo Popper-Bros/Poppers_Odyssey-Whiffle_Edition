@@ -45,10 +45,8 @@ public:
 	PhysBody* bullet;
 
 	float speed = 0.2f;
-	const char* texturePath;
 	SDL_Texture* texture = NULL;
 
-	PhysBody* pbody;
 	int sniff, fall, jump, blood;
 	bool jumping=false;
 	bool falling = false;
