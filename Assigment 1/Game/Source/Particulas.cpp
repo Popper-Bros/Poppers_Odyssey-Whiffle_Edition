@@ -44,8 +44,7 @@ bool Particulas::Start() {
 
 bool Particulas::Update(float dt) 
 {
-	
-
+	this->dt = dt;
 	for (ListItem<BalaInfo>* item = balas.start; item; item = item->next) // Recorre la lista de balas
 	{
 		if (item->data.balaBody != nullptr && item->data.balaBody->body != nullptr) // Si la bala existe y su cuerpo existe
@@ -124,14 +123,17 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, int directio
 	bala->body->GetFixtureList()->SetDensity(0.01f);
 	bala->body->SetGravityScale(0.0f); // Reducir la influencia de la gravedad
 
-	b2Vec2 initialVelocity;
+	b2Vec2 vel = bala->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
+	
 	if (direction == 1) {
-		initialVelocity = { 5.0f, 0.1f}; // Ajustar la velocidad inicial a la derecha
+		vel.x = 0.4f * dt; // Ajustar la velocidad inicial a la derecha
+
 	}
 	else if (direction == -1) {
-		initialVelocity = { -5.0f, 0.1f }; // Ajustar la velocidad inicial a la izuqierda
+		vel.x = -0.4f * dt; // Ajustar la velocidad inicial a la izuqierda
+
 	}
-	bala->body->SetLinearVelocity(initialVelocity);
+	bala->body->SetLinearVelocity(vel);
 	
 	
 	BalaInfo nuevaBala(bala, Animation(), Animation(), 150, 1, 0, 0, false);

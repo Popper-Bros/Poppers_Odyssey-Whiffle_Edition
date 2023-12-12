@@ -55,6 +55,12 @@ bool EnemyShadow::Start() {
 
 bool EnemyShadow::Update(float dt)
 {
+	Idle_right.speed = 0.01f * dt;
+	Idle_left.speed = 0.01f * dt;
+	Attack_right.speed = 0.01f * dt;
+	Attack_left.speed = 0.01f * dt;
+	Die_right.speed = 0.01f * dt;
+	Die_left.speed = 0.01f * dt;
 	cd -= dt * 0.1;
 
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  

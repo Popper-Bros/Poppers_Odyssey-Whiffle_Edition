@@ -73,8 +73,8 @@ public:
 	int balaposy;
 	int bulletlife = 150;
 	int contador = 0;
+	float dt;
 
-	
 
 	List<BalaInfo> balas;
 

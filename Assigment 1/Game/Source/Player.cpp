@@ -32,6 +32,7 @@ bool Player::Awake() {
 	Jump_right.LoadAnimation("player", "Jump_right");
 	Jump_left.LoadAnimation("player", "Jump_left");
 	Die.LoadAnimation("player", "Die");
+
 	
 	return true;
 }
@@ -46,17 +47,27 @@ bool Player::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 		
-
-	sniff = app->audio->LoadFx("Assets/Audio/Fx/sniff.ogg");
-	fall = app->audio->LoadFx("Assets/Audio/Fx/fall.ogg");
-	jump = app->audio->LoadFx("Assets/Audio/Fx/jump.ogg");
-	blood = app->audio->LoadFx("Assets/Audio/Fx/blood.ogg");
+	
+	sniff = app->audio->LoadFx("player", "sniff");
+	jump = app->audio->LoadFx("player", "jump");
+	fall = app->audio->LoadFx("player", "fall");
+	blood = app->audio->LoadFx("player", "blood");
+	shoot = app->audio->LoadFx("player", "shoot");
+	reload = app->audio->LoadFx("player", "reload");
 
 	return true;
 }
 
 bool Player::Update(float dt)
 {
+	Move_right.speed = 0.01f * dt;
+	Move_left.speed = 0.01f * dt;
+	Idle_right.speed = 0.01f * dt;
+	Idle_left.speed = 0.01f * dt;
+	Jump_right.speed = 0.01f * dt;
+	Jump_left.speed = 0.01f * dt;
+	Die.speed = 0.01f * dt;
+
 	if (position.x > 1930 && position.y < 260) {
 		win = true;
 		app->scene->checkpoint = 0;
@@ -133,9 +144,11 @@ bool Player::Update(float dt)
 				{
 					if (currentAnimation == &Idle_right || currentAnimation == &Move_right || currentAnimation == &Jump_right) {
 						app->scene->particulas->Shoot(true, position.x + 32 - (i * 15), position.y + 15 + (i * 5), 1, ColliderType::PLAYER_SHOT);
+						app->audio->PlayFx(shoot);
 					}
 					else if (currentAnimation == &Idle_left || currentAnimation == &Move_left || currentAnimation == &Jump_left) {
 						app->scene->particulas->Shoot(true, position.x + (i * 15), position.y + 11 + (i * 9), -1, ColliderType::PLAYER_SHOT);
+						app->audio->PlayFx(shoot);
 					}
 				}
 				isShooting = true;
@@ -148,6 +161,11 @@ bool Player::Update(float dt)
 		{
 			cooldown -= 0.008f * dt;
 			LOG("COOLDOWN %.5f", cooldown);
+			if (cooldown <=5 && cooldown >= 4.8f )
+			{
+				app->audio->PlayFx(reload);
+				LOG("RELOADING");
+			}
 			if (cooldown <= 0)
 			{
 				canShoot = true;
@@ -161,6 +179,7 @@ bool Player::Update(float dt)
 			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 			jumping = true;
 			vel.y = -0.625f * dt; // Aplicar impulso vertical al saltar
+
 		}
 		if (position.y >= 786 && !fell) {
 			app->audio->PlayFx(fall,60);
