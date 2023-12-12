@@ -44,7 +44,7 @@ bool Item::Update(float dt)
 
 	app->render->DrawTexture(texture, position.x, position.y);
 
-	if (isPicked)
+	if (!isAlive)
 	{
 		this->Disable();
 		app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
@@ -58,7 +58,7 @@ void Item::OnCollision(PhysBody* physA, PhysBody* physB)
 	{
 	case ColliderType::PLAYER:
 		LOG("Collision ITEM con PLAYER");
-		if(app->scene->playerAlive) isPicked = true;
+		if(app->scene->playerAlive) isAlive = false;
 		break;
 	}
 		
