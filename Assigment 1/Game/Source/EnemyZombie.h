@@ -70,6 +70,8 @@ public:
 
 	iPoint enemyTile;
 
+	iPoint enemyOriginTile;
+
 	const DynArray<iPoint>* path;
 
 	SDL_Texture* texture = NULL;
