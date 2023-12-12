@@ -5,8 +5,9 @@
 #include "Defs.h"
 #include "Log.h"
 
-PathFinding::PathFinding() 
+PathFinding::PathFinding() : Module()
 {
+	name.Create("pathfinding");
 	map = NULL;
 	width = 0;
 	height = 0;

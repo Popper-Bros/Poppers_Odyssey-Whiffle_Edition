@@ -216,8 +216,16 @@ bool Scene::LoadState(pugi::xml_node node) {
 	}
 
 	if (node.child("EnemyZombie")) {
+		if (node.child("EnemyZombie").attribute("isAlive").as_bool() == true && enemy2->isAlive == false) {
+			enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+			enemy2->isAlive = true;
+			enemy2->Awake();
+			enemy2->texturepath = node.child("EnemyZombie").attribute("texturepath").as_string();
+			enemy2->Start();
+		}
 		enemy2->position.x = node.child("EnemyZombie").attribute("x").as_int();
 		enemy2->position.y = node.child("EnemyZombie").attribute("y").as_int();
+
 		enemy2->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy2->position.x),PIXEL_TO_METERS(enemy2->position.y) }, 0);
 	}
 

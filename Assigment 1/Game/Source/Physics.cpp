@@ -20,6 +20,7 @@
 
 Physics::Physics() : Module()
 {
+	name.Create("physics");
 	// Initialise all the internal class variables, at least to NULL pointer
 	world = NULL;
 	debug = false;
