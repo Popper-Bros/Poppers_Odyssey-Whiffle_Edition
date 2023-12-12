@@ -50,6 +50,8 @@ bool EnemyShadow::Start() {
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
+	enemyOriginTile = app->map->WorldToMap(15 + position.x, 30 + position.y - app->render->camera.y);
+
 	return true;
 }
 
@@ -68,15 +70,15 @@ bool EnemyShadow::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 30;
 
 	if (isAlive) {
-		if (!isAttackingRight && !isAttackingLeft) {
-			/*if (currentDirection == EnemyShadowDirection::RIGHT || currentDirection == EnemyShadowDirection::ATTACK_R)
+		if (!isAttackingLeft && !isAttackingRight && !isMovingLeft && !isMovingRight) {
+			if (currentDirection == EnemyShadowDirection::RIGHT || currentDirection == EnemyShadowDirection::ATTACK_R)
 			{
-				currentDirection = EnemyShadowDirection::IDLE_R;
+				currentDirection = EnemyShadowDirection::RIGHT;
 			}
 			else if (currentDirection == EnemyShadowDirection::LEFT || currentDirection == EnemyShadowDirection::ATTACK_L)
 			{
-				currentDirection = EnemyShadowDirection::IDLE_L;
-			}*/
+				currentDirection = EnemyShadowDirection::LEFT;
+			}
 		}
 
 		switch (currentDirection)
@@ -100,12 +102,25 @@ bool EnemyShadow::Update(float dt)
 
 		if (position.x - app->scene->getPlayerPos().x <= 200 && position.x - app->scene->getPlayerPos().x >= -200) {
 			seePlayer = true;
+			app->map->pathfinding2->CreatePath(enemyTile, app->scene->playerTile, app->map->pathfinding2);
+			path = app->map->pathfinding2->GetLastPath();		// L13: Get the latest calculated path and draw
 		}
+
 		else {
 			seePlayer = false;
+			app->map->pathfinding2->CreatePath(enemyTile, enemyOriginTile, app->map->pathfinding2);
+			path = app->map->pathfinding2->GetLastPath();		// L13: Get the latest calculated path and draw
+		}
+
+		if (app->physics->debug && path != NULL) {
+			for (uint i = 0; i < path->Count(); ++i)
+			{
+				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+				app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+			}
 		}
 		
-		if (seePlayer && position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && 
+		if (position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && 
 			position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30 && cd <= 0.0f) {
 			attack();
 		}
@@ -116,26 +131,17 @@ bool EnemyShadow::Update(float dt)
 			if (position.x - app->scene->getPlayerPos().x < 0) {
 				isMovingRight = true;
 				isMovingLeft = false;
+				currentDirection = EnemyShadowDirection::RIGHT;
 			}
 			else if (position.x - app->scene->getPlayerPos().x > 0) {
 				isMovingLeft = true;
 				isMovingRight = false;
+				currentDirection = EnemyShadowDirection::LEFT;
 			}
 		}
 
-		enemyTile = app->map->WorldToMap(20+position.x, 25+position.y - app->render->camera.y);
-		app->map->pathfinding2->CreatePath(enemyTile, app->scene->playerTile, app->map->pathfinding2);
-		path = app->map->pathfinding2->GetLastPath();
-
-		// L13: Get the latest calculated path and draw
-		if (app->physics->debug) {
-			for (uint i = 0; i < path->Count(); ++i)
-			{
-				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
-			}
-		}
-
+		enemyTile = app->map->WorldToMap(19 + position.x, 30 + position.y - app->render->camera.y);
+		
 		if(isMovingLeft||isMovingRight){
 			MoveTowardsNextNode(enemyTile,speed,path);
 		}
@@ -143,12 +149,12 @@ bool EnemyShadow::Update(float dt)
 		if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 8) {
 			app->scene->particulas->Shoot(true, position.x-2, position.y+16, -1, ColliderType::ENEMY_SHOT);
 			isAttackingLeft = false;
-			currentDirection = EnemyShadowDirection::LEFT;
+			Attack_left.Reset();
 		}
 		if (isAttackingRight && Attack_right.GetCurrentFrameIndex() == 8) {
 			app->scene->particulas->Shoot(true, position.x+42, position.y+16, 1, ColliderType::ENEMY_SHOT);
 			isAttackingRight = false;
-			currentDirection = EnemyShadowDirection::RIGHT;
+			Attack_right.Reset();
 		}
 		
 		currentAnimation->Update();
@@ -239,16 +245,13 @@ bool EnemyShadow::CleanUp()
 
 void EnemyShadow::attack() {
 
-	Attack_right.Reset();
-	Attack_left.Reset();
-
-	if (((position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= 0))) {
+	if (position.x - app->scene->getPlayerPos().x >= 0) {
 		isAttackingLeft = true;
 		currentDirection = EnemyShadowDirection::ATTACK_L;
 	}
-	else if (position.x - app->scene->getPlayerPos().x >= -100 && position.x - app->scene->getPlayerPos().x < 0) {
+	else if (position.x - app->scene->getPlayerPos().x < 0) {
 		isAttackingRight = true;
 		currentDirection = EnemyShadowDirection::ATTACK_R;
 	}
-	cd = 20.0f;
+	cd = 200.0f;
 }

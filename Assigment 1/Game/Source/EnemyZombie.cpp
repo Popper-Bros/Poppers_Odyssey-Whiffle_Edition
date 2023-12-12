@@ -49,6 +49,10 @@ bool EnemyZombie::Start() {
 
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
+
+
+	enemyOriginTile = app->map->WorldToMap(12 + position.x, 30 + position.y - app->render->camera.y);
+
 	return true;
 }
 
@@ -110,16 +114,20 @@ bool EnemyZombie::Update(float dt)
 			seePlayer = true;
 			app->map->pathfinding->CreatePath(enemyTile, app->scene->playerTile, app->map->pathfinding);
 			path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
-			if (app->physics->debug) {
-				for (uint i = 0; i < path->Count(); ++i)
-				{
-					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-					app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
-				}
-			}
 		}
+
 		else {
 			seePlayer = false;
+			app->map->pathfinding->CreatePath(enemyTile, enemyOriginTile, app->map->pathfinding);
+			path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
+		}
+
+		if (app->physics->debug && path!=NULL) {
+			for (uint i = 0; i < path->Count(); ++i)
+			{
+				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+				app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+			}
 		}
 
 		if (position.x - app->scene->getPlayerPos().x <= 40 && position.x - app->scene->getPlayerPos().x >= -40 && cd<=0.0f) {
@@ -132,15 +140,12 @@ bool EnemyZombie::Update(float dt)
 			if (position.x - app->scene->getPlayerPos().x < 0) {
 				isMovingRight = true;
 				isMovingLeft = false;
-				currentDirection = EnemyZombieDirection::RIGHT;
 			}
 			else if (position.x - app->scene->getPlayerPos().x > 0) {
 				isMovingLeft = true;
 				isMovingRight = false;
-				currentDirection = EnemyZombieDirection::LEFT;
 			}
 		}
-
 
 		enemyTile = app->map->WorldToMap(20 + position.x, 30 + position.y - app->render->camera.y);
 
@@ -200,9 +205,20 @@ void EnemyZombie::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynA
 			// Determine the direction based on the sign of dx and dy
 			if (dx > 0) {
 				vel = { speed,0 };
+				currentDirection = EnemyZombieDirection::RIGHT;
 			}
 			else if (dx < 0) {
 				vel = { -speed,0 };
+				currentDirection = EnemyZombieDirection::LEFT;
+			}
+			else if (dx == 0) {
+				vel = { 0,0 };
+				if (currentDirection == EnemyZombieDirection::LEFT || currentDirection == EnemyZombieDirection::IDLE_L) {
+					currentDirection = EnemyZombieDirection::IDLE_L;
+				}
+				else if (currentDirection == EnemyZombieDirection::RIGHT || currentDirection == EnemyZombieDirection::IDLE_R) {
+					currentDirection = EnemyZombieDirection::IDLE_R;
+				}
 			}
 
 			enemyTile = nextNode;
@@ -230,7 +246,7 @@ void EnemyZombie::OnCollision(PhysBody* physA, PhysBody* physB)
 		LOG("Collision UNKNOWN");
 		break;
 	}
-		
+	
 }
 
 bool EnemyZombie::CleanUp()
