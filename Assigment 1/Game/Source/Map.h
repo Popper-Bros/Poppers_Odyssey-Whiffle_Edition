@@ -160,6 +160,7 @@ public:
     SString name;
     SString path;
     PathFinding* pathfinding;
+    PathFinding* pathfinding2;
     MapData mapData;
 
 private:

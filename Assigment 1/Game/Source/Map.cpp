@@ -39,11 +39,12 @@ bool Map::Start() {
 
     //Initialize pathfinding 
     pathfinding = new PathFinding();
-
+    pathfinding2 = new PathFinding();
     //Initialize the navigation map
     uchar* navigationMap = NULL;
     CreateNavigationMap(mapData.width, mapData.height, &navigationMap);
     pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
+    pathfinding2->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
     RELEASE_ARRAY(navigationMap);
 
     return true;
@@ -115,6 +116,7 @@ bool Map::CleanUp()
 
     //Clean up pathfing class
     pathfinding->CleanUp();
+    pathfinding2->CleanUp();
 
     // L05: DONE 2: Make sure you clean up any memory allocated from tilesets/map
     ListItem<TileSet*>* tileset;
