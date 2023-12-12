@@ -31,7 +31,7 @@ public:
 
 public:
 
-	bool isPicked = false;
+	bool isAlive = true;
 	state Picked = state::PICKED_FALSE;
 	PhysBody* pbody;
 

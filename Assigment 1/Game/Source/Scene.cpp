@@ -197,7 +197,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 	if (node.child("Player")) {
 		player->position.x = node.child("Player").attribute("x").as_int();
 		player->position.y = node.child("Player").attribute("y").as_int();
-		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x),PIXEL_TO_METERS(player->position.y) }, 0);
+		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x+0.3f),PIXEL_TO_METERS(player->position.y+0.3f) }, 0);
 	}
 
 	if (node.child("EnemyShadow")) {
@@ -211,7 +211,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 		enemy->position.x = node.child("EnemyShadow").attribute("x").as_int();
 		enemy->position.y = node.child("EnemyShadow").attribute("y").as_int();
 
-		enemy->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy->position.x),PIXEL_TO_METERS(enemy->position.y) }, 0);
+		enemy->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy->position.x+0.4f),PIXEL_TO_METERS(enemy->position.y+0.73f) }, 0);
 
 	}
 
@@ -226,7 +226,22 @@ bool Scene::LoadState(pugi::xml_node node) {
 		enemy2->position.x = node.child("EnemyZombie").attribute("x").as_int();
 		enemy2->position.y = node.child("EnemyZombie").attribute("y").as_int();
 
-		enemy2->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy2->position.x),PIXEL_TO_METERS(enemy2->position.y) }, 0);
+		enemy2->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy2->position.x+0.6f),PIXEL_TO_METERS(enemy2->position.y+0.93f) }, 0);
+	}
+
+	for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	{
+		if (node.child("item").attribute("isAlive").as_bool() == true && item->isAlive == false) {
+			item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM); 
+			item->isAlive = true;
+			item->Awake();
+			item->texturepath = node.child("item").attribute("texturepath").as_string();
+			item->Start();
+		}
+		item->position.x = node.child("item").attribute("x").as_int();
+		item->position.y = node.child("item").attribute("y").as_int();
+
+		item->pbody->body->SetTransform({ PIXEL_TO_METERS(item->position.x),PIXEL_TO_METERS(item->position.y) }, 0);
 	}
 
 	return true;

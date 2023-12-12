@@ -11,7 +11,7 @@
 
 Particulas::Particulas() : Entity(EntityType::PARTICULAS)
 {
-	name.Create("item");
+	name.Create("Particulas");
 }
 
 Particulas::~Particulas() {}
