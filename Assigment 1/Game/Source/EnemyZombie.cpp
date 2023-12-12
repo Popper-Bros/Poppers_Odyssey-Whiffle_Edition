@@ -131,12 +131,10 @@ bool EnemyZombie::Update(float dt)
 			if (position.x - app->scene->getPlayerPos().x < 0) {
 				isMovingRight = true;
 				isMovingLeft = false;
-				currentDirection = EnemyZombieDirection::RIGHT;
 			}
 			else if (position.x - app->scene->getPlayerPos().x > 0) {
 				isMovingLeft = true;
 				isMovingRight = false;
-				currentDirection = EnemyZombieDirection::LEFT;
 			}
 		}
 
@@ -198,12 +196,20 @@ void EnemyZombie::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynA
 			// Determine the direction based on the sign of dx and dy
 			if (dx > 0) {
 				vel = { speed,0 };
+				currentDirection = EnemyZombieDirection::RIGHT;
 			}
 			else if (dx < 0) {
 				vel = { -speed,0 };
+				currentDirection = EnemyZombieDirection::LEFT;
 			}
-			else if (dx == 0){
+			else if (dx == 0) {
 				vel = { 0,0 };
+				if (currentDirection == EnemyZombieDirection::LEFT || currentDirection == EnemyZombieDirection::IDLE_L) {
+					currentDirection = EnemyZombieDirection::IDLE_L;
+				}
+				else if (currentDirection == EnemyZombieDirection::RIGHT || currentDirection == EnemyZombieDirection::IDLE_R) {
+					currentDirection = EnemyZombieDirection::IDLE_R;
+				}
 			}
 
 			enemyTile = nextNode;
