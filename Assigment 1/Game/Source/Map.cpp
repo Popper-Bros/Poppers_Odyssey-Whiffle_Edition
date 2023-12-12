@@ -14,7 +14,7 @@
 
 Map::Map() : Module(), mapLoaded(false)
 {
-    name.Create("map");
+    Module::name.Create("map");
 }
 
 // Destructor
