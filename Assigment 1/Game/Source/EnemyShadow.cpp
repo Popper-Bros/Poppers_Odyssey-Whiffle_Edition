@@ -92,58 +92,58 @@ bool EnemyShadow::Update(float dt)
 
 		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
-		//if (position.x - app->scene->getPlayerPos().x <= 200 && position.x - app->scene->getPlayerPos().x >= -200) {
-		//	seePlayer = true;
-		//}
-		//else {
-		//	seePlayer = false;
-		//}
-		//
-		//if (seePlayer && position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && 
-		//	position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30 && cd <= 0.0f) {
-		//	attack();
-		//}
+		if (position.x - app->scene->getPlayerPos().x <= 200 && position.x - app->scene->getPlayerPos().x >= -200) {
+			seePlayer = true;
+		}
+		else {
+			seePlayer = false;
+		}
+		
+		if (seePlayer && position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && 
+			position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30 && cd <= 0.0f) {
+			attack();
+		}
 
-		//pbody->body->SetLinearVelocity(vel);
+		pbody->body->SetLinearVelocity(vel);
 
-		//if (seePlayer && !isAttackingLeft && !isAttackingRight) {
-		//	if (position.x - app->scene->getPlayerPos().x < 0) {
-		//		isMovingRight = true;
-		//		isMovingLeft = false;
-		//	}
-		//	else if (position.x - app->scene->getPlayerPos().x > 0) {
-		//		isMovingLeft = true;
-		//		isMovingRight = false;
-		//	}
-		//}
+		if (seePlayer && !isAttackingLeft && !isAttackingRight) {
+			if (position.x - app->scene->getPlayerPos().x < 0) {
+				isMovingRight = true;
+				isMovingLeft = false;
+			}
+			else if (position.x - app->scene->getPlayerPos().x > 0) {
+				isMovingLeft = true;
+				isMovingRight = false;
+			}
+		}
 
-		//enemyTile = app->map->WorldToMap(20+position.x, 25+position.y - app->render->camera.y);
-		//app->map->pathfinding->CreatePath(enemyTile, app->scene->playerTile);
-		//path = app->map->pathfinding->GetLastPath();
+		enemyTile = app->map->WorldToMap(20+position.x, 25+position.y - app->render->camera.y);
+		app->map->pathfinding2->CreatePath(enemyTile, app->scene->playerTile, app->map->pathfinding2);
+		path = app->map->pathfinding2->GetLastPath();
 
-		//// L13: Get the latest calculated path and draw
-		//if (app->physics->debug) {
-		//	for (uint i = 0; i < path->Count(); ++i)
-		//	{
-		//		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		//		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
-		//	}
-		//}
+		// L13: Get the latest calculated path and draw
+		if (app->physics->debug) {
+			for (uint i = 0; i < path->Count(); ++i)
+			{
+				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+				app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+			}
+		}
 
-		//if(isMovingLeft||isMovingRight){
-		//	MoveTowardsNextNode(enemyTile,speed,path);
-		//}
+		if(isMovingLeft||isMovingRight){
+			MoveTowardsNextNode(enemyTile,speed,path);
+		}
 
-		//if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 8) {
-		//	app->scene->particulas->Shoot(true, position.x-2, position.y+16, -1, ColliderType::ENEMY_SHOT);
-		//	isAttackingLeft = false;
-		//	currentDirection = EnemyShadowDirection::LEFT;
-		//}
-		//if (isAttackingRight && Attack_right.GetCurrentFrameIndex() == 8) {
-		//	app->scene->particulas->Shoot(true, position.x+42, position.y+16, 1, ColliderType::ENEMY_SHOT);
-		//	isAttackingRight = false;
-		//	currentDirection = EnemyShadowDirection::RIGHT;
-		//}
+		if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 8) {
+			app->scene->particulas->Shoot(true, position.x-2, position.y+16, -1, ColliderType::ENEMY_SHOT);
+			isAttackingLeft = false;
+			currentDirection = EnemyShadowDirection::LEFT;
+		}
+		if (isAttackingRight && Attack_right.GetCurrentFrameIndex() == 8) {
+			app->scene->particulas->Shoot(true, position.x+42, position.y+16, 1, ColliderType::ENEMY_SHOT);
+			isAttackingRight = false;
+			currentDirection = EnemyShadowDirection::RIGHT;
+		}
 		
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -176,34 +176,34 @@ bool EnemyShadow::Update(float dt)
 	return true;
 }
 
-//void EnemyShadow :: MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path) {
-//	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
-//	if (path->Count() > 0) {
-//		iPoint nextNode;
-//		if (app->map->pathfinding->Move(enemyTile, nextNode)) {
-//			// Determine direction from the player to the next node
-//			int dx = nextNode.x - enemyTile.x;
-//			int dy = nextNode.y - enemyTile.y;
-//
-//			// Determine the direction based on the sign of dx and dy
-//			if (dx > 0) {
-//				vel = { speed,0 };
-//			}
-//			else if (dx < 0) {
-//				vel = { -speed,0 };
-//			}
-//
-//			if (dy > 0) {
-//				vel = { 0,speed };
-//			}
-//			else if (dy < 0) {
-//				vel = { 0,-speed };
-//			}
-//			enemyTile = nextNode;
-//		}
-//	}
-//	pbody->body->SetLinearVelocity(vel);
-//}
+void EnemyShadow :: MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path) {
+	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
+	if (path->Count() > 0) {
+		iPoint nextNode;
+		if (app->map->pathfinding2->Move(enemyTile, nextNode)) {
+			// Determine direction from the player to the next node
+			int dx = nextNode.x - enemyTile.x;
+			int dy = nextNode.y - enemyTile.y;
+
+			// Determine the direction based on the sign of dx and dy
+			if (dx > 0) {
+				vel = { speed,0 };
+			}
+			else if (dx < 0) {
+				vel = { -speed,0 };
+			}
+
+			if (dy > 0) {
+				vel = { 0,speed };
+			}
+			else if (dy < 0) {
+				vel = { 0,-speed };
+			}
+			enemyTile = nextNode;
+		}
+	}
+	pbody->body->SetLinearVelocity(vel);
+}
 
 void EnemyShadow::OnCollision(PhysBody* physA, PhysBody* physB)
 {
@@ -231,18 +231,18 @@ bool EnemyShadow::CleanUp()
 	return true;
 }
 
-//void EnemyShadow::attack() {
-//
-//	Attack_right.Reset();
-//	Attack_left.Reset();
-//
-//	if (((position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= 0))) {
-//		isAttackingLeft = true;
-//		currentDirection = EnemyShadowDirection::ATTACK_L;
-//	}
-//	else if (position.x - app->scene->getPlayerPos().x >= -100 && position.x - app->scene->getPlayerPos().x < 0) {
-//		isAttackingRight = true;
-//		currentDirection = EnemyShadowDirection::ATTACK_R;
-//	}
-//	cd = 20.0f;
-//}
+void EnemyShadow::attack() {
+
+	Attack_right.Reset();
+	Attack_left.Reset();
+
+	if (((position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= 0))) {
+		isAttackingLeft = true;
+		currentDirection = EnemyShadowDirection::ATTACK_L;
+	}
+	else if (position.x - app->scene->getPlayerPos().x >= -100 && position.x - app->scene->getPlayerPos().x < 0) {
+		isAttackingRight = true;
+		currentDirection = EnemyShadowDirection::ATTACK_R;
+	}
+	cd = 20.0f;
+}

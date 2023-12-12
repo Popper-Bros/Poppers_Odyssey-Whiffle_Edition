@@ -99,7 +99,7 @@ bool EnemyZombie::Update(float dt)
 
 		if (position.x - app->scene->getPlayerPos().x <= 200 && position.x - app->scene->getPlayerPos().x >= -200) {
 			seePlayer = true;
-			app->map->pathfinding->CreatePath(enemyTile, app->scene->playerTile);
+			app->map->pathfinding->CreatePath(enemyTile, app->scene->playerTile, app->map->pathfinding);
 			path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
 			if (app->physics->debug) {
 				for (uint i = 0; i < path->Count(); ++i)
