@@ -53,12 +53,14 @@ bool Scene::Awake(pugi::xml_node& config)
 		enemy->parameters = config.child("EnemyShadow");
 	}
 
+	enemyShadowConfig2 = config.child("EnemyShadow");
+
 	if (config.child("EnemyShadow2")) {
-		enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
-		enemy->parameters = config.child("EnemyShadow2");
+		enemy3 = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+		enemy3->parameters = config.child("EnemyShadow2");
 	}
 
-	enemyShadowConfig = config.child("EnemyShadow");
+	enemyShadowConfig2 = config.child("EnemyShadow2");
 
 	if (config.child("EnemyZombie")) {
 		enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
@@ -68,11 +70,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	enemyZombieConfig = config.child("EnemyZombie");
 
 	if (config.child("EnemyZombie2")) {
-		enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
-		enemy2->parameters = config.child("EnemyZombie2");
+		enemy4 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+		enemy4->parameters = config.child("EnemyZombie2");
 	}
 
-	enemyZombieConfig = config.child("EnemyZombie2");
+	enemyZombieConfig2 = config.child("EnemyZombie2");
 
 	//Get the map name from the config file and assigns the value in the module
 	app->map->name = config.child("map").attribute("name").as_string();
@@ -209,6 +211,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 	if (node.child("Player")) {
 		player->position.x = node.child("Player").attribute("x").as_int();
 		player->position.y = node.child("Player").attribute("y").as_int();
+		player->intoxication = node.child("intoxication").attribute("x").as_int();
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x+0.3f),PIXEL_TO_METERS(player->position.y+0.3f) }, 0);
 	}
 
@@ -217,7 +220,6 @@ bool Scene::LoadState(pugi::xml_node node) {
 			enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
 			enemy->isAlive = true;
 			enemy->Awake();
-			enemy->texturepath = node.child("EnemyShadow").attribute("texturepath").as_string();
 			enemy->Start();
 		}
 		enemy->position.x = node.child("EnemyShadow").attribute("x").as_int();
@@ -232,7 +234,6 @@ bool Scene::LoadState(pugi::xml_node node) {
 			enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
 			enemy2->isAlive = true;
 			enemy2->Awake();
-			enemy2->texturepath = node.child("EnemyZombie").attribute("texturepath").as_string();
 			enemy2->Start();
 		}
 		enemy2->position.x = node.child("EnemyZombie").attribute("x").as_int();
@@ -241,6 +242,32 @@ bool Scene::LoadState(pugi::xml_node node) {
 		enemy2->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy2->position.x+0.6f),PIXEL_TO_METERS(enemy2->position.y+0.93f) }, 0);
 	}
 
+	if (node.child("EnemyShadow2")) {
+		if (node.child("EnemyShadow2").attribute("isAlive").as_bool() == true && enemy3->isAlive == false) {
+			enemy3 = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+			enemy3->isAlive = true;
+			enemy3->Awake();
+			enemy3->Start();
+		}
+		enemy3->position.x = node.child("EnemyShadow2").attribute("x").as_int();
+		enemy3->position.y = node.child("EnemyShadow2").attribute("y").as_int();
+
+		enemy3->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy3->position.x + 0.4f),PIXEL_TO_METERS(enemy3->position.y + 0.73f) }, 0);
+
+	}
+
+	if (node.child("EnemyZombie2")) {
+		if (node.child("EnemyZombie2").attribute("isAlive").as_bool() == true && enemy4->isAlive == false) {
+			enemy4 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+			enemy4->isAlive = true;
+			enemy4->Awake();
+			enemy4->Start();
+		}
+		enemy4->position.x = node.child("EnemyZombie2").attribute("x").as_int();
+		enemy4->position.y = node.child("EnemyZombie2").attribute("y").as_int();
+
+		enemy4->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy4->position.x + 0.6f),PIXEL_TO_METERS(enemy4->position.y + 0.93f) }, 0);
+	}
 
 	for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{
@@ -248,7 +275,6 @@ bool Scene::LoadState(pugi::xml_node node) {
 			item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM); 
 			item->isAlive = true;
 			item->Awake();
-			item->texturepath = node.child("item").attribute("texturepath").as_string();
 			item->Start();
 		}
 		item->position.x = node.child("item").attribute("x").as_int();
@@ -268,7 +294,9 @@ bool Scene::SaveState(pugi::xml_node node) {
 		entNode.append_attribute("x").set_value(app->entityManager->entities[i]->position.x);
 		entNode.append_attribute("y").set_value(app->entityManager->entities[i]->position.y);
 		entNode.append_attribute("isAlive").set_value(app->entityManager->entities[i]->isAlive);
-		entNode.append_attribute("texturepath").set_value(app->entityManager->entities[i]->texturepath);
+		if (app->entityManager->entities[i]->name == "Player") {
+			entNode.append_attribute("intoxication").set_value(app->entityManager->entities[i]->intoxication);
+		}
 	}
 
 	return true;

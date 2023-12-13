@@ -99,6 +99,7 @@ public:
 	PhysBody* pbody;
 	bool renderable = true;
 	bool isAlive = true;
+	int intoxication;
 	const char* texturepath;
 
 	SDL_Texture* mouseTileTex = nullptr;

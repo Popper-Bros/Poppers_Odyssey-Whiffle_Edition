@@ -55,7 +55,6 @@ public:
 	float countF = 0.0f;
 	bool isAlive = true;
 	bool win = false;
-	int intoxication = 0;
 
 	float animVel = 0.01f;
 	float frameCounter = 0.0f;
