@@ -48,6 +48,7 @@ bool EnemyShadow::Start() {
 	pbody->body->SetGravityScale(0.0f); // Reducir la influencia de la gravedad
 
 	// Texture to highligh mouse position 
+	shot = app->audio->LoadFx("EnemyShadow", "shot");
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
 	enemyOriginTile = app->map->WorldToMap(15 + position.x, 30 + position.y - app->render->camera.y);
@@ -152,11 +153,13 @@ bool EnemyShadow::Update(float dt)
 
 		if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 8) {
 			app->scene->particulas->Shoot(true, position.x-2, position.y+16, -1, ColliderType::ENEMY_SHOT);
+			app->audio->PlayFx(shot);
 			isAttackingLeft = false;
 			Attack_left.Reset();
 		}
 		if (isAttackingRight && Attack_right.GetCurrentFrameIndex() == 8) {
 			app->scene->particulas->Shoot(true, position.x+42, position.y+16, 1, ColliderType::ENEMY_SHOT);
+			app->audio->PlayFx(shot);
 			isAttackingRight = false;
 			Attack_right.Reset();
 		}
