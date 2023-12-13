@@ -37,7 +37,7 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-	void MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path);
+	void MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path, float vely);
 
 	void attack();
 

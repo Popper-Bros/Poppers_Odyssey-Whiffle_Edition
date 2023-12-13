@@ -57,6 +57,7 @@ public:
 	bool win = false;
 	int intoxication = 0;
 
+	float animVel = 0.01f;
 	float frameCounter = 0.0f;
 	int frameSpeed = 2;
 	bool collidingPlat;

@@ -53,6 +53,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		enemy->parameters = config.child("EnemyShadow");
 	}
 
+	if (config.child("EnemyShadow2")) {
+		enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+		enemy->parameters = config.child("EnemyShadow2");
+	}
+
 	enemyShadowConfig = config.child("EnemyShadow");
 
 	if (config.child("EnemyZombie")) {
@@ -235,6 +240,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 		enemy2->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy2->position.x+0.6f),PIXEL_TO_METERS(enemy2->position.y+0.93f) }, 0);
 	}
+
 
 	for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{

@@ -60,12 +60,12 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-	Move_right.speed = 0.01f * dt;
-	Move_left.speed = 0.01f * dt;
-	Idle_right.speed = 0.01f * dt;
-	Idle_left.speed = 0.01f * dt;
-	Jump_right.speed = 0.01f * dt;
-	Jump_left.speed = 0.01f * dt;
+	Move_right.speed = animVel * dt;
+	Move_left.speed = animVel * dt;
+	Idle_right.speed = animVel * dt;
+	Idle_left.speed = animVel * dt;
+	Jump_right.speed = animVel * dt;
+	Jump_left.speed = animVel * dt;
 	Die.speed = 0.01f * dt;
 
 	if (position.x > 1930 && position.y < 260) {
@@ -77,6 +77,15 @@ bool Player::Update(float dt)
 	if (intoxication > 2) {
 		isAlive = false;
 		intoxication = 0;
+	}
+
+	if (intoxication == 1) {
+		animVel = 0.02f;
+		speed = 0.3f;
+	}
+	else if (intoxication == 2) {
+		animVel = 0.03f;
+		speed = 0.4f;
 	}
 
 	if(isAlive)
@@ -178,7 +187,7 @@ bool Player::Update(float dt)
 			app->audio->PlayFx(jump);
 			pbody->body->GetFixtureList()->SetSensor(true); // Disable collisions
 			jumping = true;
-			vel.y = -0.625f * dt; // Aplicar impulso vertical al saltar
+			vel.y = -10.0f; // Aplicar impulso vertical al saltar
 
 		}
 		if (position.y >= 786 && !fell) {

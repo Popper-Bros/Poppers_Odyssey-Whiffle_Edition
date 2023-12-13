@@ -69,8 +69,6 @@ bool EnemyZombie::Update(float dt)
 
 	cd -= dt * 0.1;
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 33;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 50;
 
 	if (isAlive) {
 
@@ -84,6 +82,9 @@ bool EnemyZombie::Update(float dt)
 				currentDirection = EnemyZombieDirection::IDLE_L;
 			}
 		}
+
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 33;
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 50;
 
 		switch (currentDirection)
 		{
@@ -118,6 +119,8 @@ bool EnemyZombie::Update(float dt)
 
 		else {
 			seePlayer = false;
+			isAttackingLeft = false;
+			isAttackingRight = false;
 			app->map->pathfinding->CreatePath(enemyTile, enemyOriginTile, app->map->pathfinding);
 			path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
 		}
@@ -150,7 +153,7 @@ bool EnemyZombie::Update(float dt)
 		enemyTile = app->map->WorldToMap(20 + position.x, 30 + position.y - app->render->camera.y);
 
 		if(isMovingLeft||isMovingRight){
-			MoveTowardsNextNode(enemyTile,speed,path);
+			MoveTowardsNextNode(enemyTile,speed,path,vel.y);
 		}
 
 		if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 4) {
@@ -170,7 +173,7 @@ bool EnemyZombie::Update(float dt)
 	else
 	{
 		
-		//pbody->body->GetFixtureList()->SetSensor(true);
+		pbody->body->GetFixtureList()->SetSensor(true);
 		//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
 		if (currentAnimation == &Idle_right || currentAnimation == &Move_right) {
 			currentAnimation = &Die_right;
@@ -193,7 +196,7 @@ bool EnemyZombie::Update(float dt)
 	return true;
 }
 
-void EnemyZombie::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path) {
+void EnemyZombie::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path, float vely) {
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 	if (path->Count() > 0) {
 		iPoint nextNode;
@@ -204,15 +207,15 @@ void EnemyZombie::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynA
 
 			// Determine the direction based on the sign of dx and dy
 			if (dx > 0) {
-				vel = { speed,0 };
+				vel = { speed,vely };
 				currentDirection = EnemyZombieDirection::RIGHT;
 			}
 			else if (dx < 0) {
-				vel = { -speed,0 };
+				vel = { -speed,vely };
 				currentDirection = EnemyZombieDirection::LEFT;
 			}
 			else if (dx == 0) {
-				vel = { 0,0 };
+				vel = { 0,vely };
 				if (currentDirection == EnemyZombieDirection::LEFT || currentDirection == EnemyZombieDirection::IDLE_L) {
 					currentDirection = EnemyZombieDirection::IDLE_L;
 				}
