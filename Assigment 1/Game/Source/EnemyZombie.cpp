@@ -47,6 +47,7 @@ bool EnemyZombie::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
+	roar = app->audio->LoadFx("EnemyZombie", "attack");
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
@@ -258,10 +259,12 @@ void EnemyZombie::attack() {
 
 	if (position.x - app->scene->getPlayerPos().x >= 0) {
 		isAttackingLeft = true;
+		app->audio->PlayFx(roar);
 		currentDirection = EnemyZombieDirection::ATTACK_L;
 	}
 	else if (position.x - app->scene->getPlayerPos().x < 0) {
 		isAttackingRight = true;
+		app->audio->PlayFx(roar);
 		currentDirection = EnemyZombieDirection::ATTACK_R;
 	}
 	cd = 200.0f;
