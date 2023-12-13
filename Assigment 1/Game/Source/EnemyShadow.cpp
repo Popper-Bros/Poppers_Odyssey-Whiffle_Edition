@@ -109,6 +109,8 @@ bool EnemyShadow::Update(float dt)
 
 		else {
 			seePlayer = false;
+			isAttackingLeft = false;
+			isAttackingRight = false;
 			app->map->pathfinding2->CreatePath(enemyTile, enemyOriginTile, app->map->pathfinding2);
 			path = app->map->pathfinding2->GetLastPath();		// L13: Get the latest calculated path and draw
 		}
@@ -141,7 +143,7 @@ bool EnemyShadow::Update(float dt)
 			}
 		}
 
-		enemyTile = app->map->WorldToMap(19 + position.x, 30 + position.y - app->render->camera.y);
+		enemyTile = app->map->WorldToMap(21 + position.x, 30 + position.y - app->render->camera.y);
 		
 		if(isMovingLeft||isMovingRight){
 			MoveTowardsNextNode(enemyTile,speed,path);
@@ -168,7 +170,7 @@ bool EnemyShadow::Update(float dt)
 	else
 	{
 		
-		//pbody->body->GetFixtureList()->SetSensor(true);
+		pbody->body->GetFixtureList()->SetSensor(true);
 		//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
 		if (currentAnimation == &Idle_right || currentAnimation == &Attack_right) {
 			currentAnimation = &Die_right;

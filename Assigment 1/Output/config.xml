@@ -208,10 +208,117 @@
 			</animations>
 		</EnemyShadow>
 
-		<EnemyZombie x="1935" y="672" texturepath="Assets/Textures/zombie.png">
-			<audio>
-				<attack path="Assets/Audio/Fx/zombie_attack.ogg"/>
-			</audio>
+		<EnemyShadow2 x="1648" y="280" texturepath="Assets/Textures/sombra.png">
+			<animations>
+				<Idle_right loop="true" >
+					<anim x ="19" y =" 16" width =" 48" height ="48"/>
+					<anim x ="69" y =" 16" width =" 48" height ="48"/>
+					<anim x ="119" y =" 16" width =" 48" height ="48"/>
+					<anim x ="169" y =" 16" width =" 48" height ="48"/>
+					<anim x ="219" y =" 16" width =" 48" height ="48"/>
+					<anim x ="269" y =" 16" width =" 48" height ="48"/>
+					<anim x ="319" y =" 16" width =" 48" height ="48"/>
+					<anim x ="369" y =" 16" width =" 48" height ="48"/>
+					<anim x ="419" y =" 16" width =" 48" height ="48"/>
+					<anim x ="469" y =" 16" width =" 48" height ="48"/>
+					<anim x ="519" y =" 16" width =" 48" height ="48"/>
+					<anim x ="569" y =" 16" width =" 48" height ="48"/>
+					<anim x ="619" y =" 16" width =" 48" height ="48"/>
+					<anim x ="669" y =" 16" width =" 48" height ="48"/>
+					<anim x ="719" y =" 16" width =" 48" height ="48"/>
+					<anim x ="769" y =" 16" width =" 48" height ="48"/>
+				</Idle_right>
+
+				<Idle_left loop="true" >
+					<anim x ="769" y =" 66" width =" 48" height ="48"/>
+					<anim x ="719" y =" 66" width =" 48" height ="48"/>
+					<anim x ="669" y =" 66" width =" 48" height ="48"/>
+					<anim x ="619" y =" 66" width =" 48" height ="48"/>
+					<anim x ="569" y =" 66" width =" 48" height ="48"/>
+					<anim x ="519" y =" 66" width =" 48" height ="48"/>
+					<anim x ="469" y =" 66" width =" 48" height ="48"/>
+					<anim x ="419" y =" 66" width =" 48" height ="48"/>
+					<anim x ="369" y =" 66" width =" 48" height ="48"/>
+					<anim x ="319" y =" 66" width =" 48" height ="48"/>
+					<anim x ="269" y =" 66" width =" 48" height ="48"/>
+					<anim x ="219" y =" 66" width =" 48" height ="48"/>
+					<anim x ="169" y =" 66" width =" 48" height ="48"/>
+					<anim x ="119" y =" 66" width =" 48" height ="48"/>
+					<anim x ="69" y =" 66" width =" 48" height ="48"/>
+					<anim x ="19" y =" 66" width =" 48" height ="48"/>
+				</Idle_left>
+
+				<Die_right loop="false" >
+					<anim x ="19" y =" 116" width =" 48" height ="47"/>
+					<anim x ="69" y =" 116" width =" 48" height ="47"/>
+					<anim x ="119" y =" 116" width =" 48" height ="47"/>
+					<anim x ="169" y =" 116" width =" 48" height ="47"/>
+					<anim x ="219" y =" 116" width =" 48" height ="47"/>
+					<anim x ="269" y =" 116" width =" 48" height ="47"/>
+					<anim x ="319" y =" 116" width =" 48" height ="47"/>
+					<anim x ="369" y =" 116" width =" 48" height ="47"/>
+					<anim x ="419" y =" 116" width =" 48" height ="47"/>
+					<anim x ="469" y =" 116" width =" 48" height ="47"/>
+					<anim x ="519" y =" 116" width =" 48" height ="47"/>
+					<anim x ="569" y =" 116" width =" 48" height ="47"/>
+				</Die_right>
+
+				<Die_left loop="false" >
+					<anim x ="569" y =" 165" width =" 48" height ="48"/>
+					<anim x ="519" y =" 165" width =" 48" height ="48"/>
+					<anim x ="469" y =" 165" width =" 48" height ="48"/>
+					<anim x ="419" y =" 165" width =" 48" height ="48"/>
+					<anim x ="369" y =" 165" width =" 48" height ="48"/>
+					<anim x ="319" y =" 165" width =" 48" height ="48"/>
+					<anim x ="269" y =" 165" width =" 48" height ="48"/>
+					<anim x ="219" y =" 165" width =" 48" height ="48"/>
+					<anim x ="169" y =" 165" width =" 48" height ="48"/>
+					<anim x ="119" y =" 165" width =" 48" height ="48"/>
+					<anim x ="69" y =" 165" width =" 48" height ="48"/>
+					<anim x ="19" y =" 165" width =" 48" height ="48"/>
+				</Die_left>
+
+				<Attack_right loop="true" >
+					<anim x ="20" y =" 223" width =" 43" height ="45"/>
+					<anim x ="65" y =" 223" width =" 43" height ="45"/>
+					<anim x ="110" y =" 223" width =" 43" height ="45"/>
+					<anim x ="155" y =" 223" width =" 43" height ="45"/>
+					<anim x ="200" y =" 223" width =" 43" height ="45"/>
+					<anim x ="245" y =" 223" width =" 43" height ="45"/>
+					<anim x ="290" y =" 223" width =" 43" height ="45"/>
+					<anim x ="335" y =" 223" width =" 43" height ="45"/>
+					<anim x ="380" y =" 223" width =" 43" height ="45"/>
+					<anim x ="425" y =" 223" width =" 43" height ="45"/>
+					<anim x ="470" y =" 223" width =" 43" height ="45"/>
+					<anim x ="515" y =" 223" width =" 43" height ="45"/>
+					<anim x ="560" y =" 223" width =" 43" height ="45"/>
+					<anim x ="605" y =" 223" width =" 43" height ="45"/>
+					<anim x ="650" y =" 223" width =" 43" height ="45"/>
+					<anim x ="695" y =" 223" width =" 43" height ="45"/>
+				</Attack_right>
+
+				<Attack_left loop="true" >
+					<anim x ="695" y =" 270" width =" 43" height ="45"/>
+					<anim x ="650" y =" 270" width =" 43" height ="45"/>
+					<anim x ="605" y =" 270" width =" 43" height ="45"/>
+					<anim x ="560" y =" 270" width =" 43" height ="45"/>
+					<anim x ="515" y =" 270" width =" 43" height ="45"/>
+					<anim x ="470" y =" 270" width =" 43" height ="45"/>
+					<anim x ="425" y =" 270" width =" 43" height ="45"/>
+					<anim x ="380" y =" 270" width =" 43" height ="45"/>
+					<anim x ="335" y =" 270" width =" 43" height ="45"/>
+					<anim x ="290" y =" 270" width =" 43" height ="45"/>
+					<anim x ="245" y =" 270" width =" 43" height ="45"/>
+					<anim x ="200" y =" 270" width =" 43" height ="45"/>
+					<anim x ="155" y =" 270" width =" 43" height ="45"/>
+					<anim x ="110" y =" 270" width =" 43" height ="45"/>
+					<anim x ="65" y =" 270" width =" 43" height ="45"/>
+					<anim x ="20" y =" 270" width =" 43" height ="45"/>
+				</Attack_left>
+			</animations>
+		</EnemyShadow2>
+
+		<EnemyZombie x="1935" y="545" texturepath="Assets/Textures/zombie.png">
 			<animations>
 				<Idle_right loop="true" >
 					<anim x ="6" y =" 10" width =" 67" height ="67"/>
