@@ -51,6 +51,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("EnemyShadow")) {
 		enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
 		enemy->parameters = config.child("EnemyShadow");
+		enemy->Num = 1;
 	}
 
 	enemyShadowConfig = config.child("EnemyShadow");
@@ -58,6 +59,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("EnemyShadow2")) {
 		enemy3 = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
 		enemy3->parameters = config.child("EnemyShadow2");
+		enemy3->Num = 2;
 	}
 
 	enemyShadowConfig2 = config.child("EnemyShadow2");
@@ -65,6 +67,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("EnemyZombie")) {
 		enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
 		enemy2->parameters = config.child("EnemyZombie");
+		enemy2->Num = 1;
 	}
 
 	enemyZombieConfig = config.child("EnemyZombie");
@@ -72,6 +75,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("EnemyZombie2")) {
 		enemy4 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
 		enemy4->parameters = config.child("EnemyZombie2");
+		enemy4->Num = 2;
 	}
 
 	enemyZombieConfig2 = config.child("EnemyZombie2");
@@ -215,77 +219,67 @@ bool Scene::LoadState(pugi::xml_node node) {
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x+0.3f),PIXEL_TO_METERS(player->position.y+0.3f) }, 0);
 	}
 
-	if (node.child("EnemyShadow")) {
-		if (node.child("EnemyShadow").attribute("isAlive").as_bool() == true && enemy->isAlive == false) {
-			enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
-			enemy->isAlive = true;
-			enemy->Awake();
-			enemy->texturepath = node.child("EnemyShadow").attribute("texturepath").as_string();
-			enemy->Start();
+	for (pugi::xml_node enemyShadowNode = node.child("EnemyShadow"); enemyShadowNode; enemyShadowNode = enemyShadowNode.next_sibling("EnemyShadow")) {
+
+		if (enemyShadowNode.attribute("num").as_int()==1) {
+			if (enemyShadowNode.attribute("isAlive").as_bool() == true && enemy->isAlive == false) {
+				enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+				enemy->Awake();
+				enemy->texturepath = enemyShadowNode.attribute("texturepath").as_string();
+				enemy->Start();
+				enemy->isAlive = true;
+			}
+			enemy->position.x = enemyShadowNode.attribute("x").as_int();
+			enemy->position.y = enemyShadowNode.attribute("y").as_int();
+
+			enemy->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy->position.x+0.4f),PIXEL_TO_METERS(enemy->position.y+0.73f) }, 0);
+
 		}
-		enemy->position.x = node.child("EnemyShadow").attribute("x").as_int();
-		enemy->position.y = node.child("EnemyShadow").attribute("y").as_int();
 
-		enemy->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy->position.x+0.4f),PIXEL_TO_METERS(enemy->position.y+0.73f) }, 0);
+		if (enemyShadowNode.attribute("num").as_int() == 2) {
+			if (enemyShadowNode.attribute("isAlive").as_bool() == true && enemy3->isAlive == false) {
+				enemy3 = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+				enemy3->Awake();
+				enemy3->texturepath = enemyShadowNode.attribute("texturepath").as_string();
+				enemy3->Start();
+				enemy3->isAlive = true;
+			}
+			enemy3->position.x = enemyShadowNode.attribute("x").as_int();
+			enemy3->position.y = enemyShadowNode.attribute("y").as_int();
 
+			enemy3->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy3->position.x + 0.4f),PIXEL_TO_METERS(enemy3->position.y + 0.73f) }, 0);
+		}
 	}
 
-	if (node.child("EnemyShadow2")) {
-		if (node.child("EnemyShadow2").attribute("isAlive").as_bool() == true && enemy3->isAlive == false) {
-			enemy3 = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
-			enemy3->isAlive = true;
-			enemy3->Awake();
-			enemy3->texturepath = node.child("EnemyShadow2").attribute("texturepath").as_string();
-			enemy3->Start();
+	for (pugi::xml_node enemyZombieNode = node.child("EnemyZombie"); enemyZombieNode; enemyZombieNode = enemyZombieNode.next_sibling("EnemyZombie")) {
+
+		if (enemyZombieNode.attribute("num").as_int() == 1) {
+			if (enemyZombieNode.attribute("isAlive").as_bool() == true && enemy2->isAlive == false) {
+				enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+				enemy2->Awake();
+				enemy2->texturepath = enemyZombieNode.attribute("texturepath").as_string();
+				enemy2->Start();
+				enemy2->isAlive = true;
+			}
+			enemy2->position.x = enemyZombieNode.attribute("x").as_int();
+			enemy2->position.y = enemyZombieNode.attribute("y").as_int();
+
+			enemy2->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy2->position.x + 0.6f),PIXEL_TO_METERS(enemy2->position.y + 0.93f) }, 0);
 		}
-		enemy3->position.x = node.child("EnemyShadow2").attribute("x").as_int();
-		enemy3->position.y = node.child("EnemyShadow2").attribute("y").as_int();
 
-		enemy3->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy3->position.x + 0.4f),PIXEL_TO_METERS(enemy3->position.y + 0.73f) }, 0);
+		if (enemyZombieNode.attribute("num").as_int() == 2) {
+			if (enemyZombieNode.attribute("isAlive").as_bool() == true && enemy4->isAlive == false) {
+				enemy4 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+				enemy4->Awake();
+				enemy4->texturepath = enemyZombieNode.attribute("texturepath").as_string();
+				enemy4->Start();
+				enemy4->isAlive = true;
+			}
+			enemy4->position.x = enemyZombieNode.attribute("x").as_int();
+			enemy4->position.y = enemyZombieNode.attribute("y").as_int();
 
-	}
-
-	//for (pugi::xml_node enemyNode = node.child("EnemyZombie"); enemyNode; enemyNode = enemyNode.next_sibling("EnemyZombie"))
-	//{
-	//	if (node.child("EnemyZombie").attribute("isAlive").as_bool() == true && enemy2->isAlive == false) {
-	//		enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
-	//		enemy2->isAlive = true;
-	//		enemy2->Awake();
-	//		enemy2->texturepath = node.child("EnemyZombie").attribute("texturepath").as_string();
-	//		enemy2->Start();
-	//	}
-	//	enemy2->position.x = node.child("EnemyZombie").attribute("x").as_int();
-	//	enemy2->position.y = node.child("EnemyZombie").attribute("y").as_int();
-
-	//	enemy2->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy2->position.x+0.6f),PIXEL_TO_METERS(enemy2->position.y+0.93f) }, 0);
-	//}
-
-	if (node.child("EnemyZombie")) {
-		if (node.child("EnemyZombie").attribute("isAlive").as_bool() == true && enemy2->isAlive == false) {
-			enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
-			enemy2->isAlive = true;
-			enemy2->Awake();
-			enemy2->texturepath = node.child("EnemyZombie").attribute("texturepath").as_string();
-			enemy2->Start();
+			enemy4->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy4->position.x + 0.6f),PIXEL_TO_METERS(enemy4->position.y + 0.93f) }, 0);
 		}
-		enemy2->position.x = node.child("EnemyZombie").attribute("x").as_int();
-		enemy2->position.y = node.child("EnemyZombie").attribute("y").as_int();
-
-		enemy2->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy2->position.x+0.6f),PIXEL_TO_METERS(enemy2->position.y+0.93f) }, 0);
-	}
-
-	if (node.child("EnemyZombie2")) {
-		if (node.child("EnemyZombie2").attribute("isAlive").as_bool() == true && enemy4->isAlive == false) {
-			enemy4 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
-			enemy4->isAlive = true;
-			enemy4->Awake();
-			enemy4->texturepath = node.child("EnemyZombie2").attribute("texturepath").as_string();
-			enemy4->Start();
-		}
-		enemy4->position.x = node.child("EnemyZombie2").attribute("x").as_int();
-		enemy4->position.y = node.child("EnemyZombie2").attribute("y").as_int();
-
-		enemy4->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy4->position.x + 0.6f),PIXEL_TO_METERS(enemy4->position.y + 0.93f) }, 0);
 	}
 
 	for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
@@ -317,6 +311,12 @@ bool Scene::SaveState(pugi::xml_node node) {
 		entNode.append_attribute("texturepath").set_value(app->entityManager->entities[i]->texturepath);
 		if (app->entityManager->entities[i]->name == "Player") {
 			entNode.append_attribute("intoxication").set_value(app->entityManager->entities[i]->intoxication);
+		}
+		if (app->entityManager->entities[i]->name == "EnemyZombie") {
+			entNode.append_attribute("num").set_value(app->entityManager->entities[i]->Num);
+		}
+		if (app->entityManager->entities[i]->name == "EnemyShadow") {
+			entNode.append_attribute("num").set_value(app->entityManager->entities[i]->Num);
 		}
 	}
 

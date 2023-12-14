@@ -101,6 +101,7 @@ public:
 	bool isAlive = true;
 	int intoxication;
 	const char* texturepath;
+	int Num;
 
 	SDL_Texture* mouseTileTex = nullptr;
 };
