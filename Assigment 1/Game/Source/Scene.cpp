@@ -221,7 +221,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 	if (node.child("Player")) {
 		player->position.x = node.child("Player").attribute("x").as_int();
 		player->position.y = node.child("Player").attribute("y").as_int();
-		player->intoxication = node.child("intoxication").attribute("x").as_int();
+		player->intoxication = node.child("Player").attribute("intoxication").as_int();
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x+0.3f),PIXEL_TO_METERS(player->position.y+0.3f) }, 0);
 	}
 

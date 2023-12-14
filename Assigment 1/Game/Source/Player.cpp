@@ -78,7 +78,10 @@ bool Player::Update(float dt)
 		isAlive = false;
 		intoxication = 0;
 	}
-
+	if (intoxication == 0) {
+		animVel = 0.01f;
+		speed = 0.2f;
+	}
 	if (intoxication == 1) {
 		animVel = 0.02f;
 		speed = 0.3f;
@@ -266,6 +269,7 @@ bool Player::Update(float dt)
 			currentAnimation->Reset();
 			if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 			else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
+			intoxication = 0;
 		}
 	}
 	return true;
