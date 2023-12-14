@@ -8,13 +8,16 @@
 	<pathfinding />
 	<map />
 	<scene>
-		<item x="264" y="687" isAlive="true" texturepath="Assets/Textures/popper.png" />
-		<Player x="63" y="166" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" />
+		<item x="222" y="687" isAlive="true" texturepath="Assets/Textures/popper.png" num="1" />
+		<item x="894" y="687" isAlive="true" texturepath="Assets/Textures/popper.png" num="2" />
+		<item x="818" y="651" isAlive="true" texturepath="Assets/Textures/popper.png" num="3" />
+		<item x="1426" y="609" isAlive="true" texturepath="Assets/Textures/popper.png" num="4" />
+		<Player x="57" y="166" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" />
 		<Particulas x="0" y="0" isAlive="true" texturepath="Assets/Textures/particles.png" />
-		<EnemyShadow x="730" y="209" isAlive="true" texturepath="Assets/Textures/sombra.png" num="1" />
-		<EnemyShadow x="1626" y="266" isAlive="true" texturepath="Assets/Textures/sombra.png" num="2" />
-		<EnemyZombie x="1902" y="516" isAlive="true" texturepath="Assets/Textures/zombie.png" num="1" />
-		<EnemyZombie x="752" y="644" isAlive="true" texturepath="Assets/Textures/zombie.png" num="2" />
+		<EnemyShadow x="717" y="248" isAlive="true" texturepath="Assets/Textures/sombra.png" num="1" />
+		<EnemyShadow x="1613" y="312" isAlive="true" texturepath="Assets/Textures/sombra.png" num="2" />
+		<EnemyZombie x="1856" y="516" isAlive="true" texturepath="Assets/Textures/zombie.png" num="1" />
+		<EnemyZombie x="709" y="644" isAlive="true" texturepath="Assets/Textures/zombie.png" num="2" />
 	</scene>
 	<entitymanager />
 	<renderer>

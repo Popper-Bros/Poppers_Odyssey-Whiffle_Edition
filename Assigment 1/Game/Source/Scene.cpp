@@ -28,10 +28,28 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	// iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
-	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
-	{
+	if (config.child("item")) {
 		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
+		item->parameters = config.child("item");
+		item->Num = 1;
+	}
+
+	if (config.child("item2")) {
+		item2 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		item2->parameters = config.child("item2");
+		item2->Num = 2;
+	}
+
+	if (config.child("item3")) {
+		item3 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		item3->parameters = config.child("item3");
+		item3->Num = 3;
+	}
+
+	if (config.child("item4")) {
+		item4 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		item4->parameters = config.child("item4");
+		item4->Num = 4;
 	}
 
 	if (config.child("player")) {
@@ -39,14 +57,10 @@ bool Scene::Awake(pugi::xml_node& config)
 		player->parameters = config.child("player");
 	}
 
-	playerConfig = config.child("player");
-
 	if (config.child("Particulas")) {
 		particulas = (Particulas*)app->entityManager->CreateEntity(EntityType::PARTICULAS);
 		particulas->parameters = config.child("Particulas");
 	}
-	particulasConfig = config.child("Particulas");
-
 
 	if (config.child("EnemyShadow")) {
 		enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
@@ -54,15 +68,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		enemy->Num = 1;
 	}
 
-	enemyShadowConfig = config.child("EnemyShadow");
-
 	if (config.child("EnemyShadow2")) {
 		enemy3 = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
 		enemy3->parameters = config.child("EnemyShadow2");
 		enemy3->Num = 2;
 	}
-
-	enemyShadowConfig2 = config.child("EnemyShadow2");
 
 	if (config.child("EnemyZombie")) {
 		enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
@@ -70,15 +80,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		enemy2->Num = 1;
 	}
 
-	enemyZombieConfig = config.child("EnemyZombie");
-
 	if (config.child("EnemyZombie2")) {
 		enemy4 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
 		enemy4->parameters = config.child("EnemyZombie2");
 		enemy4->Num = 2;
 	}
-
-	enemyZombieConfig2 = config.child("EnemyZombie2");
 
 	//Get the map name from the config file and assigns the value in the module
 	app->map->name = config.child("map").attribute("name").as_string();
@@ -229,6 +235,9 @@ bool Scene::LoadState(pugi::xml_node node) {
 				enemy->Start();
 				enemy->isAlive = true;
 			}
+			if (enemyShadowNode.attribute("isAlive").as_bool() == false && enemy->isAlive == true) {
+				enemy->isAlive = false;
+			}
 			enemy->position.x = enemyShadowNode.attribute("x").as_int();
 			enemy->position.y = enemyShadowNode.attribute("y").as_int();
 
@@ -243,6 +252,9 @@ bool Scene::LoadState(pugi::xml_node node) {
 				enemy3->texturepath = enemyShadowNode.attribute("texturepath").as_string();
 				enemy3->Start();
 				enemy3->isAlive = true;
+			}
+			if (enemyShadowNode.attribute("isAlive").as_bool() == false && enemy3->isAlive == true) {
+				enemy3->isAlive = false;
 			}
 			enemy3->position.x = enemyShadowNode.attribute("x").as_int();
 			enemy3->position.y = enemyShadowNode.attribute("y").as_int();
@@ -261,6 +273,9 @@ bool Scene::LoadState(pugi::xml_node node) {
 				enemy2->Start();
 				enemy2->isAlive = true;
 			}
+			if (enemyZombieNode.attribute("isAlive").as_bool() == false && enemy2->isAlive == true) {
+				enemy2->isAlive = false;
+			}
 			enemy2->position.x = enemyZombieNode.attribute("x").as_int();
 			enemy2->position.y = enemyZombieNode.attribute("y").as_int();
 
@@ -275,6 +290,9 @@ bool Scene::LoadState(pugi::xml_node node) {
 				enemy4->Start();
 				enemy4->isAlive = true;
 			}
+			if (enemyZombieNode.attribute("isAlive").as_bool() == false && enemy4->isAlive == true) {
+				enemy4->isAlive = false;
+			}
 			enemy4->position.x = enemyZombieNode.attribute("x").as_int();
 			enemy4->position.y = enemyZombieNode.attribute("y").as_int();
 
@@ -282,19 +300,71 @@ bool Scene::LoadState(pugi::xml_node node) {
 		}
 	}
 
-	for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
-	{
-		if (node.child("item").attribute("isAlive").as_bool() == true && item->isAlive == false) {
-			item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM); 
-			item->isAlive = true;
-			item->Awake();
-			item->texturepath = node.child("item").attribute("texturepath").as_string();
-			item->Start();
-		}
-		item->position.x = node.child("item").attribute("x").as_int();
-		item->position.y = node.child("item").attribute("y").as_int();
+	for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item")) {
+		if (itemNode.attribute("num").as_int() == 1) {
+			if (itemNode.attribute("isAlive").as_bool() == true && item->isAlive == false) {
+				item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				item->Awake();
+				item->texturepath = itemNode.attribute("texturepath").as_string();
+				item->Start();
+				item->isAlive = true;
+			}
+			if (itemNode.attribute("isAlive").as_bool() == false && item->isAlive == true) {
+				item->isAlive = false;
+			}
+			item->position.x = itemNode.attribute("x").as_int();
+			item->position.y = itemNode.attribute("y").as_int();
 
-		item->pbody->body->SetTransform({ PIXEL_TO_METERS(item->position.x),PIXEL_TO_METERS(item->position.y) }, 0);
+			item->pbody->body->SetTransform({ PIXEL_TO_METERS(item->position.x),PIXEL_TO_METERS(item->position.y) }, 0);
+		}
+		if (itemNode.attribute("num").as_int() == 2) {
+			if (itemNode.attribute("isAlive").as_bool() == true && item2->isAlive == false) {
+				item2 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				item2->Awake();
+				item2->texturepath = itemNode.attribute("texturepath").as_string();
+				item2->Start();
+				item2->isAlive = true;
+			}
+			if (itemNode.attribute("isAlive").as_bool() == false && item2->isAlive == true) {
+				item2->isAlive = false;
+			}
+			item2->position.x = itemNode.attribute("x").as_int();
+			item2->position.y = itemNode.attribute("y").as_int();
+
+			item2->pbody->body->SetTransform({ PIXEL_TO_METERS(item2->position.x),PIXEL_TO_METERS(item2->position.y) }, 0);
+		}
+		if (itemNode.attribute("num").as_int() == 3) {
+			if (itemNode.attribute("isAlive").as_bool() == true && item3->isAlive == false) {
+				item3 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				item3->Awake();
+				item3->texturepath = itemNode.attribute("texturepath").as_string();
+				item3->Start();
+				item3->isAlive = true;
+			}
+			if (itemNode.attribute("isAlive").as_bool() == false && item3->isAlive == true) {
+				item3->isAlive = false;
+			}
+			item3->position.x = itemNode.attribute("x").as_int();
+			item3->position.y = itemNode.attribute("y").as_int();
+
+			item3->pbody->body->SetTransform({ PIXEL_TO_METERS(item3->position.x),PIXEL_TO_METERS(item3->position.y) }, 0);
+		}
+		if (itemNode.attribute("num").as_int() == 4) {
+			if (itemNode.attribute("isAlive").as_bool() == true && item4->isAlive == false) {
+				item4 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				item4->Awake();
+				item4->texturepath = itemNode.attribute("texturepath").as_string();
+				item4->Start();
+				item4->isAlive = true;
+			}
+			if (itemNode.attribute("isAlive").as_bool() == false && item4->isAlive == true) {
+				item4->isAlive = false;
+			}
+			item4->position.x = itemNode.attribute("x").as_int();
+			item4->position.y = itemNode.attribute("y").as_int();
+
+			item4->pbody->body->SetTransform({ PIXEL_TO_METERS(item4->position.x),PIXEL_TO_METERS(item4->position.y) }, 0);
+		}
 	}
 
 	return true;
@@ -312,12 +382,12 @@ bool Scene::SaveState(pugi::xml_node node) {
 		if (app->entityManager->entities[i]->name == "Player") {
 			entNode.append_attribute("intoxication").set_value(app->entityManager->entities[i]->intoxication);
 		}
-		if (app->entityManager->entities[i]->name == "EnemyZombie") {
+		if (app->entityManager->entities[i]->name == "EnemyZombie" || app->entityManager->entities[i]->name == "EnemyShadow" || app->entityManager->entities[i]->name == "item") {
 			entNode.append_attribute("num").set_value(app->entityManager->entities[i]->Num);
 		}
-		if (app->entityManager->entities[i]->name == "EnemyShadow") {
+		/*if (app->entityManager->entities[i]->name == "EnemyZombie") {
 			entNode.append_attribute("num").set_value(app->entityManager->entities[i]->Num);
-		}
+		}*/
 	}
 
 	return true;

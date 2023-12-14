@@ -62,6 +62,9 @@ private:
 	uint windowW, windowH;
 	Player* player;
 	Item* item;
+	Item* item2;
+	Item* item3;
+	Item* item4;
 	EnemyShadow* enemy;
 	EnemyZombie* enemy2;
 	EnemyShadow* enemy3;

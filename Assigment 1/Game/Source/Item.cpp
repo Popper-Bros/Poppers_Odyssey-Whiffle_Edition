@@ -38,11 +38,13 @@ bool Item::Start() {
 
 bool Item::Update(float dt)
 {
-	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 8;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 8;
+	if (isAlive) {
+		// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 8;
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 8;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+		app->render->DrawTexture(texture, position.x, position.y);
+	}
 
 	if (!isAlive)
 	{
