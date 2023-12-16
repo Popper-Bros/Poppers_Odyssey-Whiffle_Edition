@@ -20,7 +20,7 @@ EnemyShadow::EnemyShadow() : Entity(EntityType::ENEMYSHADOW)
 EnemyShadow::~EnemyShadow() {}
 
 bool EnemyShadow::Awake() {
-
+	//inicializa parametros
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturepath = parameters.attribute("texturepath").as_string();
@@ -132,6 +132,8 @@ bool EnemyShadow::Update(float dt)
 
 		pbody->body->SetLinearVelocity(vel);
 
+		//esta parte del codigo hace que el enemigo se mueva hacia el jugador cuando lo ve
+
 		if (seePlayer && !isAttackingLeft && !isAttackingRight) {
 			if (position.x - app->scene->getPlayerPos().x < 0) {
 				isMovingRight = true;
@@ -195,7 +197,8 @@ bool EnemyShadow::Update(float dt)
 	return true;
 }
 
-void EnemyShadow :: MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path) {
+void EnemyShadow :: MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path) //esta funcion sirve para que el enemigo se mueva hacia el siguiente nodo
+{
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 	if (path->Count() > 0) {
 		iPoint nextNode;

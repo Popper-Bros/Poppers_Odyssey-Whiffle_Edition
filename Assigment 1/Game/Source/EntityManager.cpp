@@ -82,6 +82,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 {
 	Entity* entity = nullptr; 
 
+	//Creates the entity depending on the type
 	switch (type)
 	{
 	case EntityType::PLAYER:

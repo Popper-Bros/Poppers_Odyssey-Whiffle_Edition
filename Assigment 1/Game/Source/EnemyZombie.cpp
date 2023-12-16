@@ -21,6 +21,7 @@ EnemyZombie::~EnemyZombie() {}
 
 bool EnemyZombie::Awake() {
 
+	//inicializa parametros
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturepath = parameters.attribute("texturepath").as_string();
@@ -69,7 +70,6 @@ bool EnemyZombie::Update(float dt)
 	Move_left.speed = 0.01f * dt;
 
 	cd -= dt * 0.1;
-	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 
 	if (isAlive) {
 
@@ -140,6 +140,7 @@ bool EnemyZombie::Update(float dt)
 
 		pbody->body->SetLinearVelocity(vel);
 
+		//esta parte de aqui se encarga de que el enemigo se mueva hacia el jugador si lo ve (pathfinding)
 		if (seePlayer && !isAttackingLeft && !isAttackingRight) {
 			if (position.x - app->scene->getPlayerPos().x < 0) {
 				isMovingRight = true;
@@ -197,7 +198,8 @@ bool EnemyZombie::Update(float dt)
 	return true;
 }
 
-void EnemyZombie::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path, float vely) {
+void EnemyZombie::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path, float vely) //esta fucnion es para que el enemigo se mueva hacia el siguiente nodo del path
+{
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 	if (path->Count() > 0) {
 		iPoint nextNode;

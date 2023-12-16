@@ -106,6 +106,7 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, int directio
 	int height;
 	int a;
 	int b;
+	//diferentes casos para el tamaño de la bala
 	if (coll == ColliderType::PLAYER_SHOT)
 	{
 		width = 5;
@@ -144,7 +145,7 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, int directio
 		nuevaBala.shot = playerShot;
 		nuevaBala.endShot = playerShotFinal;
 		break;
-	case ColliderType::ENEMY_SHOT:
+	case ColliderType::ENEMY_SHOT: // Cambiar la animacion de la bala dependiendo de su tipo
 		
 		if (direction == 1)
 		{
@@ -176,10 +177,10 @@ void Particulas::Shoot(bool disparar, int positionX, int positionY, int directio
 }
 
 
-void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
+void Particulas::OnCollision(PhysBody* physA, PhysBody* physB) //gestionar las colisiones de las balas
 {
 
-	for (ListItem<BalaInfo>* item = balas.start; item; item = item->next)
+	for (ListItem<BalaInfo>* item = balas.start; item; item = item->next) // Recorre la lista de balas
 	{
 		if (item->data.balaBody != nullptr && item->data.balaBody->body != nullptr && item->data.balaBody == physA)
 		{
@@ -239,7 +240,7 @@ void Particulas::OnCollision(PhysBody* physA, PhysBody* physB)
 
 bool Particulas::CleanUp()
 {
-	for (ListItem<BalaInfo>* item = balas.start; item != nullptr; )
+	for (ListItem<BalaInfo>* item = balas.start; item != nullptr; ) // Recorre la lista de balas y elimina las que ya no estan vivas
 	{
 		if (item->data.balaBody != nullptr && !item->data.alive && item->data.collision)
 		{

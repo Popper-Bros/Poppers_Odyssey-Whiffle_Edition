@@ -18,6 +18,7 @@ Item::~Item() {}
 
 bool Item::Awake() {
 
+	//initilize variables
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturepath = parameters.attribute("texturepath").as_string();
@@ -39,7 +40,7 @@ bool Item::Start() {
 bool Item::Update(float dt)
 {
 	if (isAlive) {
-		// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
+		//Draw the texture
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 8;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 8;
 

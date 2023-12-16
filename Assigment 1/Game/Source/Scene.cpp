@@ -150,6 +150,7 @@ bool Scene::Update(float dt)
 	//if(app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	//	app->render->camera.y += (int)ceil(camSpeed * dt);
 
+	//camera movement
 	if (app->render->camera.x < 0 && ((app->scene->player->position.x) + app->render->camera.x)<(((app->render->camera.w) / 2)) - 40)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 	if (app->render->camera.x > -1024 && ((app->scene->player->position.x) + app->render->camera.x) > (((app->render->camera.w) / 2)) + 40)
@@ -164,14 +165,17 @@ bool Scene::Update(float dt)
 		checkpoint = 0;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {
-		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+	//el player vuelve al pricipio 
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) { 
+		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0); 
 		checkpoint == 0;
 	}
+	//el player vuelve al checkpoint
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && player->isAlive && player->fell == false) {
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
 		checkpoint == 1;
 	}
+	//el player respawnea en el ultimo checkpoint
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && player->isAlive && player->fell == false){
 		if (checkpoint==0) player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 		else if (checkpoint == 1) player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
@@ -180,7 +184,10 @@ bool Scene::Update(float dt)
 	playerTile = app->map->WorldToMap(25+player->position.x, player->position.y - app->render->camera.y);
 		
 	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
+
+	//hace un save
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	//hace un load
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
 
@@ -210,14 +217,16 @@ bool Scene::CleanUp()
 	return true;
 }
 
-bool Scene::LoadState(pugi::xml_node node) {
+bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del xml en las variables de los objetos
+{
 
 	//for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	//{
 	//	item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 	//	item->parameters = itemNode;
 	//}
-
+	
+	
 	if (node.child("Player")) {
 		player->position.x = node.child("Player").attribute("x").as_int();
 		player->position.y = node.child("Player").attribute("y").as_int();
@@ -370,7 +379,8 @@ bool Scene::LoadState(pugi::xml_node node) {
 	return true;
 }
 
-bool Scene::SaveState(pugi::xml_node node) {
+bool Scene::SaveState(pugi::xml_node node) // esta funcion guarda los datos de las variables de los objetos en el xml "save_game" 
+{
 	//pugi::xml_node entNode = node.append_child("entitymanager");
 	for (int i = 0; i < app->entityManager->entities.Count(); i++)
 	{

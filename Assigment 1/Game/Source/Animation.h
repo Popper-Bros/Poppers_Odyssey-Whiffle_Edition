@@ -22,31 +22,38 @@ private:
 
 public:
 
-	void PushBack(const SDL_Rect& rect)
+	//añade un frame a la animacion
+	void PushBack(const SDL_Rect& rect) 
 	{
 		frames[totalFrames++] = rect;
 	}
 
-	void Reset()
+	//resetea la animacion
+	void Reset() 
 	{
 		currentFrame = 0;
 	}
 
-	int GetCurrentFrameIndex()
+	//devuelve el frame actual
+	int GetCurrentFrameIndex() 
 	{
 		return currentFrame;
 	}
 
-	bool HasFinished()
+	//devuelve si la animacion ha terminado
+	bool HasFinished() 
 	{
 		return !loop && !pingpong && loopCount > 0;
 	}
 
-	void Update()
+	//actualiza la animacion
+	void Update() 
 	{
 		currentFrame += speed;
-		if (currentFrame >= totalFrames)
+		
+		if (currentFrame >= totalFrames) 
 		{
+			//este if es para que si la animacion es loop, vuelva a empezar
 			currentFrame = (loop || pingpong) ? 0.0f : totalFrames - 1;
 			++loopCount;
 
@@ -55,6 +62,7 @@ public:
 		}
 	}
 
+	//devuelve el frame actual
 	SDL_Rect& GetCurrentFrame()
 	{
 		int actualFrame = currentFrame;
@@ -64,6 +72,7 @@ public:
 		return frames[actualFrame];
 	}
 
+	//carga la animacion desde el xml 
 	void LoadAnimation(const char* n, const char* nombre) {
 		pugi::xml_document configFile;
 		pugi::xml_node animationsNode;

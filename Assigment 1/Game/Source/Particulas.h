@@ -12,6 +12,7 @@
 
 struct BalaInfo
 {
+	//struct donde se guardan los datos de las balas
 	PhysBody* balaBody;
 	Animation* currentShotAnim;
 	Animation shot, endShot;

@@ -20,7 +20,7 @@ Player::~Player() {
 }
 
 bool Player::Awake() {
-
+	//se cargan los parametros del xml en el que se encuentra la informacion del jugador
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturepath = parameters.attribute("texturepath").as_string();
@@ -148,16 +148,16 @@ bool Player::Update(float dt)
 			falling = true;
 		}
 		
-		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && isAlive) {
-			if (cooldown <= 0 && canShoot)
-			{
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && isAlive) {  
+			if (cooldown <= 0 && canShoot) //codigo para disparar
+			{ 
 
-				for (int i = 0; i <= 1; i++)
+				for (int i = 0; i <= 1; i++) //dos disparos a la vez
 				{
 					if (currentAnimation == &Idle_right || currentAnimation == &Move_right || currentAnimation == &Jump_right) {
 						app->scene->particulas->Shoot(true, position.x + 32 - (i * 15), position.y + 15 + (i * 5), 1, ColliderType::PLAYER_SHOT);
 						app->audio->PlayFx(shoot);
-					}
+					} 
 					else if (currentAnimation == &Idle_left || currentAnimation == &Move_left || currentAnimation == &Jump_left) {
 						app->scene->particulas->Shoot(true, position.x + (i * 15), position.y + 11 + (i * 9), -1, ColliderType::PLAYER_SHOT);
 						app->audio->PlayFx(shoot);
@@ -169,7 +169,7 @@ bool Player::Update(float dt)
 			}
 		}
 
-		if (isShooting)
+		if (isShooting) 
 		{
 			cooldown -= 0.008f * dt;
 			LOG("COOLDOWN %.5f", cooldown);
@@ -256,13 +256,15 @@ bool Player::Update(float dt)
 	}
 	else
 	{
+		//en caso de que muera se desactivan las colisiones y se activa la animacion de muerte
 		pbody->body->GetFixtureList()->SetSensor(true);
 		if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood,24);
 		currentAnimation = &Die;
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
-		
+
+		//si la animacion de muerte termina se resetea la posicion del jugador y se activa la animacion de idle
 		if (currentAnimation->GetCurrentFrameIndex() >= 7)
 		{
 			isAlive = true;
