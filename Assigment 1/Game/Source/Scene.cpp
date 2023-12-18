@@ -90,6 +90,8 @@ bool Scene::Awake(pugi::xml_node& config)
 	app->map->name = config.child("map").attribute("name").as_string();
 	app->map->path = config.child("map").attribute("path").as_string();
 
+	savedConfig = config;
+
 	return ret;
 }
 
@@ -246,6 +248,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		if (enemyShadowNode.attribute("num").as_int()==1) {
 			if (enemyShadowNode.attribute("isAlive").as_bool() == true && enemy->isAlive == false) {
 				enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+				enemy->parameters = savedConfig.child("EnemyShadow");
 				enemy->Awake();
 				enemy->texturepath = enemyShadowNode.attribute("texturepath").as_string();
 				enemy->Start();
@@ -264,6 +267,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		if (enemyShadowNode.attribute("num").as_int() == 2) {
 			if (enemyShadowNode.attribute("isAlive").as_bool() == true && enemy3->isAlive == false) {
 				enemy3 = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+				enemy3->parameters = savedConfig.child("EnemyShadow");
 				enemy3->Awake();
 				enemy3->texturepath = enemyShadowNode.attribute("texturepath").as_string();
 				enemy3->Start();
@@ -284,6 +288,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		if (enemyZombieNode.attribute("num").as_int() == 1) {
 			if (enemyZombieNode.attribute("isAlive").as_bool() == true && enemy2->isAlive == false) {
 				enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+				enemy2->parameters = savedConfig.child("EnemyZombie");
 				enemy2->Awake();
 				enemy2->texturepath = enemyZombieNode.attribute("texturepath").as_string();
 				enemy2->Start();
@@ -301,6 +306,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		if (enemyZombieNode.attribute("num").as_int() == 2) {
 			if (enemyZombieNode.attribute("isAlive").as_bool() == true && enemy4->isAlive == false) {
 				enemy4 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+				enemy4->parameters = savedConfig.child("EnemyZombie2");
 				enemy4->Awake();
 				enemy4->texturepath = enemyZombieNode.attribute("texturepath").as_string();
 				enemy4->Start();
@@ -320,6 +326,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		if (itemNode.attribute("num").as_int() == 1) {
 			if (itemNode.attribute("isAlive").as_bool() == true && item->isAlive == false) {
 				item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				item->parameters = savedConfig.child("item");
 				item->Awake();
 				item->texturepath = itemNode.attribute("texturepath").as_string();
 				item->Start();
@@ -336,6 +343,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		if (itemNode.attribute("num").as_int() == 2) {
 			if (itemNode.attribute("isAlive").as_bool() == true && item2->isAlive == false) {
 				item2 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				item2->parameters = savedConfig.child("item2");
 				item2->Awake();
 				item2->texturepath = itemNode.attribute("texturepath").as_string();
 				item2->Start();
@@ -352,6 +360,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		if (itemNode.attribute("num").as_int() == 3) {
 			if (itemNode.attribute("isAlive").as_bool() == true && item3->isAlive == false) {
 				item3 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				item3->parameters = savedConfig.child("item3");
 				item3->Awake();
 				item3->texturepath = itemNode.attribute("texturepath").as_string();
 				item3->Start();
@@ -368,6 +377,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		if (itemNode.attribute("num").as_int() == 4) {
 			if (itemNode.attribute("isAlive").as_bool() == true && item4->isAlive == false) {
 				item4 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				item4->parameters = savedConfig.child("item4");
 				item4->Awake();
 				item4->texturepath = itemNode.attribute("texturepath").as_string();
 				item4->Start();

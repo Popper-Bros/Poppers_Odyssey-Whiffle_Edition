@@ -69,12 +69,7 @@ private:
 	EnemyZombie* enemy2;
 	EnemyShadow* enemy3;
 	EnemyZombie* enemy4;
-	pugi::xml_node playerConfig;
-	pugi::xml_node enemyShadowConfig;
-	pugi::xml_node enemyZombieConfig;
-	pugi::xml_node enemyShadowConfig2;
-	pugi::xml_node enemyZombieConfig2;
-	pugi::xml_node particulasConfig;
+	pugi::xml_node savedConfig;
 
 	SDL_Texture* mouseTileTex = nullptr;
 
