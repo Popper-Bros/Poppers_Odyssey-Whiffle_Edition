@@ -122,6 +122,8 @@ bool Scene::Start()
 		app->map->mapData.tileheight,
 		app->map->mapData.tilesets.Count());
 
+	app->SaveRequest();
+
 	return true;
 }
 
@@ -156,24 +158,29 @@ bool Scene::Update(float dt)
 	if (app->render->camera.x > -1024 && ((app->scene->player->position.x) + app->render->camera.x) > (((app->render->camera.w) / 2)) + 40)
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
 
-	if (player->position.x > 925 && player->position.y < 200)
+	if (player->position.x > 925 && player->position.y < 200 && checkpoint==0)
 	{
+		app->SaveRequest();
 		checkpoint = 1;
 	}
-	if (player->position.x < 150)
-	{
-		checkpoint = 0;
-	}
+	//if (player->position.x < 150)
+	//{
+	//	checkpoint = 0;
+	//}
 
 	//el player vuelve al pricipio 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) { 
-		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0); 
-		checkpoint == 0;
+		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+		checkpoint = 0;
+		app->render->camera.x = 0;
+		app->SaveRequest();
 	}
 	//el player vuelve al checkpoint
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && player->isAlive && player->fell == false) {
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
-		checkpoint == 1;
+		checkpoint = 1;
+		app->render->camera.x = -435;
+		app->SaveRequest();
 	}
 	//el player respawnea en el ultimo checkpoint
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && player->isAlive && player->fell == false){

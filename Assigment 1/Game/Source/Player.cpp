@@ -72,6 +72,7 @@ bool Player::Update(float dt)
 		win = true;
 		app->scene->checkpoint = 0;
 		pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+		app->render->camera.x = 0;
 	}
 
 	if (intoxication > 2) {
@@ -199,8 +200,9 @@ bool Player::Update(float dt)
 		}
 		if(fell){
 			if (app->audio->FxEnd(fall)) {
-				if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
-				else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
+				/*if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+				else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);*/
+				app->LoadRequest();
 				fell=false;
 			}
 			
@@ -269,9 +271,10 @@ bool Player::Update(float dt)
 		{
 			isAlive = true;
 			currentAnimation->Reset();
-			if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
-			else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
-			intoxication = 0;
+			/*if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+			else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);*/
+			app->LoadRequest();
+			//intoxication = 0;
 		}
 	}
 	return true;
