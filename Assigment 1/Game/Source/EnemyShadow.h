@@ -59,6 +59,7 @@ public:
 	float cd = 3.0f;
 	//bool win = false;
 	int shot;
+	int death;
 	///*const int NUM_FRAMES = 8;*/
 	///*int currentFrame = 0;*/
 	//float frameCounter = 0.0f;

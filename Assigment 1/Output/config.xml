@@ -98,6 +98,7 @@
 		<EnemyShadow x="752" y="224" texturepath="Assets/Textures/sombra.png">
 			<audio>
 				<shot path="Assets/Audio/Fx/shadow_shot.ogg"/>
+				<death path="Assets/Audio/Fx/shadow_dead.ogg"/>
 			</audio>
 			<animations>
 				<Idle_right loop="true" >
@@ -319,6 +320,10 @@
 		</EnemyShadow2>
 
 		<EnemyZombie x="1935" y="545" texturepath="Assets/Textures/zombie.png">
+			<audio>
+				<attack path="Assets/Audio/Fx/zombie_attack.ogg"/>
+				<death path="Assets/Audio/Fx/zombie_dead.ogg"/>
+			</audio>
 			<animations>
 				<Idle_right loop="true" >
 					<anim x ="6" y =" 10" width =" 67" height ="67"/>

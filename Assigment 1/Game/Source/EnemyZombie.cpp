@@ -49,6 +49,7 @@ bool EnemyZombie::Start() {
 	pbody->ctype = ColliderType::ENEMY;
 
 	roar = app->audio->LoadFx("EnemyZombie", "attack");
+	dead = app->audio->LoadFx("EnemyZombie", "death");
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
@@ -159,10 +160,12 @@ bool EnemyZombie::Update(float dt)
 		}
 
 		if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 4) {
+			app->audio->PlayFx(roar);
 			isAttackingLeft = false;
 			Attack_left.Reset();
 		}
 		if (isAttackingRight && Attack_right.GetCurrentFrameIndex() == 4) {
+			app->audio->PlayFx(roar);
 			isAttackingRight = false;
 			Attack_right.Reset();
 		}
@@ -176,7 +179,6 @@ bool EnemyZombie::Update(float dt)
 	{
 		
 		pbody->body->GetFixtureList()->SetSensor(true);
-		//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
 		if (currentAnimation == &Idle_right || currentAnimation == &Move_right) {
 			currentAnimation = &Die_right;
 		}
@@ -186,7 +188,7 @@ bool EnemyZombie::Update(float dt)
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
-
+		app->audio->PlayFx(dead);
 		if (currentAnimation->GetCurrentFrameIndex() >= 4)
 		{
 			app->entityManager->DestroyEntity(this);
@@ -264,13 +266,12 @@ void EnemyZombie::attack() {
 
 	if (position.x - app->scene->getPlayerPos().x >= 0) {
 		isAttackingLeft = true;
-		app->audio->PlayFx(roar);
 		currentDirection = EnemyZombieDirection::ATTACK_L;
 	}
 	else if (position.x - app->scene->getPlayerPos().x < 0) {
 		isAttackingRight = true;
-		app->audio->PlayFx(roar);
 		currentDirection = EnemyZombieDirection::ATTACK_R;
 	}
-	cd = 200.0f;
+
+	cd = 500.0f;
 }

@@ -62,6 +62,7 @@ public:
 	bool seePlayer = false;
 	//bool win = false;
 	int roar;
+	int dead;
 	///*const int NUM_FRAMES = 8;*/
 	///*int currentFrame = 0;*/
 	//float frameCounter = 0.0f;

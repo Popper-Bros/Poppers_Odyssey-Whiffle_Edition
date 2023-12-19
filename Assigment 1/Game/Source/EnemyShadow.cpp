@@ -49,6 +49,7 @@ bool EnemyShadow::Start() {
 
 	// Texture to highligh mouse position 
 	shot = app->audio->LoadFx("EnemyShadow", "shot");
+	death = app->audio->LoadFx("EnemyShadow", "death");
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
 	enemyOriginTile = app->map->WorldToMap(15 + position.x, 30 + position.y - app->render->camera.y);
@@ -185,7 +186,7 @@ bool EnemyShadow::Update(float dt)
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
-
+		app->audio->PlayFx(death);
 		if (currentAnimation->GetCurrentFrameIndex() >= 11)
 		{
 			app->entityManager->DestroyEntity(this);
