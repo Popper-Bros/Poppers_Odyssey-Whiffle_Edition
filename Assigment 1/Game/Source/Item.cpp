@@ -49,7 +49,7 @@ bool Item::Update(float dt)
 
 	if (!isAlive)
 	{
-		this->Disable();
+		app->entityManager->DestroyEntity(this);
 		app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
 	}
 	return true;

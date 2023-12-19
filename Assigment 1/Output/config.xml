@@ -328,7 +328,7 @@
 					<anim x ="278" y =" 10" width =" 67" height ="67"/>
 					<anim x ="346" y =" 10" width =" 67" height ="67"/>
 					<anim x ="414" y =" 10" width =" 67" height ="67"/>
-					<anim x ="480" y =" 10" width =" 67" height ="67"/>
+					<anim x ="482" y =" 10" width =" 67" height ="67"/>
 				</Idle_right>
 
 				<Idle_left loop="true" >

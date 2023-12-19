@@ -188,7 +188,7 @@ bool EnemyShadow::Update(float dt)
 
 		if (currentAnimation->GetCurrentFrameIndex() >= 11)
 		{
-			this->Disable();
+			app->entityManager->DestroyEntity(this);
 			app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
 		}
 
@@ -250,6 +250,9 @@ void EnemyShadow::OnCollision(PhysBody* physA, PhysBody* physB)
 
 bool EnemyShadow::CleanUp()
 {
+	// Liberar recursos y realizar cualquier limpieza necesaria
+	app->tex->UnLoad(texture);
+
 	return true;
 }
 

@@ -12,15 +12,15 @@
 		<item x="901" y="687" isAlive="true" texturepath="Assets/Textures/popper.png" num="2" />
 		<item x="967" y="143" isAlive="true" texturepath="Assets/Textures/popper.png" num="3" />
 		<item x="1542" y="495" isAlive="true" texturepath="Assets/Textures/popper.png" num="4" />
-		<Player x="930" y="134" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" />
+		<Player x="1176" y="326" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" />
 		<Particulas x="0" y="0" isAlive="true" texturepath="Assets/Textures/particles.png" />
-		<EnemyShadow x="820" y="365" isAlive="false" texturepath="Assets/Textures/sombra.png" num="1" />
+		<EnemyShadow x="723" y="211" isAlive="true" texturepath="Assets/Textures/sombra.png" num="1" />
 		<EnemyShadow x="1626" y="266" isAlive="true" texturepath="Assets/Textures/sombra.png" num="2" />
 		<EnemyZombie x="1902" y="516" isAlive="true" texturepath="Assets/Textures/zombie.png" num="1" />
-		<EnemyZombie x="731" y="644" isAlive="false" texturepath="Assets/Textures/zombie.png" num="2" />
+		<EnemyZombie x="772" y="644" isAlive="true" texturepath="Assets/Textures/zombie.png" num="2" />
 	</scene>
 	<entitymanager />
 	<renderer>
-		<camera x="-371" y="0" />
+		<camera x="-623" y="0" />
 	</renderer>
 </game_state>

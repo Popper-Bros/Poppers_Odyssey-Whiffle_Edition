@@ -189,7 +189,7 @@ bool EnemyZombie::Update(float dt)
 
 		if (currentAnimation->GetCurrentFrameIndex() >= 4)
 		{
-			this->Disable();
+			app->entityManager->DestroyEntity(this);
 			app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
 		}
 
