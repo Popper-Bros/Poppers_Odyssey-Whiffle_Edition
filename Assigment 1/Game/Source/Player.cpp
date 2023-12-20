@@ -54,6 +54,7 @@ bool Player::Start() {
 	blood = app->audio->LoadFx("player", "blood");
 	shoot = app->audio->LoadFx("player", "shoot");
 	reload = app->audio->LoadFx("player", "reload");
+	won = app->audio->LoadFx("player", "win");
 
 	return true;
 }
@@ -68,11 +69,13 @@ bool Player::Update(float dt)
 	Jump_left.speed = animVel * dt;
 	Die.speed = 0.01f * dt;
 
-	if (position.x > 1930 && position.y < 260) {
+	if (position.x > 1930 && position.y < 260 && !win) {
 		win = true;
+		app->audio->PlayFx(won);
 		app->scene->checkpoint = 0;
-		pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
-		app->render->camera.x = 0;
+		//pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+		app->entityManager->DestroyEntity(this);
+
 	}
 
 	if (intoxication > 2) {

@@ -30,6 +30,7 @@
 				<sniff path="Assets/Audio/Fx/sniff.ogg"/>
 				<fall path="Assets/Audio/Fx/fall.ogg"/>
 				<reload path="Assets/Audio/Fx/reload.ogg"/>
+				<win path="Assets/Audio/Fx/win.ogg"/>
 			</audio>
 			<animations>
 				<Idle_right loop="true">
