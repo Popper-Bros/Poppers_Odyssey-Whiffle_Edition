@@ -41,6 +41,8 @@ public:
 	
 	bool playerAlive = true;
 
+	Player* getPlayer();
+
 	iPoint getPlayerPos();
 
 	PathFinding* pathfinding;

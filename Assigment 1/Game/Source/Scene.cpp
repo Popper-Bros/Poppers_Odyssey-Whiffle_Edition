@@ -204,6 +204,10 @@ bool Scene::Update(float dt)
 	return true;
 }
 
+Player* Scene::getPlayer() {
+	return player;
+}
+
 // Called each loop iteration
 bool Scene::PostUpdate()
 {

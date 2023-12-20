@@ -86,6 +86,7 @@ struct MapLayer
     SString name;
     int width;
     int height;
+    float parallax;
     uint* tiles;
     Properties properties;
 

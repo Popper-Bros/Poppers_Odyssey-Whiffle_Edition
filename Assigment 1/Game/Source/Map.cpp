@@ -65,25 +65,40 @@ bool Map::Update(float dt)
     // iterates the layers in the map
     while (mapLayer != NULL) {
         //Check if the property Draw exist get the value, if it's true draw the lawyer
-        if (mapLayer->data->properties.GetProperty("Draw") != NULL && mapLayer->data->properties.GetProperty("Draw")->value) {
-            //iterate all tiles in a layer
-            for (int i = 0; i < mapData.width; i++) {
-                for (int j = 0; j < mapData.height; j++) {
-                    //Get the gid from tile
-                    int gid = mapLayer->data->Get(i, j);
+        if (mapLayer->data->properties.GetProperty("Draw") != NULL && mapLayer->data->properties.GetProperty("Draw")->value
+            && (mapLayer->data->properties.GetProperty("Parallax") == NULL || mapLayer->data->properties.GetProperty("Parallax")->value == false)) {
 
-                    //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
-                    //Get the Rect from the tileSetTexture;
-                    TileSet* tileSet = GetTilesetFromTileId(gid);
-                    SDL_Rect tileRect = tileSet->GetRect(gid);
-                    //SDL_Rect tileRect = mapData.tilesets.start->data->GetRect(gid); // (!!) we are using always the first tileset in the list
+            iPoint playerPos = app->scene->getPlayer()->position;
+            int xToTiledLeft = NULL((playerPos.x / 16) - 30, 0);
+            int xToTiledRight = NULL((playerPos.x / 16) + 30, mapLayer->data->width);
 
-                    //Get the screen coordinates from the tile coordinates
-                    iPoint mapCoord = MapToWorld(i, j);
+            for (int x = xToTiledLeft; x < xToTiledRight; x++)
+            {
+                for (int y = 0; y < mapLayer->data->height; y++)
+                {
+                    int gid = mapLayer->data->Get(x, y);
+                    TileSet* tileset = GetTilesetFromTileId(gid);
+                    SDL_Rect r = tileset->GetRect(gid);
+                    iPoint pos = MapToWorld(x, y);
 
-                    // L06: DONE 9: Complete the draw function
-                    app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);
+                    app->render->DrawTexture(tileset->texture, pos.x, pos.y, &r);
+                }
+            }
 
+            if (mapLayer->data->properties.GetProperty("Parallax") == NULL || mapLayer->data->properties.GetProperty("Parallax")->value) {
+
+                //iterate all tiles in a layer
+                for (int x = 0; x < mapData.width; x++) {
+                    for (int y = 0; y < mapData.height; y++) {
+                      
+                        int gid = mapLayer->data->Get(x, y);
+                        TileSet* tileset = GetTilesetFromTileId(gid);
+                        SDL_Rect r = tileset->GetRect(gid);
+                        iPoint pos = MapToWorld(x, y);
+
+                        app->render->DrawTexture(tileset->texture, pos.x, pos.y, &r, mapLayer->data->parallax);
+
+                    }
                 }
             }
         }
@@ -152,6 +167,8 @@ bool Map::Load(SString mapFileName)
 
     pugi::xml_document mapFileXML;
     pugi::xml_parse_result result = mapFileXML.load_file(mapFileName.GetString());
+
+    
 
     if (result == NULL)
     {
