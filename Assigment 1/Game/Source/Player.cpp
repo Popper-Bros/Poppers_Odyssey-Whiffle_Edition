@@ -302,7 +302,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (vel.y > 0)jumping = false;
 		if(isAlive) state::PICKED_TRUE;
 		collidingPlat = false;
-		intoxication += 1;
+		//intoxication += 1;
 		break;
 	case ColliderType::PLATFORM:
 		//if(!jumping)pbody->body->GetFixtureList()->SetSensor(false); // Enable collisions
