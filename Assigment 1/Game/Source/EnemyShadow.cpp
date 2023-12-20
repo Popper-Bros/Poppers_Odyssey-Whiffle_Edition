@@ -174,7 +174,8 @@ bool EnemyShadow::Update(float dt)
 
 	else
 	{
-		
+		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
+		vel = { 0,0 };
 		pbody->body->GetFixtureList()->SetSensor(true);
 		//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
 		if (currentAnimation == &Idle_right || currentAnimation == &Attack_right) {
