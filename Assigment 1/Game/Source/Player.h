@@ -47,7 +47,7 @@ public:
 	float speed = 0.2f;
 	SDL_Texture* texture = NULL;
 
-	int sniff, fall, jump, blood, shoot, reload;
+	int sniff, fall, jump, blood, shoot, reload, won;
 	bool jumping=false;
 	bool falling = false;
 	bool godmode = false;
