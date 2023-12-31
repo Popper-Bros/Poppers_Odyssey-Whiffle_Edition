@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Item.h"
+#include "Heal.h"
 #include "EnemyShadow.h"
 #include "EnemyZombie.h"
 #include "Particulas.h"
@@ -65,6 +66,7 @@ private:
 	Item* item2;
 	Item* item3;
 	Item* item4;
+	Heal* heal;
 	EnemyShadow* enemy;
 	EnemyZombie* enemy2;
 	EnemyShadow* enemy3;

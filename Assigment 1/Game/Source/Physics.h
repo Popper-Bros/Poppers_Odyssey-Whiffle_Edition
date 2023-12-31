@@ -28,6 +28,7 @@ enum class ColliderType {
 	PLAYER_SHOT,
 	ENEMY_SHOT,
 	ITEM,
+	HEAL,
 	PLATFORM, 
 	WALL,
 	FLOOR,

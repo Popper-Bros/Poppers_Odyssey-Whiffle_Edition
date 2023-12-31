@@ -15,6 +15,7 @@ enum class EntityType
 {
 	PLAYER,
 	ITEM,
+	HEAL,
 	ENEMYSHADOW,
 	ENEMYZOMBIE,
 	PARTICULAS,
@@ -100,6 +101,7 @@ public:
 	bool renderable = true;
 	bool isAlive = true;
 	int intoxication;
+	int health;
 	const char* texturepath;
 	int Num;
 

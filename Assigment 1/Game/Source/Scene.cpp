@@ -86,6 +86,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		enemy4->Num = 2;
 	}
 
+	if (config.child("Heal")) {
+		heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
+		heal->parameters = config.child("Heal");
+	}
+
 	//Get the map name from the config file and assigns the value in the module
 	app->map->name = config.child("map").attribute("name").as_string();
 	app->map->path = config.child("map").attribute("path").as_string();
@@ -241,7 +246,13 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		player->position.x = node.child("Player").attribute("x").as_int();
 		player->position.y = node.child("Player").attribute("y").as_int();
 		player->intoxication = node.child("Player").attribute("intoxication").as_int();
+		player->health = node.child("Player").attribute("health").as_int();
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x+0.3f),PIXEL_TO_METERS(player->position.y+0.3f) }, 0);
+	}
+	if (node.child("Heal")) {
+		heal->position.x = node.child("Heal").attribute("x").as_int();
+		heal->position.y = node.child("Heal").attribute("y").as_int();
+		heal->pbody->body->SetTransform({ PIXEL_TO_METERS(heal->position.x)+PIXEL_TO_METERS(9),PIXEL_TO_METERS(heal->position.y) + PIXEL_TO_METERS(8) }, 0);
 	}
 
 	for (pugi::xml_node enemyShadowNode = node.child("EnemyShadow"); enemyShadowNode; enemyShadowNode = enemyShadowNode.next_sibling("EnemyShadow")) {
@@ -409,6 +420,7 @@ bool Scene::SaveState(pugi::xml_node node) // esta funcion guarda los datos de l
 		entNode.append_attribute("texturepath").set_value(app->entityManager->entities[i]->texturepath);
 		if (app->entityManager->entities[i]->name == "Player") {
 			entNode.append_attribute("intoxication").set_value(app->entityManager->entities[i]->intoxication);
+			entNode.append_attribute("health").set_value(app->entityManager->entities[i]->health);
 		}
 		if (app->entityManager->entities[i]->name == "EnemyZombie" || app->entityManager->entities[i]->name == "EnemyShadow" || app->entityManager->entities[i]->name == "item") {
 			entNode.append_attribute("num").set_value(app->entityManager->entities[i]->Num);

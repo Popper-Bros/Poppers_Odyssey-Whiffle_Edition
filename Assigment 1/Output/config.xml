@@ -512,7 +512,7 @@
 					<anim x ="355" y =" 409" width =" 42" height ="35"/>
 					<anim x ="410" y =" 413" width =" 39" height ="34"/>
 				</enemyShadowShotFinal>
-			<enemyShadowShotLeft loop="true" >
+				<enemyShadowShotLeft loop="true" >
 					<anim x ="501" y =" 493" width =" 31" height ="19"/>
 					<anim x ="458" y =" 493" width =" 31" height ="19"/>
 					<anim x ="412" y =" 493" width =" 31" height ="19"/>
@@ -520,15 +520,33 @@
 					<anim x ="322" y =" 493" width =" 31" height ="19"/>
 					<anim x ="279" y =" 493" width =" 31" height ="19"/>
 					<anim x ="238" y =" 493" width =" 31" height ="19"/>
-			</enemyShadowShotLeft>
-			<enemyShadowShotFinalLeft loop="false" >
+				</enemyShadowShotLeft>
+				<enemyShadowShotFinalLeft loop="false" >
 					<anim x ="193" y =" 492" width =" 32" height ="20"/>
 					<anim x ="137" y =" 493" width =" 42" height ="35"/>
 					<anim x ="85" y =" 497" width =" 39" height ="34"/>
-			</enemyShadowShotFinalLeft>
+				</enemyShadowShotFinalLeft>
 			
-		</animations>
-	</Particulas>
+			</animations>
+		</Particulas>
+		<Heal x="400" y="635" texturepath ="Assets/Textures/Kit.png">
+			<animations>
+				<KitIdle loop="false" >
+					<anim x ="0" y =" 4" width =" 16" height ="13"/>
+					<anim x ="32" y =" 4" width =" 16" height ="13"/>
+					<anim x ="48" y =" 4" width =" 16" height ="13"/>
+				</KitIdle>
+				<KitPicked loop="false">
+					<anim x ="16" y =" 4" width =" 16" height ="13"/>
+					<anim x ="64" y =" 4" width =" 16" height ="13"/>
+					<anim x ="80" y =" 4" width =" 16" height ="13"/>
+					<anim x ="96" y =" 4" width =" 16" height ="13"/>
+					<anim x ="112" y =" 4" width =" 16" height ="13"/>
+					<anim x ="128" y =" 4" width =" 16" height ="13"/>
+					<anim x ="144" y =" 4" width =" 16" height ="13"/>
+				</KitPicked>
+			</animations>
+		</Heal>
 
 		<item x="272" y="672" texturepath="Assets/Textures/popper.png"/>
 		<item2 x="910" y="672" texturepath="Assets/Textures/popper.png"/>

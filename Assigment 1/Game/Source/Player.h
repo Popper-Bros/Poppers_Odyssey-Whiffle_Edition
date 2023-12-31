@@ -65,6 +65,7 @@ public:
 	bool isShooting = false;
 	bool canShoot = true;
 
+
 	Direction currentDirection = Direction::IDLE_R;
 
 	Animation* currentAnimation = &Idle_right;

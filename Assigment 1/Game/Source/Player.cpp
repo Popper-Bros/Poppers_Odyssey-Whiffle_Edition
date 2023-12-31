@@ -56,6 +56,7 @@ bool Player::Start() {
 	reload = app->audio->LoadFx("player", "reload");
 	won = app->audio->LoadFx("player", "win");
 
+	health = 3;
 	return true;
 }
 
@@ -335,15 +336,44 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ENEMY_SHOT:
 		if (vel.y > 0)jumping = false;
 		falling = false;
-		if (!godmode) isAlive = false;
+		if (!godmode)
+		{
+			if (health <= 0)
+			{
+				isAlive = false;
+			}
+			else
+			{
+				health -= 1;
+			}
+			LOG("HEALTH: %d", health);
+		}
 		LOG("Collision SHOT");
 		break;
 	case ColliderType::ENEMY:
 		if (vel.y > 0)jumping = false;
 		falling = false;
-		if (!godmode) isAlive = false;
+		if (!godmode)
+		{
+			if (health <= 0)
+			{
+				isAlive = false;
+			}
+			else
+			{
+				health -= 1;
+			}
+			LOG("HEALTH: %d", health);
+		}
 		LOG("Collision ENEMY");
 		break;
-
+	case ColliderType::HEAL:
+		LOG("Collision HEAL");
+		//app->audio->PlayFx(sniff);
+		if (vel.y > 0)jumping = false;
+		health += 1;
+		LOG("HEALTH: %d", health);
+		collidingPlat = false;
+		break;
 	}
 }

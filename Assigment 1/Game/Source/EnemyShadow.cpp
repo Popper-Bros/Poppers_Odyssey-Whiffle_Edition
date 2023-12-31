@@ -67,7 +67,6 @@ bool EnemyShadow::Update(float dt)
 	Die_left.speed = 0.01f * dt;
 	cd -= dt * 0.1;
 
-	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 
 
 	if (isAlive) {

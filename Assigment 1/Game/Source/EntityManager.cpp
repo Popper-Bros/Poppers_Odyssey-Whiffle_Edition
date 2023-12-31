@@ -1,6 +1,7 @@
 #include "EntityManager.h"
 #include "Player.h"
 #include "Item.h"
+#include "Heal.h"
 #include "EnemyShadow.h"
 #include "EnemyZombie.h"
 #include "Particulas.h"
@@ -103,6 +104,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::ENEMYZOMBIE:
 		entity = new EnemyZombie();
+		break;
+	case EntityType::HEAL:
+		entity = new Heal();
 		break;
 	default:
 		break;
