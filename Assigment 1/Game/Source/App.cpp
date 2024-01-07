@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Pathfinding.h"
+#include "HUD.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -35,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	entityManager = new EntityManager();
 	render = new Render();
+	hud = new HUD();
 
 
 	// Ordered for awake / Start / Update
@@ -48,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(scene);
 	AddModule(entityManager);
+	AddModule(hud);
 
 	// Render last to swap buffer
 	AddModule(render);

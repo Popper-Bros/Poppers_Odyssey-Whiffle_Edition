@@ -8,6 +8,7 @@
 #include "EnemyShadow.h"
 #include "EnemyZombie.h"
 #include "Particulas.h"
+#include "HUD.h"
 
 struct SDL_Texture;
 
@@ -43,6 +44,8 @@ public:
 	bool playerAlive = true;
 
 	iPoint getPlayerPos();
+
+	int GetPlayerLife();
 
 	PathFinding* pathfinding;
 

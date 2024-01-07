@@ -33,6 +33,11 @@ bool EnemyShadow::Awake() {
 	Die_right.LoadAnimation("EnemyShadow", "Die_right");
 	Die_left.LoadAnimation("EnemyShadow", "Die_left");
 
+	EnemyHealthBar1Path = parameters.attribute("HealthBar1").as_string();
+	EnemyHealthBar2Path = parameters.attribute("HealthBar2").as_string();
+	EnemyHealthBarNullPath = parameters.attribute("HealthBarNull").as_string();
+	EnemyHealthBarFullPath = parameters.attribute("HealthBarFull").as_string();
+
 
 	return true;
 }
@@ -40,6 +45,12 @@ bool EnemyShadow::Awake() {
 bool EnemyShadow::Start() {
 
 	//initilize textures
+
+	EnemyHealthBarFull = app->tex->Load(EnemyHealthBarFullPath);
+	EnemyHealthBarNull = app->tex->Load(EnemyHealthBarNullPath);
+	EnemyHealthBar1 = app->tex->Load(EnemyHealthBar1Path);
+	EnemyHealthBar2 = app->tex->Load(EnemyHealthBar2Path);
+
 	texture = app->tex->Load(texturepath);
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);
@@ -54,6 +65,7 @@ bool EnemyShadow::Start() {
 
 	enemyOriginTile = app->map->WorldToMap(15 + position.x, 30 + position.y - app->render->camera.y);
 
+	health = 3;
 	return true;
 }
 
@@ -67,7 +79,23 @@ bool EnemyShadow::Update(float dt)
 	Die_left.speed = 0.01f * dt;
 	cd -= dt * 0.1;
 
+	EnemyHealthRec = { position.x + 13 + app->render->camera.x, position.y + app->render->camera.y, 20, 6 };
 
+	switch (health)
+	{
+	case 3:
+		SDL_RenderCopy(app->render->renderer, EnemyHealthBarFull, NULL, &EnemyHealthRec);
+		break;
+	case 2:
+		SDL_RenderCopy(app->render->renderer, EnemyHealthBar2, NULL, &EnemyHealthRec);
+		break;
+	case 1:
+		SDL_RenderCopy(app->render->renderer, EnemyHealthBar1, NULL, &EnemyHealthRec);
+		break;
+	case 0:
+		SDL_RenderCopy(app->render->renderer, EnemyHealthBarNull, NULL, &EnemyHealthRec);
+		break;
+	}
 
 	if (isAlive) {
 		if (!isAttackingLeft && !isAttackingRight && !isMovingLeft && !isMovingRight) {
@@ -239,7 +267,14 @@ void EnemyShadow::OnCollision(PhysBody* physA, PhysBody* physB)
 		LOG("Collision SPIKES");
 		break;
 	case ColliderType::PLAYER_SHOT:
-		isAlive = false;
+		if (health > 0)
+		{
+			health -= 1;
+		}
+		if (health <= 0)
+		{
+			isAlive = false;
+		}
 		LOG("Collision SHOT");
 		break;
 	case ColliderType::UNKNOWN:
@@ -253,6 +288,11 @@ bool EnemyShadow::CleanUp()
 {
 	// Liberar recursos y realizar cualquier limpieza necesaria
 	app->tex->UnLoad(texture);
+	app->tex->UnLoad(texture);
+	app->tex->UnLoad(EnemyHealthBarFull);
+	app->tex->UnLoad(EnemyHealthBarNull);
+	app->tex->UnLoad(EnemyHealthBar1);
+	app->tex->UnLoad(EnemyHealthBar2);
 
 	return true;
 }

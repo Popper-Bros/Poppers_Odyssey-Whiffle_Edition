@@ -70,6 +70,15 @@ public:
 
 	Animation* currentAnimation = &Idle_right;
 	Animation Move_left, Move_right, Jump_left, Jump_right, Idle_left, Idle_right, Die;
+	/*SDL_Texture* HealthBarNull;
+	SDL_Texture* HealthBar1;
+	SDL_Texture* HealthBar2;
+	SDL_Texture* HealthBar3;
+	SDL_Texture* HealthBar4;
+	SDL_Texture* HealthBar5;
+	SDL_Texture* Box;
+	SDL_Texture* Heart;
+	SDL_Rect box, HealthRec, heart;*/
 	
 };
 

@@ -10,6 +10,7 @@
 #include "Pathfinding.h"
 #include "Defs.h"
 #include "Log.h"
+#include "HUD.h"
 
 Scene::Scene() : Module()
 {
@@ -144,6 +145,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	
 	if (player->isAlive) {
 		playerAlive = true;
 	}
@@ -223,6 +225,10 @@ bool Scene::PostUpdate()
 iPoint Scene::getPlayerPos() {
 	return player->position;
 }	
+
+int Scene::GetPlayerLife() {
+	return player->health;
+}
 
 // Called before quitting
 bool Scene::CleanUp()

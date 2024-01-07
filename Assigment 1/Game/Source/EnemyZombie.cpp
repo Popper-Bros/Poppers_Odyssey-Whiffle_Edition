@@ -20,7 +20,7 @@ EnemyZombie::EnemyZombie() : Entity(EntityType::ENEMYZOMBIE)
 EnemyZombie::~EnemyZombie() {}
 
 bool EnemyZombie::Awake() {
-
+	
 	//inicializa parametros
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -35,11 +35,22 @@ bool EnemyZombie::Awake() {
 	Move_right.LoadAnimation("EnemyZombie", "Move_right");
 	Move_left.LoadAnimation("EnemyZombie", "Move_left");
 
+	EnemyHealthBar1Path = parameters.attribute("HealthBar1").as_string();
+	EnemyHealthBar2Path = parameters.attribute("HealthBar2").as_string();
+	EnemyHealthBar3Path = parameters.attribute("HealthBar3").as_string();
+	EnemyHealthBarNullPath = parameters.attribute("HealthBarNull").as_string();
+	EnemyHealthBarFullPath = parameters.attribute("HealthBarFull").as_string();
 
 	return true;
 }
 
 bool EnemyZombie::Start() {
+
+	EnemyHealthBarFull = app->tex->Load(EnemyHealthBarFullPath);
+	EnemyHealthBarNull = app->tex->Load(EnemyHealthBarNullPath);
+	EnemyHealthBar1 = app->tex->Load(EnemyHealthBar1Path);
+	EnemyHealthBar2 = app->tex->Load(EnemyHealthBar2Path);
+	EnemyHealthBar3 = app->tex->Load(EnemyHealthBar3Path);
 
 	//initilize textures
 	texture = app->tex->Load(texturepath);
@@ -55,6 +66,7 @@ bool EnemyZombie::Start() {
 
 
 	enemyOriginTile = app->map->WorldToMap(12 + position.x, 30 + position.y - app->render->camera.y);
+	health = 4;
 
 	return true;
 }
@@ -71,6 +83,26 @@ bool EnemyZombie::Update(float dt)
 	Move_left.speed = 0.01f * dt;
 
 	cd -= dt * 0.1;
+	EnemyHealthRec = { position.x+20+app->render->camera.x, position.y+app->render->camera.y, 20, 6 };
+
+	switch (health)
+	{
+	case 4:
+		SDL_RenderCopy(app->render->renderer, EnemyHealthBarFull, NULL, &EnemyHealthRec);
+		break;
+	case 3:
+		SDL_RenderCopy(app->render->renderer, EnemyHealthBar3, NULL, &EnemyHealthRec);
+		break;
+	case 2:
+		SDL_RenderCopy(app->render->renderer, EnemyHealthBar2, NULL, &EnemyHealthRec);
+		break;
+	case 1:
+		SDL_RenderCopy(app->render->renderer, EnemyHealthBar1, NULL, &EnemyHealthRec);
+		break;
+	case 0:
+		SDL_RenderCopy(app->render->renderer, EnemyHealthBarNull, NULL, &EnemyHealthRec);
+		break;
+	}
 
 	if (isAlive) {
 
@@ -246,7 +278,14 @@ void EnemyZombie::OnCollision(PhysBody* physA, PhysBody* physB)
 		LOG("Collision SPIKES");
 		break;
 	case ColliderType::PLAYER_SHOT:
-		isAlive = false;
+		if (health > 0)
+		{
+			health -= 1;
+		}
+		if (health <= 0)
+		{
+			isAlive = false;
+		}
 		LOG("Collision SHOT");
 		break;
 	case ColliderType::UNKNOWN:
@@ -258,6 +297,14 @@ void EnemyZombie::OnCollision(PhysBody* physA, PhysBody* physB)
 
 bool EnemyZombie::CleanUp()
 {
+	// Liberar recursos y realizar cualquier limpieza necesaria
+	app->tex->UnLoad(texture);
+	app->tex->UnLoad(EnemyHealthBarFull);
+	app->tex->UnLoad(EnemyHealthBarNull);
+	app->tex->UnLoad(EnemyHealthBar1);
+	app->tex->UnLoad(EnemyHealthBar2);
+	app->tex->UnLoad(EnemyHealthBar3);
+
 	return true;
 }
 

@@ -81,6 +81,19 @@ public:
 
 	Animation* currentAnimation = &Idle_left;
 	Animation Move_left, Move_right, Idle_left, Idle_right, Die_right, Die_left,Attack_right,Attack_left;
+
+	const char* EnemyHealthBarNullPath;
+	const char* EnemyHealthBar1Path;
+	const char* EnemyHealthBar2Path;
+	const char* EnemyHealthBar3Path;
+	const char* EnemyHealthBarFullPath;
+
+	SDL_Texture* EnemyHealthBarNull;
+	SDL_Texture* EnemyHealthBar1;
+	SDL_Texture* EnemyHealthBar2;
+	SDL_Texture* EnemyHealthBar3;
+	SDL_Texture* EnemyHealthBarFull;
+	SDL_Rect EnemyHealthRec;
 	
 };
 

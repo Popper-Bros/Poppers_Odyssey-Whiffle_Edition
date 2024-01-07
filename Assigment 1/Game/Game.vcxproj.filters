@@ -27,6 +27,7 @@
     <ClCompile Include="Source\Particulas.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\Heal.cpp" />
+    <ClCompile Include="Source\HUD.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -79,6 +80,7 @@
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\PQueue.h" />
     <ClInclude Include="Source\Heal.h" />
+    <ClInclude Include="Source\HUD.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

@@ -20,6 +20,7 @@ class EntityManager;
 class Map;
 class Physics;
 class PathFinding;
+class HUD;
 
 class App
 {
@@ -98,6 +99,7 @@ public:
 	Map* map;
 	Physics* physics;
 	PathFinding* pathfinding;
+	HUD* hud;
 
 private:
 

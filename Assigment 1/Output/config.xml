@@ -20,8 +20,26 @@
     <music volume="128"/>
     <fx volume="128"/>
   </audio>
+  <HUD>
+	  <HealthBar1 texturepath ="Assets/Textures/UI/bar1.png"/>
+	  <HealthBar2 texturepath ="Assets/Textures/UI/bar2.png"/>
+	  <HealthBar3 texturepath = "Assets/Textures/UI/bar3.png"/>
+	  <HealthBar4 texturepath = "Assets/Textures/UI/bar4.png"/>
+	  <HealthBar5 texturepath = "Assets/Textures/UI/bar5.png"/>
+	  <HealthBarNull texturepath = "Assets/Textures/UI/barNull.png"/>
+	  <Box texturepath = "Assets/Textures/UI/box.png"/>
+	  <Heart texturepath = "Assets/Textures/UI/heart.png"/>
+	  <EnemyHealthBar1 texturepath ="Assets/Textures/UI/EnemyHealth1.png"/>
+	  <EnemyHealthBar2 texturepath ="Assets/Textures/UI/EnemyHealth2.png"/>
+	  <EnemyHealthBar3 texturepath ="Assets/Textures/UI/EnemyHealth3.png"/>
+	  <EnemyHealthBarFull texturepath ="Assets/Textures/UI/EnemyHealthFull.png"/>
+	  <EnemyHealthBarNull texturepath ="Assets/Textures/UI/EnemyHealthNull.png"/>
+  </HUD>
 
 	<scene>
+		<UI>
+			<HealthBar x="0" y ="0 " texturepath="Assets/Textures/UI/bar.png"/>
+		</UI>
 		<player x="80" y="166" texturepath="Assets/Textures/Spritesheet.png" Bala_texturePath="Assets/Textures/Shadow_disparo.png">
 			<audio>
 				<jump path="Assets/Audio/Fx/jump.ogg"/>
@@ -96,7 +114,9 @@
 			</animations>
 		</player>
 
-		<EnemyShadow x="752" y="224" texturepath="Assets/Textures/sombra.png">
+		<EnemyShadow x="752" y="224" texturepath="Assets/Textures/sombra.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
+					HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png"
+					 HealthBar3 ="Assets/Textures/UI/EnemyHealth3.png" HealthBarNull ="Assets/Textures/UI/EnemyHealthNull.png">
 			<audio>
 				<shot path="Assets/Audio/Fx/shadow_shot.ogg"/>
 				<death path="Assets/Audio/Fx/shadow_dead.ogg"/>
@@ -210,7 +230,9 @@
 			</animations>
 		</EnemyShadow>
 
-		<EnemyShadow2 x="1648" y="280" texturepath="Assets/Textures/sombra.png">
+		<EnemyShadow2 x="1648" y="280" texturepath="Assets/Textures/sombra.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
+					HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png"
+					 HealthBar3 ="Assets/Textures/UI/EnemyHealth3.png" HealthBarNull ="Assets/Textures/UI/EnemyHealthNull.png">
 			<animations>
 				<Idle_right loop="true" >
 					<anim x ="19" y =" 16" width =" 48" height ="48"/>
@@ -320,7 +342,9 @@
 			</animations>
 		</EnemyShadow2>
 
-		<EnemyZombie x="1935" y="545" texturepath="Assets/Textures/zombie.png">
+		<EnemyZombie x="1935" y="545" texturepath="Assets/Textures/zombie.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
+					HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png" 
+					 HealthBar3 ="Assets/Textures/UI/EnemyHealth3.png" HealthBarNull ="Assets/Textures/UI/EnemyHealthNull.png">
 			<audio>
 				<attack path="Assets/Audio/Fx/zombie_attack.ogg"/>
 				<death path="Assets/Audio/Fx/zombie_dead.ogg"/>
@@ -404,7 +428,9 @@
 			</animations>
 		</EnemyZombie>
 
-		<EnemyZombie2 x="785" y="672" texturepath="Assets/Textures/zombie.png">
+		<EnemyZombie2 x="785" y="672" texturepath="Assets/Textures/zombie.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
+					HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png"
+					 HealthBar3 ="Assets/Textures/UI/EnemyHealth3.png" HealthBarNull ="Assets/Textures/UI/EnemyHealthNull.png">
 			<animations>
 				<Idle_right loop="true" speed ="0.15f * dt">
 					<anim x ="6" y =" 10" width =" 67" height ="67"/>

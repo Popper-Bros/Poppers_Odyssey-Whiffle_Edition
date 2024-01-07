@@ -33,6 +33,7 @@ bool Player::Awake() {
 	Jump_left.LoadAnimation("player", "Jump_left");
 	Die.LoadAnimation("player", "Die");
 
+
 	
 	return true;
 }
@@ -42,6 +43,17 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturepath);
 	
+	/*HealthBar1 = app->tex->Load("Assets/Textures/UI/bar1.png");
+	HealthBar2 = app->tex->Load("Assets/Textures/UI/bar2.png");
+	HealthBar3 = app->tex->Load("Assets/Textures/UI/bar3.png");
+	HealthBar4 = app->tex->Load("Assets/Textures/UI/bar4.png");
+	HealthBar5 = app->tex->Load("Assets/Textures/UI/bar5.png");
+	HealthBarNull = app->tex->Load("Assets/Textures/UI/barNull.png");
+	Box = app->tex->Load("Assets/Textures/UI/box.png");
+	Heart = app->tex->Load("Assets/Textures/UI/heart.png");
+	HealthRec = { 76, 18, 28, 12 };
+	box = { 68, 14, 43, 20 };
+	heart = { 64, 19, 10, 10 };*/
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -56,7 +68,8 @@ bool Player::Start() {
 	reload = app->audio->LoadFx("player", "reload");
 	won = app->audio->LoadFx("player", "win");
 
-	health = 3;
+	health = 5;
+
 	return true;
 }
 
@@ -95,6 +108,29 @@ bool Player::Update(float dt)
 		animVel = 0.03f;
 		speed = 0.4f;
 	}
+	/*SDL_RenderCopy(app->render->renderer, Box, NULL, &box);
+	SDL_RenderCopy(app->render->renderer, Heart, NULL, &heart);
+	switch (health)
+	{
+	case 5:
+		SDL_RenderCopy(app->render->renderer, HealthBar5, NULL, &HealthRec);
+		break;
+	case 4:
+		SDL_RenderCopy(app->render->renderer, HealthBar4, NULL, &HealthRec);
+		break;
+	case 3:
+		SDL_RenderCopy(app->render->renderer, HealthBar3, NULL, &HealthRec);
+		break;
+	case 2:
+		SDL_RenderCopy(app->render->renderer, HealthBar2, NULL, &HealthRec);
+		break;
+	case 1:
+		SDL_RenderCopy(app->render->renderer, HealthBar1, NULL, &HealthRec);
+		break;
+	case 0:
+		SDL_RenderCopy(app->render->renderer, HealthBarNull, NULL, &HealthRec);
+		break;
+	}*/
 
 	if(isAlive)
 	{ 
@@ -285,7 +321,6 @@ bool Player::Update(float dt)
 }
 
 
-
 bool Player::CleanUp()
 {
 
@@ -327,7 +362,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::SPIKES:
 		if (vel.y > 0)jumping = false;
 		falling = false;
-		if (!godmode) isAlive = false;
+		if (!godmode) {
+			isAlive = false;
+			health = 0;
+		}
 		LOG("Collision SPIKES");
 		break;
 	case ColliderType::UNKNOWN:
