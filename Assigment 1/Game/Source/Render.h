@@ -4,6 +4,7 @@
 #include "Module.h"
 
 #include "Point.h"
+#include "Timer.h" 
 
 #include "SDL/include/SDL.h"
 
@@ -54,6 +55,12 @@ public:
 	SDL_Rect camera;
 	SDL_Rect viewport;
 	SDL_Color background;
+
+	Timer timer = Timer();
+	bool timerOn = false;
+
+	int playerItem = 0;
+	SDL_Texture* t;
 };
 
 #endif // __RENDER_H__

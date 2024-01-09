@@ -40,6 +40,9 @@ bool HUD::Awake(pugi::xml_node& config)
 	EnemyHealthBar3Path = config.child("EnemyHealth3").attribute("texturepath").as_string();
 	EnemyHealthBarFullPath = config.child("EnemyHealthFull").attribute("texturepath").as_string();
 
+	popperEmptyPath = config.child("PopperEmpty").attribute("texturepath").as_string();
+	popperFullPath = config.child("PopperFull").attribute("texturepath").as_string();
+
 	return true;
 }
 
@@ -59,9 +62,17 @@ bool HUD::Start() {
 	EnemyHealthBar3 = app->tex->Load(EnemyHealthBar3Path);
 	EnemyHealthBarFull = app->tex->Load(EnemyHealthBarFullPath);
 
+	popperEmpty = app->tex->Load(popperEmptyPath);
+	popperFull = app->tex->Load(popperFullPath);
+
     HealthRec = { 76, 18, 28, 12 };
     box = { 68, 14, 43, 20 };
     heart = { 64, 19, 10, 10 };
+	popperRec = { 66, 40, 16, 20 };
+	popperRec2 = { 81, 40, 16, 20 };
+	popperRec3 = { 96, 40, 16, 20 };
+
+	SDL_SetTextureAlphaMod(popperEmpty, 100);
 
 	return true;
 }
@@ -73,6 +84,33 @@ bool HUD::Update(float dt)
 	SDL_RenderCopy(app->render->renderer, Box, NULL, &box);
 	SDL_RenderCopy(app->render->renderer, Heart, NULL, &heart);
 
+	
+	
+	switch (app->scene->playerItem)
+	{
+	case 0:
+		SDL_RenderCopy(app->render->renderer, popperEmpty, NULL, &popperRec);
+		SDL_RenderCopy(app->render->renderer, popperEmpty, NULL, &popperRec2);
+		SDL_RenderCopy(app->render->renderer, popperEmpty, NULL, &popperRec3);
+		break;
+	case 1:
+		SDL_RenderCopy(app->render->renderer, popperFull, NULL, &popperRec);
+		SDL_RenderCopy(app->render->renderer, popperEmpty, NULL, &popperRec2);
+		SDL_RenderCopy(app->render->renderer, popperEmpty, NULL, &popperRec3);
+		break;
+	case 2:
+		SDL_RenderCopy(app->render->renderer, popperFull, NULL, &popperRec);
+		SDL_RenderCopy(app->render->renderer, popperFull, NULL, &popperRec2);
+		SDL_RenderCopy(app->render->renderer, popperEmpty, NULL, &popperRec3);
+		break;
+	case 3:
+		SDL_RenderCopy(app->render->renderer, popperFull, NULL, &popperRec);
+		SDL_RenderCopy(app->render->renderer, popperFull, NULL, &popperRec2);
+		SDL_RenderCopy(app->render->renderer, popperFull, NULL, &popperRec3);
+		break;
+	default:
+		break;
+	}
 
 	switch (playerHealth)
 	{
@@ -111,17 +149,9 @@ bool HUD::CleanUp()
 	app->tex->UnLoad(HealthBarNull);
 	app->tex->UnLoad(Box);
 	app->tex->UnLoad(Heart);
+	app->tex->UnLoad(popperEmpty);
+	app->tex->UnLoad(popperFull);
 	return true;
 }
 
-
-void HUD::DestroyEntity(Entity* entity)
-{
-
-}
-
-void HUD::AddEntity(Entity* entity)
-{
-
-}
 

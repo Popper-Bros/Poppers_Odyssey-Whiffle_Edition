@@ -43,18 +43,6 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturepath);
-	
-	/*HealthBar1 = app->tex->Load("Assets/Textures/UI/bar1.png");
-	HealthBar2 = app->tex->Load("Assets/Textures/UI/bar2.png");
-	HealthBar3 = app->tex->Load("Assets/Textures/UI/bar3.png");
-	HealthBar4 = app->tex->Load("Assets/Textures/UI/bar4.png");
-	HealthBar5 = app->tex->Load("Assets/Textures/UI/bar5.png");
-	HealthBarNull = app->tex->Load("Assets/Textures/UI/barNull.png");
-	Box = app->tex->Load("Assets/Textures/UI/box.png");
-	Heart = app->tex->Load("Assets/Textures/UI/heart.png");
-	HealthRec = { 76, 18, 28, 12 };
-	box = { 68, 14, 43, 20 };
-	heart = { 64, 19, 10, 10 };*/
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 16, 9, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -93,48 +81,16 @@ bool Player::Update(float dt)
 
 	}
 
-	if (intoxication > 2) {
+	if (intoxication > 3) {
 		isAlive = false;
 		intoxication = 0;
 	}
-	if (intoxication == 0) {
-		animVel = 0.01f;
-		speed = 0.2f;
-	}
-	if (intoxication == 1) {
-		animVel = 0.02f;
-		speed = 0.3f;
-	}
-	else if (intoxication == 2) {
-		animVel = 0.03f;
-		speed = 0.4f;
-	}
-	/*SDL_RenderCopy(app->render->renderer, Box, NULL, &box);
-	SDL_RenderCopy(app->render->renderer, Heart, NULL, &heart);
-	switch (health)
-	{
-	case 5:
-		SDL_RenderCopy(app->render->renderer, HealthBar5, NULL, &HealthRec);
-		break;
-	case 4:
-		SDL_RenderCopy(app->render->renderer, HealthBar4, NULL, &HealthRec);
-		break;
-	case 3:
-		SDL_RenderCopy(app->render->renderer, HealthBar3, NULL, &HealthRec);
-		break;
-	case 2:
-		SDL_RenderCopy(app->render->renderer, HealthBar2, NULL, &HealthRec);
-		break;
-	case 1:
-		SDL_RenderCopy(app->render->renderer, HealthBar1, NULL, &HealthRec);
-		break;
-	case 0:
-		SDL_RenderCopy(app->render->renderer, HealthBarNull, NULL, &HealthRec);
-		break;
-	}*/
 
 	if(isAlive)
 	{ 
+		if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+			itemPicked -= 1;
+		}
 		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 			godmode = !godmode;
 		}
@@ -207,23 +163,25 @@ bool Player::Update(float dt)
 				}
 				isShooting = true;
 				canShoot = false;
-				cooldown = 10.0f;
+				timer.Start();
+				/*cooldown = 10.0f;*/
 			}
 		}
 
 		if (isShooting) 
 		{
-			cooldown -= 0.008f * dt;
-			LOG("COOLDOWN %.5f", cooldown);
-			if (cooldown <=5 && cooldown >= 4.8f )
+			/*cooldown -= 0.008f * dt;*/
+			if (timer.ReadSec() == 1 && isReloading == false)
 			{
 				app->audio->PlayFx(reload);
 				LOG("RELOADING");
+				isReloading = true;
 			}
-			if (cooldown <= 0)
+			if (timer.ReadSec() == 2)
 			{
 				canShoot = true;
 				isShooting = false;
+				isReloading = false;
 			}
 		}
 		
@@ -339,6 +297,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (vel.y > 0)jumping = false;
 		if(isAlive) state::PICKED_TRUE;
 		collidingPlat = false;
+		if (itemPicked <= 2)
+		{
+			itemPicked += 1;
+		}
 		//intoxication += 1;
 		break;
 	case ColliderType::PLATFORM:
@@ -410,7 +372,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision HEAL");
 		//app->audio->PlayFx(sniff);
 		if (vel.y > 0)jumping = false;
-		health += 1;
+		if (health < 5)
+		{
+			health += 1;
+		}
+		
 		LOG("HEALTH: %d", health);
 		collidingPlat = false;
 		break;

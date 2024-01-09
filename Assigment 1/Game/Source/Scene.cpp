@@ -134,6 +134,8 @@ bool Scene::Start()
 
 	app->SaveRequest();
 
+	
+
 	return true;
 }
 
@@ -146,7 +148,25 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	switch (player->itemPicked)
+	{
+	case 0:
+		playerItem = 0;
+		break;
+	case 1:
+		playerItem = 1;
+		break;
+	case 2:
+		playerItem = 2;
+		break;
+	case 3:
+		playerItem = 3;
+		break;
+
+	}
 	
+	
+
 	if (player->isAlive) {
 		playerAlive = true;
 	}
@@ -260,6 +280,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		player->position.y = node.child("Player").attribute("y").as_int();
 		player->intoxication = node.child("Player").attribute("intoxication").as_int();
 		player->health = node.child("Player").attribute("health").as_int();
+		player->itemPicked = node.child("Player").attribute("itemPicked").as_int();
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x+0.3f),PIXEL_TO_METERS(player->position.y+0.3f) }, 0);
 	}
 	if (node.child("Heal")) {
@@ -343,7 +364,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 			enemy4->position.x = enemyZombieNode.attribute("x").as_int();
 			enemy4->position.y = enemyZombieNode.attribute("y").as_int();
 
-			enemy4->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy4->position.x + 0.6f),PIXEL_TO_METERS(enemy4->position.y + 0.93f) }, 0);
+			enemy4->pbody->body->SetTransform({ PIXEL_TO_METERS(enemy4->position.x + 0.6f)+PIXEL_TO_METERS(9),PIXEL_TO_METERS(enemy4->position.y + 0.93f) }, 0);
 		}
 	}
 
@@ -363,7 +384,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 			item->position.x = itemNode.attribute("x").as_int();
 			item->position.y = itemNode.attribute("y").as_int();
 
-			item->pbody->body->SetTransform({ PIXEL_TO_METERS(item->position.x),PIXEL_TO_METERS(item->position.y) }, 0);
+			item->pbody->body->SetTransform({ PIXEL_TO_METERS(item->position.x)+PIXEL_TO_METERS(9),PIXEL_TO_METERS(item->position.y)+PIXEL_TO_METERS(8) }, 0);
 		}
 		if (itemNode.attribute("num").as_int() == 2) {
 			if (itemNode.attribute("isAlive").as_bool() == true && item2->isAlive == false) {
@@ -380,7 +401,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 			item2->position.x = itemNode.attribute("x").as_int();
 			item2->position.y = itemNode.attribute("y").as_int();
 
-			item2->pbody->body->SetTransform({ PIXEL_TO_METERS(item2->position.x),PIXEL_TO_METERS(item2->position.y) }, 0);
+			item2->pbody->body->SetTransform({ PIXEL_TO_METERS(item2->position.x) + PIXEL_TO_METERS(9),PIXEL_TO_METERS(item2->position.y) + PIXEL_TO_METERS(8) }, 0);
 		}
 		if (itemNode.attribute("num").as_int() == 3) {
 			if (itemNode.attribute("isAlive").as_bool() == true && item3->isAlive == false) {
@@ -397,7 +418,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 			item3->position.x = itemNode.attribute("x").as_int();
 			item3->position.y = itemNode.attribute("y").as_int();
 
-			item3->pbody->body->SetTransform({ PIXEL_TO_METERS(item3->position.x),PIXEL_TO_METERS(item3->position.y) }, 0);
+			item3->pbody->body->SetTransform({ PIXEL_TO_METERS(item3->position.x) + PIXEL_TO_METERS(9),PIXEL_TO_METERS(item3->position.y) + PIXEL_TO_METERS(8) }, 0);
 		}
 		if (itemNode.attribute("num").as_int() == 4) {
 			if (itemNode.attribute("isAlive").as_bool() == true && item4->isAlive == false) {
@@ -414,7 +435,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 			item4->position.x = itemNode.attribute("x").as_int();
 			item4->position.y = itemNode.attribute("y").as_int();
 
-			item4->pbody->body->SetTransform({ PIXEL_TO_METERS(item4->position.x),PIXEL_TO_METERS(item4->position.y) }, 0);
+			item4->pbody->body->SetTransform({ PIXEL_TO_METERS(item4->position.x) + PIXEL_TO_METERS(9),PIXEL_TO_METERS(item4->position.y) + PIXEL_TO_METERS(8) }, 0);
 		}
 	}
 
@@ -434,6 +455,7 @@ bool Scene::SaveState(pugi::xml_node node) // esta funcion guarda los datos de l
 		if (app->entityManager->entities[i]->name == "Player") {
 			entNode.append_attribute("intoxication").set_value(app->entityManager->entities[i]->intoxication);
 			entNode.append_attribute("health").set_value(app->entityManager->entities[i]->health);
+			entNode.append_attribute("itemPicked").set_value(player->itemPicked);
 		}
 		if (app->entityManager->entities[i]->name == "EnemyZombie" || app->entityManager->entities[i]->name == "EnemyShadow" || app->entityManager->entities[i]->name == "item") {
 			entNode.append_attribute("num").set_value(app->entityManager->entities[i]->Num);

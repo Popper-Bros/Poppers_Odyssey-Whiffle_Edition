@@ -34,12 +34,11 @@
 	  <EnemyHealthBar3 texturepath ="Assets/Textures/UI/EnemyHealth3.png"/>
 	  <EnemyHealthBarFull texturepath ="Assets/Textures/UI/EnemyHealthFull.png"/>
 	  <EnemyHealthBarNull texturepath ="Assets/Textures/UI/EnemyHealthNull.png"/>
+	  <PopperEmpty texturepath ="Assets/Textures/UI/popperBlank.png"/>
+	  <PopperFull texturepath ="Assets/Textures/UI/popperUI.png"/>
   </HUD>
 
 	<scene>
-		<UI>
-			<HealthBar x="0" y ="0 " texturepath="Assets/Textures/UI/bar.png"/>
-		</UI>
 		<player x="80" y="166" texturepath="Assets/Textures/Spritesheet.png" Bala_texturePath="Assets/Textures/Shadow_disparo.png">
 			<audio>
 				<jump path="Assets/Audio/Fx/jump.ogg"/>

@@ -1,6 +1,8 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
+#include "Textures.h"
+#include "Scene.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -58,6 +60,10 @@ bool Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+	t = app->tex->Load("Assets/Textures/SlowMo.png");
+	
+	
+	SDL_SetTextureAlphaMod(t, 50);
 	return true;
 }
 
@@ -70,6 +76,22 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && app->scene->playerItem > 0)
+	{
+		
+		timer.Start();
+		timerOn = true;
+	}
+	if (timerOn)
+	{
+		SDL_RenderCopy(renderer, t, NULL, NULL);
+		if (timer.ReadSec() >= 3)
+		{
+			
+			timerOn = false;
+		}
+	}
+
 	return true;
 }
 
@@ -85,6 +107,7 @@ bool Render::CleanUp()
 {
 	LOG("Destroying SDL render");
 	SDL_DestroyRenderer(renderer);
+	app->tex->UnLoad(t);
 	return true;
 }
 

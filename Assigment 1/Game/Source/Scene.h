@@ -43,6 +43,8 @@ public:
 	
 	bool playerAlive = true;
 
+	int playerItem = 0;
+
 	iPoint getPlayerPos();
 
 	int GetPlayerLife();

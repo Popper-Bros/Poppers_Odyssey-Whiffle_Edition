@@ -27,11 +27,6 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Entity* CreateEntity(EntityType type);
-
-	void DestroyEntity(Entity* entity);
-
-	void AddEntity(Entity* entity);
 
 
 public:
@@ -52,6 +47,9 @@ public:
 	const char* EnemyHealthBar3Path;
 	const char* EnemyHealthBarFullPath;
 
+	const char* popperEmptyPath;
+	const char* popperFullPath;
+
 	SDL_Texture* HealthBarNull;
 	SDL_Texture* HealthBar1;
 	SDL_Texture* HealthBar2;
@@ -68,6 +66,13 @@ public:
 	SDL_Texture* EnemyHealthBar3;
 	SDL_Texture* EnemyHealthBarFull;
 	SDL_Rect EnemyHealthRec;
+
+	SDL_Texture* popperEmpty;
+	SDL_Texture* popperFull;
+	SDL_Rect popperRec;
+	SDL_Rect popperRec2;
+	SDL_Rect popperRec3;
+	
 
 	int playerHealth = 1;
 

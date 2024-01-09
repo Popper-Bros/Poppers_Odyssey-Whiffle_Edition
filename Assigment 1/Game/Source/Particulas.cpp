@@ -211,7 +211,7 @@ void Particulas::OnCollision(PhysBody* physA, PhysBody* physB) //gestionar las c
 				break;
 			case ColliderType::PLAYER_SHOT:
 
-				LOG("BALA COLISION SHOT");
+				/*LOG("BALA COLISION SHOT");*/
 				item->data.collision = true;
 				break;
 			case ColliderType::ENEMY:

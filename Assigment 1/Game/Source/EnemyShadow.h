@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "DynArray.h"
 #include "SDL/include/SDL.h"
+#include "Timer.h"
 
 
 struct SDL_Texture;
@@ -65,6 +66,10 @@ public:
 	//float frameCounter = 0.0f;
 	//int frameSpeed = 2;
 	//bool collidingPlat;
+
+	float timerOn = false;
+	Timer timer = Timer();
+	float animSpeed = 0.01f;
 
 	iPoint enemyTile;
 
