@@ -11,6 +11,8 @@
 #include "Item.h"
 #include "Player.h"
 #include "Map.h"
+#include "Timer.h"
+#include "PerfTimer.h"
 
 EnemyZombie::EnemyZombie() : Entity(EntityType::ENEMYZOMBIE)
 {
@@ -73,14 +75,15 @@ bool EnemyZombie::Start() {
 
 bool EnemyZombie::Update(float dt)
 {
-	Idle_right.speed = 0.01f * dt;
-	Idle_left.speed = 0.01f * dt;
-	Attack_right.speed = 0.01f * dt;
-	Attack_left.speed = 0.01f * dt;
-	Die_right.speed = 0.01f * dt;
-	Die_left.speed = 0.01f * dt;
-	Move_right.speed = 0.01f * dt;
-	Move_left.speed = 0.01f * dt;
+	
+	Idle_right.speed = animSpeed * dt;
+	Idle_left.speed = animSpeed * dt;
+	Attack_right.speed = animSpeed * dt;
+	Attack_left.speed = animSpeed * dt;
+	Die_right.speed = animSpeed * dt;
+	Die_left.speed = animSpeed * dt;
+	Move_right.speed = animSpeed * dt;
+	Move_left.speed = animSpeed * dt;
 
 	cd -= dt * 0.1;
 	EnemyHealthRec = { position.x+20+app->render->camera.x, position.y+app->render->camera.y, 20, 6 };
@@ -105,6 +108,25 @@ bool EnemyZombie::Update(float dt)
 	}
 
 	if (isAlive) {
+
+		if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && app->scene->playerItem > 0)
+		{
+			timer.Start();
+			timerOn = true;
+			LOG("Timer started");
+			speed = 0.2f;
+			animSpeed = 0.002f;
+		}
+		if (timerOn)
+		{
+			if (timer.ReadSec() >= 3 )
+			{
+				speed = 1.0f;
+				animSpeed = 0.01f;
+				LOG("%f", speed);
+				timerOn = false;
+			}
+		}
 
 		if (!isAttackingLeft && !isAttackingRight && !isMovingLeft && !isMovingRight) {
 			if (currentDirection == EnemyZombieDirection::RIGHT || currentDirection == EnemyZombieDirection::ATTACK_R)
@@ -230,6 +252,7 @@ bool EnemyZombie::Update(float dt)
 
 	return true;
 }
+
 
 void EnemyZombie::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path, float vely) //esta fucnion es para que el enemigo se mueva hacia el siguiente nodo del path
 {

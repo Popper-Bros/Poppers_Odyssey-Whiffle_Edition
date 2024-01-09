@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "SDL/include/SDL.h"
 #include "Module.h"
+#include "Timer.h"
 
 
 struct SDL_Texture;
@@ -64,7 +65,11 @@ public:
 	float cooldown = 0.0f;
 	bool isShooting = false;
 	bool canShoot = true;
+	bool isReloading = false;
 
+	Timer timer = Timer();
+
+	int itemPicked = 0;
 
 	Direction currentDirection = Direction::IDLE_R;
 

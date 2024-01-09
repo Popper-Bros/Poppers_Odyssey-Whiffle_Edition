@@ -5,7 +5,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "SDL/include/SDL.h"
-
+#include "Timer.h"
 
 struct SDL_Texture;
 enum class EnemyZombieDirection
@@ -68,6 +68,10 @@ public:
 	//float frameCounter = 0.0f;
 	//int frameSpeed = 2;
 	//bool collidingPlat;
+
+	float timerOn = false;
+	Timer timer = Timer();
+	float animSpeed = 0.01f;
 
 	iPoint enemyTile;
 
