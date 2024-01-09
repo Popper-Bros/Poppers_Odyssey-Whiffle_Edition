@@ -33,8 +33,14 @@ bool Map::Awake(pugi::xml_node config)
 bool Map::Start() {
 
     //Calls the functon to load the map, make sure that the filename is assigned
-    SString mapPath = path;
-    mapPath += name;
+    if (level == 1) {
+        mapPath = path;
+        mapPath += name1;
+    }
+    else {
+        mapPath = path;
+        mapPath += name2;
+    }
     Load(mapPath);
 
     //Initialize pathfinding 
@@ -117,6 +123,16 @@ bool Map::CleanUp()
     //Clean up pathfing class
     pathfinding->CleanUp();
     pathfinding2->CleanUp();
+
+    // Clean up navigation map memory
+    if (navigationLayer != nullptr && navigationLayer->tiles != nullptr) {
+        delete[] navigationLayer->tiles;
+        navigationLayer->tiles = nullptr;
+    }
+
+    // Release pathfinding objects
+    RELEASE(pathfinding);
+    RELEASE(pathfinding2);
 
     // L05: DONE 2: Make sure you clean up any memory allocated from tilesets/map
     ListItem<TileSet*>* tileset;
@@ -492,6 +508,8 @@ bool Map::LoadColliders(pugi::xml_node& layerNode) {
     }
     else {
         ret = false;
+
+        LOG("Error: Data node not found in layer.");
     }
 
     return ret;

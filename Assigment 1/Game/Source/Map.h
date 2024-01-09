@@ -157,8 +157,11 @@ public:
 
 
 public:
-    SString name;
+    int level = 1;
+    SString name1;
+    SString name2;
     SString path;
+    SString mapPath;
     PathFinding* pathfinding;
     PathFinding* pathfinding2;
     MapData mapData;

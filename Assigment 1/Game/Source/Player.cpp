@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Item.h"
+#include "Map.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -83,7 +84,7 @@ bool Player::Update(float dt)
 	Jump_left.speed = animVel * dt;
 	Die.speed = 0.01f * dt;
 
-	if (position.x > 1930 && position.y < 260 && !win) {
+	if (app->map->level == 1 &&	position.x > 1930 && position.y < 260 && !win) {
 		win = true;
 		app->audio->PlayFx(won);
 		app->scene->checkpoint = 0;

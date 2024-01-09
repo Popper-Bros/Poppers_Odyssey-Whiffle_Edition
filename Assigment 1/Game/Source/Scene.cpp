@@ -93,7 +93,8 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 
 	//Get the map name from the config file and assigns the value in the module
-	app->map->name = config.child("map").attribute("name").as_string();
+	app->map->name1 = config.child("map").attribute("name1").as_string();
+	app->map->name2 = config.child("map").attribute("name2").as_string();
 	app->map->path = config.child("map").attribute("path").as_string();
 
 	savedConfig = config;
@@ -207,7 +208,13 @@ bool Scene::Update(float dt)
 	//hace un load
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
-
+	if (player->win && app->map->level == 1) {
+		player->win = false;
+		app->map->CleanUp();
+		app->map->level = 2;
+		app->map->Awake(savedConfig);
+		app->map->Start();
+	}
 	return true;
 }
 

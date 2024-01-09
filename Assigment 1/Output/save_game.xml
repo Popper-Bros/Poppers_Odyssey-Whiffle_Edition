@@ -8,21 +8,21 @@
 	<pathfinding />
 	<map />
 	<scene>
-		<item x="264" y="664" isAlive="true" texturepath="Assets/Textures/popper.png" num="1" />
-		<item x="901" y="664" isAlive="true" texturepath="Assets/Textures/popper.png" num="2" />
-		<item x="967" y="130" isAlive="true" texturepath="Assets/Textures/popper.png" num="3" />
-		<item x="1542" y="482" isAlive="true" texturepath="Assets/Textures/popper.png" num="4" />
-		<Player x="63" y="166" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" health="5" />
-		<Particulas x="0" y="0" isAlive="true" texturepath="Assets/Textures/particles.png" />
-		<EnemyShadow x="730" y="209" isAlive="true" texturepath="Assets/Textures/sombra.png" num="1" />
-		<EnemyShadow x="1626" y="266" isAlive="true" texturepath="Assets/Textures/sombra.png" num="2" />
-		<EnemyZombie x="1902" y="511" isAlive="true" texturepath="Assets/Textures/zombie.png" num="1" />
-		<EnemyZombie x="752" y="638" isAlive="true" texturepath="Assets/Textures/zombie.png" num="2" />
-		<Heal x="392" y="626" isAlive="true" texturepath="Assets/Textures/Kit.png" />
+		<item x="256" y="687" isAlive="true" texturepath="Assets/Textures/popper.png" num="1" />
+		<item x="903" y="689" isAlive="true" texturepath="Assets/Textures/popper.png" num="2" />
+		<item x="959" y="122" isAlive="true" texturepath="Assets/Textures/popper.png" num="3" />
+		<item x="1534" y="473" isAlive="true" texturepath="Assets/Textures/popper.png" num="4" />
+		<Player x="964" y="134" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" health="5" />
+		<Particulas x="0" y="-2097152" isAlive="true" texturepath="Assets/Textures/particles.png" />
+		<EnemyShadow x="727" y="215" isAlive="true" texturepath="Assets/Textures/sombra.png" num="1" />
+		<EnemyShadow x="1624" y="272" isAlive="true" texturepath="Assets/Textures/sombra.png" num="2" />
+		<EnemyZombie x="1899" y="507" isAlive="true" texturepath="Assets/Textures/zombie.png" num="1" />
+		<EnemyZombie x="749" y="634" isAlive="true" texturepath="Assets/Textures/zombie.png" num="2" />
+		<Heal x="392" y="625" isAlive="true" texturepath="Assets/Textures/Kit.png" />
 	</scene>
 	<entitymanager />
 	<HUD />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-435" y="0" />
 	</renderer>
 </game_state>
