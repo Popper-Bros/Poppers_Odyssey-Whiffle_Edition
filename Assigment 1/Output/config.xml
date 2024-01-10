@@ -574,9 +574,9 @@
 		</Heal>
 
 		<item x="272" y="672" texturepath="Assets/Textures/popper.png"/>
-		<item2 x="910" y="672" texturepath="Assets/Textures/popper.png"/>
-		<item3 x="975" y="138" texturepath="Assets/Textures/popper.png"/>
-		<item4 x="1550" y="490" texturepath="Assets/Textures/popper.png"/>
+		<item x="910" y="672" texturepath="Assets/Textures/popper.png"/>
+		<item x="975" y="138" texturepath="Assets/Textures/popper.png"/>
+		<item x="1550" y="490" texturepath="Assets/Textures/popper.png"/>
 		<map path="Assets/Maps/" name1="MapTemplate.tmx" name2="MapTemplat.tmx"/>
 	</scene>
   

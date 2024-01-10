@@ -26,70 +26,55 @@ bool Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
+	if (app->map->level == 1) {
+		// iterate all objects in the scene
+		// Check https://pugixml.org/docs/quickstart.html#access
 
-	// iterate all objects in the scene
-	// Check https://pugixml.org/docs/quickstart.html#access
-	if (config.child("item")) {
-		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = config.child("item");
-		item->Num = 1;
-	}
+		for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item")) {
+			if (config.child("item")) {
+				item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				this->item->parameters = itemNode.child("item");
+			}
+		}
+	
+		if (config.child("player")) {
+			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+			player->parameters = config.child("player");
+		}
 
-	if (config.child("item2")) {
-		item2 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item2->parameters = config.child("item2");
-		item2->Num = 2;
-	}
+		if (config.child("Particulas")) {
+			particulas = (Particulas*)app->entityManager->CreateEntity(EntityType::PARTICULAS);
+			particulas->parameters = config.child("Particulas");
+		}
 
-	if (config.child("item3")) {
-		item3 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item3->parameters = config.child("item3");
-		item3->Num = 3;
-	}
+		if (config.child("EnemyShadow")) {
+			enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+			enemy->parameters = config.child("EnemyShadow");
+			enemy->Num = 1;
+		}
 
-	if (config.child("item4")) {
-		item4 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item4->parameters = config.child("item4");
-		item4->Num = 4;
-	}
+		if (config.child("EnemyShadow2")) {
+			enemy3 = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+			enemy3->parameters = config.child("EnemyShadow2");
+			enemy3->Num = 2;
+		}
 
-	if (config.child("player")) {
-		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-		player->parameters = config.child("player");
-	}
+		if (config.child("EnemyZombie")) {
+			enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+			enemy2->parameters = config.child("EnemyZombie");
+			enemy2->Num = 1;
+		}
 
-	if (config.child("Particulas")) {
-		particulas = (Particulas*)app->entityManager->CreateEntity(EntityType::PARTICULAS);
-		particulas->parameters = config.child("Particulas");
-	}
+		if (config.child("EnemyZombie2")) {
+			enemy4 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+			enemy4->parameters = config.child("EnemyZombie2");
+			enemy4->Num = 2;
+		}
 
-	if (config.child("EnemyShadow")) {
-		enemy = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
-		enemy->parameters = config.child("EnemyShadow");
-		enemy->Num = 1;
-	}
-
-	if (config.child("EnemyShadow2")) {
-		enemy3 = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
-		enemy3->parameters = config.child("EnemyShadow2");
-		enemy3->Num = 2;
-	}
-
-	if (config.child("EnemyZombie")) {
-		enemy2 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
-		enemy2->parameters = config.child("EnemyZombie");
-		enemy2->Num = 1;
-	}
-
-	if (config.child("EnemyZombie2")) {
-		enemy4 = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
-		enemy4->parameters = config.child("EnemyZombie2");
-		enemy4->Num = 2;
-	}
-
-	if (config.child("Heal")) {
-		heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
-		heal->parameters = config.child("Heal");
+		if (config.child("Heal")) {
+			heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
+			heal->parameters = config.child("Heal");
+		}
 	}
 
 	//Get the map name from the config file and assigns the value in the module
@@ -229,7 +214,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
 	if (player->win && app->map->level == 1) {
-		player->win = false;
+		CleanUp();
 		app->map->CleanUp();
 		app->map->level = 2;
 		app->map->Awake(savedConfig);
@@ -261,6 +246,7 @@ int Scene::GetPlayerLife() {
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	app->entityManager->CleanUp();
 
 	return true;
 }
@@ -283,10 +269,24 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 		player->itemPicked = node.child("Player").attribute("itemPicked").as_int();
 		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x+0.3f),PIXEL_TO_METERS(player->position.y+0.3f) }, 0);
 	}
-	if (node.child("Heal")) {
-		heal->position.x = node.child("Heal").attribute("x").as_int();
-		heal->position.y = node.child("Heal").attribute("y").as_int();
-		heal->pbody->body->SetTransform({ PIXEL_TO_METERS(heal->position.x)+PIXEL_TO_METERS(9),PIXEL_TO_METERS(heal->position.y) + PIXEL_TO_METERS(8) }, 0);
+
+	for (pugi::xml_node healNode = node.child("Heal"); healNode; healNode = healNode.next_sibling("Heal")) {
+		if (node.child("Heal")) {
+			if (healNode.attribute("isAlive").as_bool() == true && heal->isAlive == false) {
+				heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
+				heal->parameters = savedConfig.child("Heal");
+				heal->Awake();
+				heal->texturepath = healNode.attribute("texturepath").as_string();
+				heal->Start();
+				heal->isAlive = true;
+			}
+			if (healNode.attribute("isAlive").as_bool() == false && heal->isAlive == true) {
+				heal->isAlive = false;
+			}
+			heal->position.x = node.child("Heal").attribute("x").as_int();
+			heal->position.y = node.child("Heal").attribute("y").as_int();
+			heal->pbody->body->SetTransform({ PIXEL_TO_METERS(heal->position.x) + PIXEL_TO_METERS(9),PIXEL_TO_METERS(heal->position.y) + PIXEL_TO_METERS(8) }, 0);
+		}
 	}
 
 	for (pugi::xml_node enemyShadowNode = node.child("EnemyShadow"); enemyShadowNode; enemyShadowNode = enemyShadowNode.next_sibling("EnemyShadow")) {
