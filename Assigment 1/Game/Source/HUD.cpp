@@ -43,6 +43,8 @@ bool HUD::Awake(pugi::xml_node& config)
 	popperEmptyPath = config.child("PopperEmpty").attribute("texturepath").as_string();
 	popperFullPath = config.child("PopperFull").attribute("texturepath").as_string();
 
+	numbersPath = config.child("Numbers").attribute("texturepath").as_string();
+
 	return true;
 }
 
@@ -64,6 +66,9 @@ bool HUD::Start() {
 
 	popperEmpty = app->tex->Load(popperEmptyPath);
 	popperFull = app->tex->Load(popperFullPath);
+	
+	numbers = app->tex->Load(numbersPath);
+	
 
     HealthRec = { 76, 18, 28, 12 };
     box = { 68, 14, 43, 20 };
@@ -71,6 +76,12 @@ bool HUD::Start() {
 	popperRec = { 66, 40, 16, 20 };
 	popperRec2 = { 81, 40, 16, 20 };
 	popperRec3 = { 96, 40, 16, 20 };
+	for (int i = 0; i < 10; i++)
+	{
+		Num[i] = { 11*(i+1), 0, 9, 20 };
+	}
+
+	timerRect = { 500, 20, 9, 20 };
 
 	SDL_SetTextureAlphaMod(popperEmpty, 100);
 
@@ -79,13 +90,62 @@ bool HUD::Start() {
 
 bool HUD::Update(float dt)
 {
+	if (!timerOn)
+	{
+		timer.Start();
+		timerOn = true;
+		elapsedTime = 0;
+	}
+	elapsedTime = timer.ReadSec();
+	LOG("%d", timer.ReadSec());
+	if (elapsedTime > 10)
+	{
+		timerOn = false;
+	}
+	switch (elapsedTime)
+	{
+	case 0:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[0], &timerRect);
+		break;
+	case 1:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[1], &timerRect);
+		break;
+	case 2:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[2], &timerRect);
+		break;
+	case 3:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[3], &timerRect);
+		break;
+	case 4:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[4], &timerRect);
+		break;
+	case 5:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[5], &timerRect);
+		break;
+	case 6:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[6], &timerRect);
+		break;
+	case 7:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[7], &timerRect);
+		break;
+	case 8:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[8], &timerRect);
+		break;
+	case 9:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[9], &timerRect);
+		break;
+	case 10:
+		SDL_RenderCopy(app->render->renderer, numbers, &Num[0], &timerRect);
+		break;
+	}
+	
 	playerHealth = app->scene->GetPlayerLife();
 
 	SDL_RenderCopy(app->render->renderer, Box, NULL, &box);
 	SDL_RenderCopy(app->render->renderer, Heart, NULL, &heart);
 
-	
-	
+		
+
 	switch (app->scene->playerItem)
 	{
 	case 0:
