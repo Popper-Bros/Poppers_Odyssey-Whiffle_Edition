@@ -36,6 +36,7 @@
 	  <EnemyHealthBarNull texturepath ="Assets/Textures/UI/EnemyHealthNull.png"/>
 	  <PopperEmpty texturepath ="Assets/Textures/UI/popperBlank.png"/>
 	  <PopperFull texturepath ="Assets/Textures/UI/popperUI.png"/>
+	  <Numbers texturepath ="Assets/Textures/UI/numbers.png"/>
   </HUD>
 
 	<scene>

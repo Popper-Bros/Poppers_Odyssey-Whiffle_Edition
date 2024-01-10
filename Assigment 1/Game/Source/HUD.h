@@ -50,6 +50,8 @@ public:
 	const char* popperEmptyPath;
 	const char* popperFullPath;
 
+	const char* numbersPath;
+
 	SDL_Texture* HealthBarNull;
 	SDL_Texture* HealthBar1;
 	SDL_Texture* HealthBar2;
@@ -72,9 +74,18 @@ public:
 	SDL_Rect popperRec;
 	SDL_Rect popperRec2;
 	SDL_Rect popperRec3;
-	
 
-	int playerHealth = 1;
+	SDL_Texture* numbers;			  // Texturas para dígitos del cronómetro
+	SDL_Texture* colonTexture;       // Textura para el separador de minutos y segundos
+	SDL_Rect timerRect;			    // Rectángulo para el cronómetro
+	SDL_Rect Num[10];			   // Rectángulos para los dígitos del cronómetro
+	SDL_Rect TimerRec;			  // Rectángulo para el cronómetro
+	SDL_Rect colonRect;			 // Rectángulo para el separador de minutos y segundos
+	Timer timer = Timer();		// Timer para el cronómetro
+	int elapsedTime = 0;	   // Tiempo transcurrido desde el inicio del cronómetro
+	bool timerOn = false;	  // Indica si el cronómetro está activo o no
+	
+	int playerHealth;
 
 private:
 
