@@ -190,7 +190,7 @@ bool EnemyZombie::Update(float dt)
 		}
 
 		if (position.x - app->scene->getPlayerPos().x <= 40 && position.x - app->scene->getPlayerPos().x >= -40 && cd<=0.0f) {
-			attack();
+			Attack();
 		}
 
 		pbody->body->SetLinearVelocity(vel);
@@ -231,23 +231,7 @@ bool EnemyZombie::Update(float dt)
 
 	else
 	{
-		
-		pbody->body->GetFixtureList()->SetSensor(true);
-		if (currentAnimation == &Idle_right || currentAnimation == &Move_right) {
-			currentAnimation = &Die_right;
-		}
-		if (currentAnimation == &Idle_left || currentAnimation == &Move_left) {
-			currentAnimation = &Die_left;
-		}
-		currentAnimation->Update();
-		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(texture, position.x, position.y, &rect);
-		app->audio->PlayFx(dead);
-		if (currentAnimation->GetCurrentFrameIndex() >= 4)
-		{
-			app->entityManager->DestroyEntity(this);
-			app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
-		}
+	Die();
 	}
 
 	return true;
@@ -331,7 +315,7 @@ bool EnemyZombie::CleanUp()
 	return true;
 }
 
-void EnemyZombie::attack() {
+void EnemyZombie::Attack() {
 
 	if (position.x - app->scene->getPlayerPos().x >= 0) {
 		isAttackingLeft = true;
@@ -343,4 +327,24 @@ void EnemyZombie::attack() {
 	}
 
 	cd = 500.0f;
+}
+
+bool EnemyZombie::Die() {
+	pbody->body->GetFixtureList()->SetSensor(true);
+	if (currentAnimation == &Idle_right || currentAnimation == &Move_right) {
+		currentAnimation = &Die_right;
+	}
+	if (currentAnimation == &Idle_left || currentAnimation == &Move_left) {
+		currentAnimation = &Die_left;
+	}
+	currentAnimation->Update();
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y, &rect);
+	app->audio->PlayFx(dead);
+	if (currentAnimation->GetCurrentFrameIndex() >= 4)
+	{
+		app->entityManager->DestroyEntity(this);
+		app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
+	}
+	return true;
 }

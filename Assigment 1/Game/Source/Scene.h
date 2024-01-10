@@ -68,14 +68,9 @@ private:
 	uint windowW, windowH;
 	Player* player;
 	Item* item;
-	Item* item2;
-	Item* item3;
-	Item* item4;
 	Heal* heal;
-	EnemyShadow* enemy;
-	EnemyZombie* enemy2;
-	EnemyShadow* enemy3;
-	EnemyZombie* enemy4;
+	EnemyShadow* enemyShadow;
+	EnemyZombie* enemyZombie;
 	pugi::xml_node savedConfig;
 
 	SDL_Texture* mouseTileTex = nullptr;

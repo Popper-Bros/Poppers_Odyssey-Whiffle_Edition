@@ -75,9 +75,8 @@ bool Player::Update(float dt)
 	if (app->map->level == 1 &&	position.x > 1930 && position.y < 260 && !win) {
 		win = true;
 		app->audio->PlayFx(won);
-		app->scene->checkpoint = 0;
 		//pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
-		app->entityManager->DestroyEntity(this);
+		//app->entityManager->DestroyEntity(this);
 
 	}
 
@@ -193,7 +192,7 @@ bool Player::Update(float dt)
 			vel.y = -10.0f; // Aplicar impulso vertical al saltar
 
 		}
-		if (position.y >= 786 && !fell) {
+		if (position.y >= 786 && !fell && !godmode) {
 			app->audio->PlayFx(fall,60);
 			fell = true;
 		}

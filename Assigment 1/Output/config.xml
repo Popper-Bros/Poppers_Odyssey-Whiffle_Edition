@@ -115,7 +115,7 @@
 		</player>
 
 		<EnemyShadow x="752" y="224" texturepath="Assets/Textures/sombra.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
-					HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png"
+					 HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png"
 					 HealthBar3 ="Assets/Textures/UI/EnemyHealth3.png" HealthBarNull ="Assets/Textures/UI/EnemyHealthNull.png">
 			<audio>
 				<shot path="Assets/Audio/Fx/shadow_shot.ogg"/>
@@ -230,7 +230,7 @@
 			</animations>
 		</EnemyShadow>
 
-		<EnemyShadow2 x="1648" y="280" texturepath="Assets/Textures/sombra.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
+		<EnemyShadow x="1648" y="280" texturepath="Assets/Textures/sombra.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
 					HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png"
 					 HealthBar3 ="Assets/Textures/UI/EnemyHealth3.png" HealthBarNull ="Assets/Textures/UI/EnemyHealthNull.png">
 			<animations>
@@ -340,7 +340,7 @@
 					<anim x ="20" y =" 270" width =" 43" height ="45"/>
 				</Attack_left>
 			</animations>
-		</EnemyShadow2>
+		</EnemyShadow>
 
 		<EnemyZombie x="1935" y="545" texturepath="Assets/Textures/zombie.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
 					HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png" 
@@ -428,7 +428,7 @@
 			</animations>
 		</EnemyZombie>
 
-		<EnemyZombie2 x="785" y="672" texturepath="Assets/Textures/zombie.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
+		<EnemyZombie x="785" y="672" texturepath="Assets/Textures/zombie.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
 					HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png"
 					 HealthBar3 ="Assets/Textures/UI/EnemyHealth3.png" HealthBarNull ="Assets/Textures/UI/EnemyHealthNull.png">
 			<animations>
@@ -508,7 +508,7 @@
 					<anim x ="280" y =" 285" width =" 67" height ="67"/>
 				</Attack_right>
 			</animations>
-		</EnemyZombie2>
+		</EnemyZombie>
 		
 		<Particulas texturepath ="Assets/Textures/particles.png">	
 			<animations>
@@ -555,6 +555,7 @@
 			
 			</animations>
 		</Particulas>
+		
 		<Heal x="400" y="635" texturepath ="Assets/Textures/Kit.png">
 			<animations>
 				<KitIdle loop="false" >

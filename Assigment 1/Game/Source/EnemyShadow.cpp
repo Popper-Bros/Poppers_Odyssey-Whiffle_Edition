@@ -175,7 +175,7 @@ bool EnemyShadow::Update(float dt)
 		
 		if (position.x - app->scene->getPlayerPos().x <= 100 && position.x - app->scene->getPlayerPos().x >= -100 && 
 			position.y - app->scene->getPlayerPos().y >= -30 && position.y - app->scene->getPlayerPos().y <= 30 && cd <= 0.0f) {
-			attack();
+			Attack();
 		}
 
 		pbody->body->SetLinearVelocity(vel);
@@ -221,26 +221,7 @@ bool EnemyShadow::Update(float dt)
 
 	else
 	{
-		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
-		vel = { 0,0 };
-		pbody->body->GetFixtureList()->SetSensor(true);
-		//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
-		if (currentAnimation == &Idle_right || currentAnimation == &Attack_right) {
-			currentAnimation = &Die_right;
-		}
-		if (currentAnimation == &Idle_left || currentAnimation == &Attack_left) {
-			currentAnimation = &Die_left;
-		}
-		currentAnimation->Update();
-		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(texture, position.x, position.y, &rect);
-		app->audio->PlayFx(death);
-		if (currentAnimation->GetCurrentFrameIndex() >= 11)
-		{
-			app->entityManager->DestroyEntity(this);
-			app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
-		}
-
+	Die();
 	}
 
 	return true;
@@ -317,7 +298,7 @@ bool EnemyShadow::CleanUp()
 	return true;
 }
 
-void EnemyShadow::attack() {
+void EnemyShadow::Attack() {
 
 	if (position.x - app->scene->getPlayerPos().x >= 0) {
 		isAttackingLeft = true;
@@ -328,4 +309,27 @@ void EnemyShadow::attack() {
 		currentDirection = EnemyShadowDirection::ATTACK_R;
 	}
 	cd = 200.0f;
+}
+
+bool EnemyShadow::Die() {
+	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
+	vel = { 0,0 };
+	pbody->body->GetFixtureList()->SetSensor(true);
+	//if (currentAnimation->GetCurrentFrameIndex() >= 0) app->audio->PlayFx(blood, 24);
+	if (currentAnimation == &Idle_right || currentAnimation == &Attack_right) {
+		currentAnimation = &Die_right;
+	}
+	if (currentAnimation == &Idle_left || currentAnimation == &Attack_left) {
+		currentAnimation = &Die_left;
+	}
+	currentAnimation->Update();
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y, &rect);
+	app->audio->PlayFx(death);
+	if (currentAnimation->GetCurrentFrameIndex() >= 11)
+	{
+		app->entityManager->DestroyEntity(this);
+		app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
+	}
+	return true;
 }

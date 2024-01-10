@@ -39,7 +39,9 @@ public:
 
 	void MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iPoint>* path, float vely);
 
-	void attack();
+	void Attack();
+
+	bool Die();
 
 
 public:
