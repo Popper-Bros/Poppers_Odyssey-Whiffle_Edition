@@ -9,6 +9,8 @@
 #include "EnemyZombie.h"
 #include "Particulas.h"
 #include "HUD.h"
+#include "GuiControl.h"
+#include "GuiControlButton.h"
 
 struct SDL_Texture;
 
@@ -61,6 +63,7 @@ public:
 	//
 	bool SaveState(pugi::xml_node node);
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
@@ -74,6 +77,8 @@ private:
 	pugi::xml_node savedConfig;
 
 	SDL_Texture* mouseTileTex = nullptr;
+
+	GuiControlButton* gcButton;
 
 };
 

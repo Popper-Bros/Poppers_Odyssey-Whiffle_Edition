@@ -11,6 +11,9 @@
 #include "Defs.h"
 #include "Log.h"
 #include "HUD.h"
+#include "GuiControl.h"
+#include "GuiManager.h"
+#include "Optick/include/optick.h"
 
 Scene::Scene() : Module()
 {
@@ -84,7 +87,6 @@ bool Scene::Start()
 	pathfinding = new PathFinding();
 
 	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-	//img = app->tex->Load("Assets/Textures/test.png");
 	
 
 	//Music is commented so that you can add your own music
@@ -107,9 +109,17 @@ bool Scene::Start()
 		app->map->mapData.tileheight,
 		app->map->mapData.tilesets.Count());
 
+	app->win->GetWindowSize(windowW, windowH);
+
+	//Get the size of the texture
+	app->tex->GetSize(img, texW, texH);
+
+	textPosX = (float)windowW / 2 - (float)texW / 2;
+	textPosY = (float)windowH / 2 - (float)texH / 2;
 	app->SaveRequest();
 
-	
+	SDL_Rect btPos = { windowW / 2 - 60,20, 120,20 };
+	gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Didac, el virgen", btPos, this);
 
 	return true;
 }
@@ -357,6 +367,14 @@ bool Scene::SaveState(pugi::xml_node node) // esta funcion guarda los datos de l
 			entNode.append_attribute("num").set_value(app->entityManager->entities[i]->Num);
 		}*/
 	}
+
+	return true;
+}
+
+bool Scene::OnGuiMouseClickEvent(GuiControl* control)
+{
+	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
+	LOG("Press Gui Control: %d", control->id);
 
 	return true;
 }
