@@ -214,18 +214,24 @@ bool Scene::Update(float dt)
 	if (player->win && app->map->level == 1) {
 		CleanUp();
 		app->map->CleanUp();
-		app->map->level = 2;
 		app->physics->CleanUp();
+		app->hud->CleanUp();
+		app->tex->CleanUp();
 		//player->win = false;
 		//player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
-		app->render->camera.x = 0;
-		app->physics->Start();
+		app->tex->Awake(savedConfig);
 		app->map->Awake(savedConfig);
 		Awake(savedConfig);
 		player->Awake();
+		app->entityManager->Awake(savedConfig);
+		app->hud->Awake(savedConfig);
+		app->tex->Start();
+		app->physics->Start();
 		app->map->Start();
 		Start();
-		player->Start();
+		app->entityManager->Start();
+		app->hud->Start();
+		app->render->camera.x = 0;
 	}
 	return true;
 }
