@@ -225,6 +225,7 @@ bool Scene::Update(float dt)
 		player->Awake();
 		app->entityManager->Awake(savedConfig);
 		app->hud->Awake(savedConfig);
+		app->map->level = 2;
 		app->tex->Start();
 		app->physics->Start();
 		app->map->Start();
@@ -232,6 +233,7 @@ bool Scene::Update(float dt)
 		app->entityManager->Start();
 		app->hud->Start();
 		app->render->camera.x = 0;
+		
 	}
 	return true;
 }
