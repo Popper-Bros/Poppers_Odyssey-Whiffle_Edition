@@ -16,9 +16,9 @@
 		<Particulas x="0" y="0" isAlive="true" texturepath="Assets/Textures/particles.png" />
 		<EnemyShadow x="730" y="209" isAlive="true" texturepath="Assets/Textures/sombra.png" />
 		<EnemyShadow x="1626" y="266" isAlive="true" texturepath="Assets/Textures/sombra.png" />
-		<EnemyZombie x="1902" y="510" isAlive="true" texturepath="Assets/Textures/zombie.png" />
-		<EnemyZombie x="752" y="637" isAlive="true" texturepath="Assets/Textures/zombie.png" />
-		<Heal x="392" y="627" isAlive="true" texturepath="Assets/Textures/Kit.png" />
+		<EnemyZombie x="1902" y="511" isAlive="true" texturepath="Assets/Textures/zombie.png" />
+		<EnemyZombie x="752" y="638" isAlive="true" texturepath="Assets/Textures/zombie.png" />
+		<Heal x="392" y="626" isAlive="true" texturepath="Assets/Textures/Kit.png" />
 	</scene>
 	<entitymanager />
 	<HUD />
