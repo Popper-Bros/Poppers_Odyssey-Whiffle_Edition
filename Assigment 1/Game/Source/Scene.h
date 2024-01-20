@@ -7,6 +7,7 @@
 #include "Heal.h"
 #include "EnemyShadow.h"
 #include "EnemyZombie.h"
+#include "Boss.h"
 #include "Particulas.h"
 #include "HUD.h"
 #include "GuiControl.h"
@@ -47,6 +48,10 @@ public:
 
 	int playerItem = 0;
 
+	bool tp1 = false;
+
+	bool tp2 = false;
+
 	iPoint getPlayerPos();
 
 	int GetPlayerLife();
@@ -74,6 +79,7 @@ private:
 	Heal* heal;
 	EnemyShadow* enemyShadow;
 	EnemyZombie* enemyZombie;
+	Boss* boss;
 	pugi::xml_node savedConfig;
 
 	SDL_Texture* mouseTileTex = nullptr;

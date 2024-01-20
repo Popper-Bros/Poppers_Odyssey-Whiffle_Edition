@@ -29,6 +29,12 @@ bool Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
+
+	if (config.child("Particulas")) {
+		particulas = (Particulas*)app->entityManager->CreateEntity(EntityType::PARTICULAS);
+		particulas->parameters = config.child("Particulas");
+	}
+
 	if (app->map->level == 1) {
 		// iterate all objects in the scene
 		// Check https://pugixml.org/docs/quickstart.html#access
@@ -41,11 +47,6 @@ bool Scene::Awake(pugi::xml_node& config)
 		if (config.child("player")) {
 			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 			player->parameters = config.child("player");
-		}
-
-		if (config.child("Particulas")) {
-			particulas = (Particulas*)app->entityManager->CreateEntity(EntityType::PARTICULAS);
-			particulas->parameters = config.child("Particulas");
 		}
 
 		for (pugi::xml_node enemyShadowNode = config.child("EnemyShadow"); enemyShadowNode; enemyShadowNode = enemyShadowNode.next_sibling("EnemyShadow")) {
@@ -69,7 +70,13 @@ bool Scene::Awake(pugi::xml_node& config)
 			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 			player->parameters = config.child("player");
 		}
+
+		for (pugi::xml_node bossNode = config.child("Boss"); bossNode; bossNode = bossNode.next_sibling("Boss")) {
+			boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+			this->boss->parameters = bossNode;
+		}
 	}
+
 	//Get the map name from the config file and assigns the value in the module
 	app->map->name1 = config.child("map").attribute("name1").as_string();
 	app->map->name2 = config.child("map").attribute("name2").as_string();
@@ -172,28 +179,40 @@ bool Scene::Update(float dt)
 	if (app->render->camera.x > -1024 && ((app->scene->player->position.x) + app->render->camera.x) > (((app->render->camera.w) / 2)) + 40)
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
 
-	if (player->position.x > 925 && player->position.y < 200 && checkpoint==0)
+	if (player->position.x > 925 && player->position.y < 200 && checkpoint==0 && app->map->level == 1)
 	{
 		app->SaveRequest();
 		checkpoint = 1;
 	}
-	//if (player->position.x < 150)
-	//{
-	//	checkpoint = 0;
-	//}
+
+	if (player->position.x > 810 && player->position.y < 200 && checkpoint == 0 && app->map->level == 2)
+	{
+		app->SaveRequest();
+		checkpoint = 1;
+	}
 
 	//el player vuelve al pricipio 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) { 
-		player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 		checkpoint = 0;
 		app->render->camera.x = 0;
+		if (app->map->level == 1) {
+			player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+		}
+		else if (app->map->level == 2) {
+			player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(530) }, 0);
+		}
 		app->SaveRequest();
 	}
 	//el player vuelve al checkpoint
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && player->isAlive && player->fell == false) {
-		player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
 		checkpoint = 1;
 		app->render->camera.x = -435;
+		if (app->map->level == 1) {
+			player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
+		}
+		else if (app->map->level == 2) {
+			player->pbody->body->SetTransform({ PIXEL_TO_METERS(810),PIXEL_TO_METERS(60) }, 0);
+		}
 		app->SaveRequest();
 	}
 	//el player respawnea en el ultimo checkpoint
@@ -211,12 +230,26 @@ bool Scene::Update(float dt)
 	//hace un load
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
-	if (player->win && app->map->level == 1) {
+	//teleport 1 level 2
+	if (player->position.x > 1020 && player->position.x < 1060 && player->position.y > 650) {
+		player->pbody->body->SetTransform({ PIXEL_TO_METERS(1294),PIXEL_TO_METERS(94) }, 0);
+		tp1 = true;
+	}
+
+	//teleport 2 level 2
+	if (player->position.x > 1275 && player->position.x < 1310 && player->position.y > 650) {
+		player->pbody->body->SetTransform({ PIXEL_TO_METERS(1423),PIXEL_TO_METERS(94) }, 0);
+		tp2 = true;
+	}
+
+	if (player->win && app->map->level == 1 || app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
 		CleanUp();
 		app->map->CleanUp();
 		app->physics->CleanUp();
 		app->hud->CleanUp();
 		app->tex->CleanUp();
+		app->map->level = 2;
+		player->win = false;
 		//player->win = false;
 		//player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 		app->tex->Awake(savedConfig);
@@ -225,7 +258,6 @@ bool Scene::Update(float dt)
 		player->Awake();
 		app->entityManager->Awake(savedConfig);
 		app->hud->Awake(savedConfig);
-		app->map->level = 2;
 		app->tex->Start();
 		app->physics->Start();
 		app->map->Start();

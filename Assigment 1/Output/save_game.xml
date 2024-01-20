@@ -8,22 +8,14 @@
 	<pathfinding />
 	<map />
 	<scene>
-		<item x="264" y="664" isAlive="true" texturepath="Assets/Textures/popper.png" />
-		<item x="901" y="664" isAlive="true" texturepath="Assets/Textures/popper.png" />
-		<item x="967" y="130" isAlive="true" texturepath="Assets/Textures/popper.png" />
-		<item x="1542" y="482" isAlive="true" texturepath="Assets/Textures/popper.png" />
-		<Player x="63" y="166" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" health="5" itemPicked="0" />
 		<Particulas x="0" y="0" isAlive="true" texturepath="Assets/Textures/particles.png" />
-		<EnemyShadow x="730" y="209" isAlive="true" texturepath="Assets/Textures/sombra.png" />
-		<EnemyShadow x="1626" y="266" isAlive="true" texturepath="Assets/Textures/sombra.png" />
-		<EnemyZombie x="1902" y="511" isAlive="true" texturepath="Assets/Textures/zombie.png" />
-		<EnemyZombie x="752" y="638" isAlive="true" texturepath="Assets/Textures/zombie.png" />
-		<Heal x="392" y="626" isAlive="true" texturepath="Assets/Textures/Kit.png" />
+		<Player x="815" y="70" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" health="5" itemPicked="0" />
+		<Boss x="1536" y="352" isAlive="true" texturepath="Assets/Textures/boss.png" />
 	</scene>
 	<entitymanager />
 	<HUD />
 	<guiManager />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-242" y="0" />
 	</renderer>
 </game_state>
