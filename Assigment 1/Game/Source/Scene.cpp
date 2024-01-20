@@ -39,42 +39,13 @@ bool Scene::Awake(pugi::xml_node& config)
 		// iterate all objects in the scene
 		// Check https://pugixml.org/docs/quickstart.html#access
 
-		for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item")) {
-			item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-			this->item->parameters = itemNode;
-		}
-	
-		if (config.child("player")) {
-			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-			player->parameters = config.child("player");
-		}
+		AwakeForLevel1(config);
 
-		for (pugi::xml_node enemyShadowNode = config.child("EnemyShadow"); enemyShadowNode; enemyShadowNode = enemyShadowNode.next_sibling("EnemyShadow")) {
-			enemyShadow = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
-			this->enemyShadow->parameters = enemyShadowNode;
-		}
-
-		for (pugi::xml_node enemyZombieNode = config.child("EnemyZombie"); enemyZombieNode; enemyZombieNode = enemyZombieNode.next_sibling("EnemyZombie")) {
-			enemyZombie = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
-			this->enemyZombie->parameters = enemyZombieNode;
-		}
-
-		for (pugi::xml_node healNode = config.child("Heal"); healNode; healNode = healNode.next_sibling("Heal")) {
-			heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
-			this->heal->parameters = healNode;
-		}
 	}
 	
 	else if (app->map->level == 2) {
-		if (config.child("player")) {
-			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-			player->parameters = config.child("player");
-		}
 
-		for (pugi::xml_node bossNode = config.child("Boss"); bossNode; bossNode = bossNode.next_sibling("Boss")) {
-			boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
-			this->boss->parameters = bossNode;
-		}
+		AwakeForLevel2(config);
 	}
 
 	//Get the map name from the config file and assigns the value in the module
@@ -85,6 +56,95 @@ bool Scene::Awake(pugi::xml_node& config)
 	savedConfig = config;
 
 	return ret;
+}
+
+void Scene::AwakeForLevel1(const pugi::xml_node& config)
+{
+	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item")) {
+		if (itemNode.attribute("scene").as_int() == 1) {
+			item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+			this->item->parameters = itemNode;
+		}
+	}
+
+	for (pugi::xml_node playerNode = config.child("player"); playerNode; playerNode = playerNode.next_sibling("player")) {
+		if (playerNode.attribute("scene").as_int() == 1) {
+			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+			this->player->parameters = playerNode;
+		}
+	}
+
+	for (pugi::xml_node bossNode = config.child("Boss"); bossNode; bossNode = bossNode.next_sibling("Boss")) {
+		if (bossNode.attribute("scene").as_int() == 1) {
+			boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+			this->boss->parameters = bossNode;
+		}
+	}
+
+	for (pugi::xml_node enemyShadowNode = config.child("EnemyShadow"); enemyShadowNode; enemyShadowNode = enemyShadowNode.next_sibling("EnemyShadow")) {
+		if (enemyShadowNode.attribute("scene").as_int() == 1) {
+			enemyShadow = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+			this->enemyShadow->parameters = enemyShadowNode;
+		}
+	}
+
+	for (pugi::xml_node enemyZombieNode = config.child("EnemyZombie"); enemyZombieNode; enemyZombieNode = enemyZombieNode.next_sibling("EnemyZombie")) {
+		if (enemyZombieNode.attribute("scene").as_int() == 1) {
+			enemyZombie = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+			this->enemyZombie->parameters = enemyZombieNode;
+		}
+	}
+
+	for (pugi::xml_node healNode = config.child("Heal"); healNode; healNode = healNode.next_sibling("Heal")) {
+		if (healNode.attribute("scene").as_int() == 1) {
+			heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
+			this->heal->parameters = healNode;
+		}
+	}
+}
+
+void Scene::AwakeForLevel2(const pugi::xml_node& config) {
+	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item")) {
+		if (itemNode.attribute("scene").as_int() == 2) {
+			item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+			this->item->parameters = itemNode;
+		}
+	}
+
+	for (pugi::xml_node playerNode = config.child("player"); playerNode; playerNode = playerNode.next_sibling("player")) {
+		if (playerNode.attribute("scene").as_int() == 2) {
+			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+			this->player->parameters = playerNode;
+		}
+	}
+
+	for (pugi::xml_node bossNode = config.child("Boss"); bossNode; bossNode = bossNode.next_sibling("Boss")) {
+		if (bossNode.attribute("scene").as_int() == 2) {
+			boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+			this->boss->parameters = bossNode;
+		}
+	}
+
+	for (pugi::xml_node enemyShadowNode = config.child("EnemyShadow"); enemyShadowNode; enemyShadowNode = enemyShadowNode.next_sibling("EnemyShadow")) {
+		if (enemyShadowNode.attribute("scene").as_int() == 2) {
+			enemyShadow = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
+			this->enemyShadow->parameters = enemyShadowNode;
+		}
+	}
+
+	for (pugi::xml_node enemyZombieNode = config.child("EnemyZombie"); enemyZombieNode; enemyZombieNode = enemyZombieNode.next_sibling("EnemyZombie")) {
+		if (enemyZombieNode.attribute("scene").as_int() == 2) {
+			enemyZombie = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
+			this->enemyZombie->parameters = enemyZombieNode;
+		}
+	}
+
+	for (pugi::xml_node healNode = config.child("Heal"); healNode; healNode = healNode.next_sibling("Heal")) {
+		if (healNode.attribute("scene").as_int() == 2) {
+			heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
+			this->heal->parameters = healNode;
+		}
+	}
 }
 
 // Called before the first frame
@@ -307,7 +367,6 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 	//	item->parameters = itemNode;
 	//}
 	
-	
 	if (node.child("Player")) {
 		player->position.x = node.child("Player").attribute("x").as_int();
 		player->position.y = node.child("Player").attribute("y").as_int();
@@ -320,7 +379,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 	for (pugi::xml_node healNode = node.child("Heal"); healNode; healNode = healNode.next_sibling("Heal")) {
 		if (healNode.attribute("isAlive").as_bool() == true && heal->isAlive == false) {
 			heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
-			heal->parameters = savedConfig.child("Heal");
+			heal->parameters = healNode;
 			heal->Awake();
 			heal->texturepath = healNode.attribute("texturepath").as_string();
 			heal->Start();
@@ -337,7 +396,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 	for (pugi::xml_node enemyShadowNode = node.child("EnemyShadow"); enemyShadowNode; enemyShadowNode = enemyShadowNode.next_sibling("EnemyShadow")) {
 		if (enemyShadowNode.attribute("isAlive").as_bool() == true && this->enemyShadow->isAlive == false) {
 			this->enemyShadow = (EnemyShadow*)app->entityManager->CreateEntity(EntityType::ENEMYSHADOW);
-			this->enemyShadow->parameters = savedConfig.child("EnemyShadow");
+			this->enemyShadow->parameters = enemyShadowNode;
 			this->enemyShadow->Awake();
 			this->enemyShadow->texturepath = enemyShadowNode.attribute("texturepath").as_string();
 			this->enemyShadow->Start();
@@ -352,7 +411,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 	for (pugi::xml_node enemyZombieNode = node.child("EnemyZombie"); enemyZombieNode; enemyZombieNode = enemyZombieNode.next_sibling("EnemyZombie")) {
 		if (enemyZombieNode.attribute("isAlive").as_bool() == true && this->enemyZombie->isAlive == false) {
 			this->enemyZombie = (EnemyZombie*)app->entityManager->CreateEntity(EntityType::ENEMYZOMBIE);
-			this->enemyZombie->parameters = savedConfig.child("EnemyZombie");
+			this->enemyZombie->parameters = enemyZombieNode;
 			this->enemyZombie->Awake();
 			this->enemyZombie->texturepath = enemyZombieNode.attribute("texturepath").as_string();
 			this->enemyZombie->Start();
@@ -367,7 +426,7 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 	for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item")) {
 			if (itemNode.attribute("isAlive").as_bool() == true && item->isAlive == false) {
 				item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-				item->parameters = savedConfig.child("item");
+				item->parameters = itemNode;
 				item->Awake();
 				item->texturepath = itemNode.attribute("texturepath").as_string();
 				item->Start();

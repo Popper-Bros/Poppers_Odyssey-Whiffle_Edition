@@ -13,6 +13,7 @@
 #include "Map.h"
 #include "Timer.h"
 #include "PerfTimer.h"
+#include "Log.h"
 
 Boss::Boss() : Entity(EntityType::BOSS)
 {
@@ -67,7 +68,7 @@ bool Boss::Start() {
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
 
-	enemyOriginTile = app->map->WorldToMap(140 + position.x, 178 + position.y - app->render->camera.y);
+	enemyOriginTile = app->map->WorldToMap(12 + position.x, 60 + position.y - app->render->camera.y);
 	health = 4;
 
 	return true;
@@ -85,7 +86,7 @@ bool Boss::Update(float dt)
 	Move_right.speed = animSpeed * dt;
 	Move_left.speed = animSpeed * dt;
 
-	cd -= dt * 0.1;
+	cooldown -= dt * 0.1;
 	EnemyHealthRec = { position.x + 20 + app->render->camera.x, position.y + app->render->camera.y, 20, 6 };
 
 	switch (health)
@@ -128,17 +129,6 @@ bool Boss::Update(float dt)
 			}
 		}
 
-		if (!isAttackingLeft && !isAttackingRight && !isMovingLeft && !isMovingRight) {
-			if (currentDirection == BossDirection::RIGHT || currentDirection == BossDirection::ATTACK_R)
-			{
-				currentDirection = BossDirection::IDLE_R;
-			}
-			else if (currentDirection == BossDirection::LEFT || currentDirection == BossDirection::ATTACK_L)
-			{
-				currentDirection = BossDirection::IDLE_L;
-			}
-		}
-
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 164;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 150;
 
@@ -167,18 +157,21 @@ bool Boss::Update(float dt)
 
 		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
-		if (position.x - app->scene->getPlayerPos().x <= 200 && position.x - app->scene->getPlayerPos().x >= -200) {
+		// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
+		vel.x = 0;
+
+		if (position.x - app->scene->getPlayerPos().x <= 148 && position.x - app->scene->getPlayerPos().x >= -348) {
 			seePlayer = true;
 			app->map->pathfinding->CreatePath(enemyTile, app->scene->playerTile, app->map->pathfinding);
 			path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
 		}
 
 		else {
+			Idle();
 			seePlayer = false;
-			isAttackingLeft = false;
-			isAttackingRight = false;
-			app->map->pathfinding->CreatePath(enemyTile, enemyOriginTile, app->map->pathfinding);
-			path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
+			//app->map->pathfinding->CreatePath(enemyTile, enemyOriginTile, app->map->pathfinding);
+			//path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
+			//MoveTowardsNextNode(enemyTile, speed, path, vel.y);
 		}
 
 		if (app->physics->debug && path != NULL) {
@@ -189,40 +182,28 @@ bool Boss::Update(float dt)
 			}
 		}
 
-		if (position.x - app->scene->getPlayerPos().x <= 40 && position.x - app->scene->getPlayerPos().x >= -40 && cd <= 0.0f) {
+		if (position.x - app->scene->getPlayerPos().x <= -113 && position.x - app->scene->getPlayerPos().x >= -183) {
+			attackRange = true;
+		}
+		else {
+			attackRange = false;
+		}
+
+		if (attackRange && cooldown <= 0) {
 			Attack();
+		}
+
+		else {
+			Idle();
 		}
 
 		pbody->body->SetLinearVelocity(vel);
 
-		//esta parte de aqui se encarga de que el enemigo se mueva hacia el jugador si lo ve (pathfinding)
-		if (seePlayer && !isAttackingLeft && !isAttackingRight) {
-			if (position.x - app->scene->getPlayerPos().x < 0) {
-				isMovingRight = true;
-				isMovingLeft = false;
-			}
-			else if (position.x - app->scene->getPlayerPos().x > 0) {
-				isMovingLeft = true;
-				isMovingRight = false;
-			}
-		}
-
-		enemyTile = app->map->WorldToMap(164 + position.x, 150 + position.y - app->render->camera.y);
-
-		if (isMovingLeft || isMovingRight) {
+		if (seePlayer && !attackRange) {
 			MoveTowardsNextNode(enemyTile, speed, path, vel.y);
 		}
 
-		if (isAttackingLeft && Attack_left.GetCurrentFrameIndex() == 4) {
-			app->audio->PlayFx(roar);
-			isAttackingLeft = false;
-			Attack_left.Reset();
-		}
-		if (isAttackingRight && Attack_right.GetCurrentFrameIndex() == 4) {
-			app->audio->PlayFx(roar);
-			isAttackingRight = false;
-			Attack_right.Reset();
-		}
+		enemyTile = app->map->WorldToMap(163 + position.x, 158 + position.y - app->render->camera.y);
 
 		currentAnimation->Update();
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -315,18 +296,28 @@ bool Boss::CleanUp()
 	return true;
 }
 
+void Boss :: Idle() {
+	if (currentDirection == BossDirection::RIGHT || currentDirection == BossDirection::ATTACK_R && Attack_right.GetCurrentFrameIndex()>=12)
+	{
+		currentDirection = BossDirection::IDLE_R;
+	}
+	else if (currentDirection == BossDirection::LEFT || currentDirection == BossDirection::ATTACK_L && Attack_left.GetCurrentFrameIndex() >= 12)
+	{
+		currentDirection = BossDirection::IDLE_L;
+	}
+}
+
 void Boss::Attack() {
-
-	if (position.x - app->scene->getPlayerPos().x >= 0) {
-		isAttackingLeft = true;
+	if (position.x - app->scene->getPlayerPos().x >= -148) {
 		currentDirection = BossDirection::ATTACK_L;
+		Attack_left.Reset();
 	}
-	else if (position.x - app->scene->getPlayerPos().x < 0) {
-		isAttackingRight = true;
+	else if (position.x - app->scene->getPlayerPos().x < -148) {
 		currentDirection = BossDirection::ATTACK_R;
+		Attack_right.Reset();
 	}
 
-	cd = 500.0f;
+	cooldown = 250.0f;
 }
 
 bool Boss::Die() {
@@ -341,7 +332,7 @@ bool Boss::Die() {
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x, position.y, &rect);
 	app->audio->PlayFx(dead);
-	if (currentAnimation->GetCurrentFrameIndex() >= 4)
+	if (currentAnimation->GetCurrentFrameIndex() >= 21)
 	{
 		app->entityManager->DestroyEntity(this);
 		app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);

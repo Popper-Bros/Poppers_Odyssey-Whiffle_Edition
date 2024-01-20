@@ -27,6 +27,10 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 
+	void AwakeForLevel1(const pugi::xml_node& conf);
+
+	void AwakeForLevel2(const pugi::xml_node& conf);
+
 	// Called before the first frame
 	bool Start();
 

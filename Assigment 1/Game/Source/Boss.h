@@ -41,6 +41,8 @@ public:
 
 	void Attack();
 
+	void Idle();
+
 	bool Die();
 
 
@@ -60,11 +62,12 @@ public:
 	bool isMovingRight = false;
 	bool isAttackingRight = false;
 	bool isAttackingLeft = false;
-	float cd = 3.0f;
+	float cooldown = 3.0f;
 	bool seePlayer = false;
 	//bool win = false;
 	int roar;
 	int dead;
+	bool attackRange = false;
 	///*const int NUM_FRAMES = 8;*/
 	///*int currentFrame = 0;*/
 	//float frameCounter = 0.0f;
