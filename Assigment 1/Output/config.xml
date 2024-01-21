@@ -977,6 +977,13 @@
 		<Boss scene="2" x="1700" y="420" texturepath="Assets/Textures/boss.png" HealthBarFull ="Assets/Textures/UI/EnemyHealthFull.png"
 					HealthBar1 ="Assets/Textures/UI/EnemyHealth1.png" HealthBar2 ="Assets/Textures/UI/EnemyHealth2.png"
 					 HealthBar3 ="Assets/Textures/UI/EnemyHealth3.png" HealthBarNull ="Assets/Textures/UI/EnemyHealthNull.png">
+
+			<audio>
+				<attack path="Assets/Audio/Fx/bossAttack.ogg"/>
+				<death path="Assets/Audio/Fx/bossDeath.ogg"/>	
+				<move path="Assets/Audio/Fx/bossMove.ogg"/>
+			</audio>
+			
 			<animations>
 				<Idle_right loop="true" >
 					<anim x ="6048" y ="800" width ="288" height ="160"/>

@@ -9,14 +9,16 @@
 	<map />
 	<scene>
 		<Particulas x="0" y="0" isAlive="true" texturepath="Assets/Textures/particles.png" />
-		<Player x="815" y="70" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" health="5" itemPicked="0" />
-		<Boss x="1536" y="352" isAlive="true" texturepath="Assets/Textures/boss.png" />
-		<EnemyShadow x="902" y="129" isAlive="true" texturepath="Assets/Textures/sombra.png" />
+		<Player x="793" y="43" isAlive="true" texturepath="Assets/Textures/Spritesheet.png" intoxication="0" health="5" itemPicked="0" />
+		<Boss x="1536" y="331" isAlive="true" texturepath="Assets/Textures/boss.png" />
+		<EnemyShadow x="858" y="256" isAlive="true" texturepath="Assets/Textures/sombra.png" />
+		<EnemyShadow x="72" y="136" isAlive="true" texturepath="Assets/Textures/sombra.png" />
+		<EnemyZombie x="847" y="36" isAlive="true" texturepath="Assets/Textures/zombie.png" />
 	</scene>
 	<entitymanager />
 	<HUD />
 	<guiManager />
 	<renderer>
-		<camera x="-257" y="0" />
+		<camera x="-435" y="0" />
 	</renderer>
 </game_state>

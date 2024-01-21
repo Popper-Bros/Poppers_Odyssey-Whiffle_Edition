@@ -231,7 +231,7 @@ bool EnemyZombie::Update(float dt)
 
 	else
 	{
-	Die();
+		Die();
 	}
 
 	return true;
@@ -340,7 +340,11 @@ bool EnemyZombie::Die() {
 	currentAnimation->Update();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x, position.y, &rect);
-	app->audio->PlayFx(dead);
+
+	if (currentAnimation->GetCurrentFrameIndex() == 1)
+	{
+		app->audio->PlayFx(dead);
+	}
 	if (currentAnimation->GetCurrentFrameIndex() >= 4)
 	{
 		app->entityManager->DestroyEntity(this);

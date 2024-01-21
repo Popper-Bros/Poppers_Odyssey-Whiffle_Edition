@@ -62,8 +62,9 @@ bool Boss::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
-	roar = app->audio->LoadFx("Boss", "attack");
-	dead = app->audio->LoadFx("Boss", "death");
+	attackSound = app->audio->LoadFx("Boss", "attack");
+	deadSound = app->audio->LoadFx("Boss", "death");
+	moveSound = app->audio->LoadFx("Boss", "move");
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
@@ -160,15 +161,15 @@ bool Boss::Update(float dt)
 		// Restablecer la velocidad en X para evitar movimientos diagonales no deseados
 		vel.x = 0;
 
-		if (position.x - app->scene->getPlayerPos().x <= 148 && position.x - app->scene->getPlayerPos().x >= -348) {
+		if (position.x - app->scene->getPlayerPos().x <= 348 && position.x - app->scene->getPlayerPos().x >= -548) {
 			seePlayer = true;
 			app->map->pathfinding->CreatePath(enemyTile, app->scene->playerTile, app->map->pathfinding);
 			path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
 		}
 
 		else {
-			Idle();
 			seePlayer = false;
+			Idle();
 			//app->map->pathfinding->CreatePath(enemyTile, enemyOriginTile, app->map->pathfinding);
 			//path = app->map->pathfinding->GetLastPath();		// L13: Get the latest calculated path and draw
 			//MoveTowardsNextNode(enemyTile, speed, path, vel.y);
@@ -182,7 +183,7 @@ bool Boss::Update(float dt)
 			}
 		}
 
-		if (position.x - app->scene->getPlayerPos().x <= -113 && position.x - app->scene->getPlayerPos().x >= -183) {
+		if (position.x - app->scene->getPlayerPos().x <= -53 && position.x - app->scene->getPlayerPos().x >= -243) {
 			attackRange = true;
 		}
 		else {
@@ -190,6 +191,14 @@ bool Boss::Update(float dt)
 		}
 
 		if (attackRange && cooldown <= 0) {
+			Attack_left.Reset();
+			Attack_right.Reset();
+			cooldown = 250.0f;
+			isAttacking = true;
+		}
+
+		if (isAttacking) {
+
 			Attack();
 		}
 
@@ -199,8 +208,12 @@ bool Boss::Update(float dt)
 
 		pbody->body->SetLinearVelocity(vel);
 
-		if (seePlayer && !attackRange) {
+		if (seePlayer && !attackRange && !isAttacking) {
 			MoveTowardsNextNode(enemyTile, speed, path, vel.y);
+		}
+
+		if (Move_left.GetCurrentFrameIndex() == 6 || Move_right.GetCurrentFrameIndex() == 6) {
+			app->audio->PlayFx(moveSound);
 		}
 
 		enemyTile = app->map->WorldToMap(163 + position.x, 158 + position.y - app->render->camera.y);
@@ -232,14 +245,18 @@ void Boss::MoveTowardsNextNode(iPoint& enemyTile, float speed, const DynArray<iP
 			// Determine the direction based on the sign of dx and dy
 			if (dx > 0) {
 				vel = { speed,vely };
+				Move_left.Reset();
 				currentDirection = BossDirection::RIGHT;
 			}
 			else if (dx < 0) {
 				vel = { -speed,vely };
+				Move_right.Reset();
 				currentDirection = BossDirection::LEFT;
 			}
 			else if (dx == 0) {
 				vel = { 0,vely };
+				Move_left.Reset();
+				Move_right.Reset();
 				if (currentDirection == BossDirection::LEFT || currentDirection == BossDirection::IDLE_L) {
 					currentDirection = BossDirection::IDLE_L;
 				}
@@ -310,14 +327,17 @@ void Boss :: Idle() {
 void Boss::Attack() {
 	if (position.x - app->scene->getPlayerPos().x >= -148) {
 		currentDirection = BossDirection::ATTACK_L;
-		Attack_left.Reset();
 	}
 	else if (position.x - app->scene->getPlayerPos().x < -148) {
 		currentDirection = BossDirection::ATTACK_R;
-		Attack_right.Reset();
+	}
+	if (Attack_left.GetCurrentFrameIndex() >= 11 || Attack_right.GetCurrentFrameIndex() >= 11) {
+		isAttacking = false;
 	}
 
-	cooldown = 250.0f;
+	if (Attack_left.GetCurrentFrameIndex() == 9 || Attack_right.GetCurrentFrameIndex() == 9) {
+		app->audio->PlayFx(attackSound);
+	}
 }
 
 bool Boss::Die() {
@@ -331,7 +351,11 @@ bool Boss::Die() {
 	currentAnimation->Update();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x, position.y, &rect);
-	app->audio->PlayFx(dead);
+
+	if (currentAnimation->GetCurrentFrameIndex() ==1) 
+	{
+		app->audio->PlayFx(deadSound);
+	}
 	if (currentAnimation->GetCurrentFrameIndex() >= 21)
 	{
 		app->entityManager->DestroyEntity(this);

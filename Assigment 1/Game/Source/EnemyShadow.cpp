@@ -221,7 +221,7 @@ bool EnemyShadow::Update(float dt)
 
 	else
 	{
-	Die();
+		Die();
 	}
 
 	return true;
@@ -325,7 +325,10 @@ bool EnemyShadow::Die() {
 	currentAnimation->Update();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x, position.y, &rect);
-	app->audio->PlayFx(death);
+	if (currentAnimation->GetCurrentFrameIndex() == 1)
+	{
+		app->audio->PlayFx(death);
+	}
 	if (currentAnimation->GetCurrentFrameIndex() >= 11)
 	{
 		app->entityManager->DestroyEntity(this);
