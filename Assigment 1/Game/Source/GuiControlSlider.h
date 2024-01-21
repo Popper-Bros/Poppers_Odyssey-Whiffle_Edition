@@ -30,6 +30,8 @@ private:
 	float maxValue;
 	float currentValue;
 
+	SDL_Rect cursorBounds;
+
 };
 
 #endif // __GUICONTROLSLIDER_H__

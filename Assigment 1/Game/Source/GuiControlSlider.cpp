@@ -20,20 +20,19 @@ GuiControlSlider::~GuiControlSlider()
 
 bool GuiControlSlider::Update(float dt)
 {
+	cursorBounds = { bounds.x + (bounds.w / 2), bounds.y + 10, 5, 5 };
 	if (state != GuiControlState::DISABLED)
 	{
 		// L15: DONE 3: Update the state of the GUiButton according to the mouse position
 		app->input->GetMousePosition(mouseX, mouseY);
 
-		if (mouseX > bounds.x && mouseX < bounds.x + bounds.w && mouseY > bounds.y && mouseY < bounds.y + bounds.h) {
+		if (mouseX > cursorBounds.x && mouseX < cursorBounds.x + cursorBounds.w && mouseY > cursorBounds.y && mouseY < cursorBounds.y + cursorBounds.h) {
 			state = GuiControlState::FOCUSED;
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 				// Ajustar el valor del slider según la posición del ratón
-				float normalizedX = static_cast<float>(mouseX - bounds.x) / static_cast<float>(bounds.w);
-				currentValue = minValue + normalizedX * (maxValue - minValue);
 				state = GuiControlState::PRESSED;
-				DrawSlider();
+				
 			}
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
@@ -47,10 +46,8 @@ bool GuiControlSlider::Update(float dt)
 
 		//L15: DONE 4: Draw the button according the GuiControl State
 
-		
-
 		app->render->DrawText(text.GetString(), bounds.x, bounds.y, bounds.w, bounds.h);
-
+		DrawSlider();
 	}
 
 	return false;
@@ -58,12 +55,17 @@ bool GuiControlSlider::Update(float dt)
 
 void GuiControlSlider::DrawSlider()
 {
-	app->render->DrawRectangle(bounds, 255, 255, 255, 255, true, false);
+	app->render->DrawRectangle(bounds, 255, 255, 255, 100, true, false);
 
 	float normalizedPosition = (currentValue - minValue) / (maxValue - minValue);
 	int cursorX = bounds.x + static_cast<int>(normalizedPosition * bounds.w);
 
-	SDL_Rect cursorBounds = { cursorX - 5, bounds.y + 10, 5, 5 }; // Ajusta según sea necesario
+	 // Ajusta según sea necesario
+
+	if (state == GuiControlState::PRESSED)
+	{
+		cursorBounds = { mouseX, bounds.y + 10, 5, 5 };
+	}
 
 	switch (state)
 	{
