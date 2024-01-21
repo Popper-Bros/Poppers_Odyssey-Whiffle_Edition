@@ -11,6 +11,7 @@
 #include "HUD.h"
 #include "GuiControl.h"
 #include "GuiControlButton.h"
+#include "GuiControlSlider.h"
 
 struct SDL_Texture;
 
@@ -78,7 +79,8 @@ private:
 
 	SDL_Texture* mouseTileTex = nullptr;
 
-	GuiControlButton* gcButton;
+	//GuiControlButton* gcButton;
+	GuiControlSlider* gcButton;
 
 };
 
