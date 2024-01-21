@@ -105,7 +105,15 @@ bool Player::Update(float dt)
 
 		b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual del cuerpo
 
+		if (app->scene->tp1) {
+			vel.y = 0.2f;
+			app->scene->tp1 = false;
+		}
 
+		if (app->scene->tp2) {
+			vel.y = 0.2f;
+			app->scene->tp2 = false;
+		}
 
 		if (godmode) {
 			vel.y = 0;

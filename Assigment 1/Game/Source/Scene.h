@@ -7,6 +7,7 @@
 #include "Heal.h"
 #include "EnemyShadow.h"
 #include "EnemyZombie.h"
+#include "Boss.h"
 #include "Particulas.h"
 #include "HUD.h"
 #include "GuiControl.h"
@@ -26,6 +27,10 @@ public:
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
+
+	void AwakeForLevel1(const pugi::xml_node& conf);
+
+	void AwakeForLevel2(const pugi::xml_node& conf);
 
 	// Called before the first frame
 	bool Start();
@@ -47,6 +52,10 @@ public:
 	bool playerAlive = true;
 
 	int playerItem = 0;
+
+	bool tp1 = false;
+
+	bool tp2 = false;
 
 	iPoint getPlayerPos();
 
@@ -75,6 +84,7 @@ private:
 	Heal* heal;
 	EnemyShadow* enemyShadow;
 	EnemyZombie* enemyZombie;
+	Boss* boss;
 	pugi::xml_node savedConfig;
 
 	SDL_Texture* mouseTileTex = nullptr;

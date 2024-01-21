@@ -4,6 +4,7 @@
 #include "Heal.h"
 #include "EnemyShadow.h"
 #include "EnemyZombie.h"
+#include "Boss.h"
 #include "Particulas.h"
 #include "App.h"
 #include "Textures.h"
@@ -104,6 +105,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::ENEMYZOMBIE:
 		entity = new EnemyZombie();
+		break;
+	case EntityType::BOSS:
+		entity = new Boss();
 		break;
 	case EntityType::HEAL:
 		entity = new Heal();
