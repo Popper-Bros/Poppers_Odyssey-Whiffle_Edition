@@ -375,6 +375,23 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		LOG("Collision ENEMY");
 		break;
+	case ColliderType::BOSS:
+		if (vel.y > 0)jumping = false;
+		falling = false;
+		if (!godmode)
+		{
+			if (health <= 0)
+			{
+				isAlive = false;
+			}
+			else
+			{
+				health -= 4;
+			}
+			LOG("HEALTH: %d", health);
+		}
+		LOG("Collision BOSS");
+		break;
 	case ColliderType::HEAL:
 		LOG("Collision HEAL");
 		//app->audio->PlayFx(sniff);

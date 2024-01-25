@@ -34,6 +34,7 @@ enum class ColliderType {
 	FLOOR,
 	SPIKES,
 	ENEMY,
+	BOSS,
 	UNKNOWN
 	// ..
 };

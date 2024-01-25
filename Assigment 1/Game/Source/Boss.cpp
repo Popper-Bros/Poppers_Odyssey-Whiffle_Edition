@@ -130,7 +130,7 @@ bool Boss::Update(float dt)
 			}
 		}
 
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 164;
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 149;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 150;
 
 		switch (currentDirection)
@@ -331,13 +331,28 @@ void Boss::Attack() {
 	else if (position.x - app->scene->getPlayerPos().x < -148) {
 		currentDirection = BossDirection::ATTACK_R;
 	}
-	if (Attack_left.GetCurrentFrameIndex() >= 11 || Attack_right.GetCurrentFrameIndex() >= 11) {
-		isAttacking = false;
-	}
-
 	if (Attack_left.GetCurrentFrameIndex() == 9 || Attack_right.GetCurrentFrameIndex() == 9) {
 		app->audio->PlayFx(attackSound);
+		if (!espadazo) {
+			if (currentAnimation == &Attack_left) {
+				espadon = app->physics->CreateRectangle(position.x + 72, position.y + 128, 115, 70, bodyType::STATIC);
+			}
+			else if (currentAnimation == &Attack_right) {
+				espadon = app->physics->CreateRectangle(position.x + 226, position.y + 128, 115, 70, bodyType::STATIC);
+			}
+			espadon->listener = this;
+			espadon->ctype = ColliderType::BOSS;
+			espadazo = true;
+			//espadon->body->GetFixtureList()->SetSensor(true); // Disable collisions
+		}
 	}
+
+	if (Attack_left.GetCurrentFrameIndex() >= 12 || Attack_right.GetCurrentFrameIndex() >= 12) {
+		isAttacking = false;
+		app->physics->ChupaBody(app->physics->GetWorld(), espadon->body);
+		espadazo = false;
+	}
+	
 }
 
 bool Boss::Die() {

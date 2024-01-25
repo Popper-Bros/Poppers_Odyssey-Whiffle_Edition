@@ -83,6 +83,8 @@ public:
 	SDL_Texture* EnemyHealthBarFull;
 	SDL_Rect EnemyHealthRec;
 
+	PhysBody* espadon;
+	bool espadazo = false;
 };
 
 #endif // __Boss_H__
