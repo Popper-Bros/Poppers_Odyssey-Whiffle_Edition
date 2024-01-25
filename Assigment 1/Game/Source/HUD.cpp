@@ -98,46 +98,18 @@ bool HUD::Update(float dt)
 	}
 	elapsedTime = timer.ReadSec();
 	LOG("%d", timer.ReadSec());
-	if (elapsedTime > 10)
+
+	std::string tiempoString = std::to_string(timer.ReadSec());
+	const char *n = tiempoString.c_str();
+	if (elapsedTime < 10)
 	{
-		timerOn = false;
+		app->render->DrawText(n, 500, 20, 15, 30);
 	}
-	switch (elapsedTime)
+	else
 	{
-	case 0:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[0], &timerRect);
-		break;
-	case 1:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[1], &timerRect);
-		break;
-	case 2:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[2], &timerRect);
-		break;
-	case 3:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[3], &timerRect);
-		break;
-	case 4:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[4], &timerRect);
-		break;
-	case 5:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[5], &timerRect);
-		break;
-	case 6:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[6], &timerRect);
-		break;
-	case 7:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[7], &timerRect);
-		break;
-	case 8:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[8], &timerRect);
-		break;
-	case 9:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[9], &timerRect);
-		break;
-	case 10:
-		SDL_RenderCopy(app->render->renderer, numbers, &Num[0], &timerRect);
-		break;
+		app->render->DrawText(n, 500, 20, 30, 30);
 	}
+	
 	
 	playerHealth = app->scene->GetPlayerLife();
 

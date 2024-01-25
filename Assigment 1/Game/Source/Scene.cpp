@@ -187,7 +187,7 @@ bool Scene::Start()
 
 	SDL_Rect btPos = { windowW / 2 - 60,20, 120,12 };
 	//gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Didac, el virgen", btPos, this);
-	gcButton = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "", btPos, this);
+	//gcButton = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "", btPos, this);
 
 	return true;
 }
