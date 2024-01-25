@@ -2,6 +2,8 @@
 #include "Render.h"
 #include "App.h"
 #include "Audio.h"
+#include "SDL_mixer/include/SDL_mixer.h"
+#include "Textures.h"
 
 GuiControlSlider::GuiControlSlider(uint32 id, SDL_Rect bounds, SDL_Rect sliderBounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
 {
@@ -11,6 +13,7 @@ GuiControlSlider::GuiControlSlider(uint32 id, SDL_Rect bounds, SDL_Rect sliderBo
 
 	canClick = true;
 	drawBasic = false;
+	
 }
 
 GuiControlSlider::~GuiControlSlider()
@@ -18,23 +21,33 @@ GuiControlSlider::~GuiControlSlider()
 
 }
 
+bool GuiControlSlider::Start()
+{
+	texture = app->tex->Load("Assets/Textures/UI/GUI.png");
+	MusicBarRect = { 14,0,30,3 };
+	MusicSliderRect = { 14,5,11,8 };
+
+	cursorBounds = { bounds.x + (bounds.w / 2), bounds.y - 10 + 10, 22, 16 };
+	return true;
+}
+
 bool GuiControlSlider::Update(float dt)
 {
-	cursorBounds = { bounds.x + (bounds.w / 2), bounds.y + 10, 5, 5 };
+	
 	if (state != GuiControlState::DISABLED)
 	{
-		// L15: DONE 3: Update the state of the GUiButton according to the mouse position
 		app->input->GetMousePosition(mouseX, mouseY);
 
 		if (mouseX > cursorBounds.x && mouseX < cursorBounds.x + cursorBounds.w && mouseY > cursorBounds.y && mouseY < cursorBounds.y + cursorBounds.h) {
 			state = GuiControlState::FOCUSED;
 
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && mouseX >= bounds.x+5 && mouseX <= bounds.x + 115) {
 				// Ajustar el valor del slider según la posición del ratón
 				state = GuiControlState::PRESSED;
-				
+				//ejusta el volumen de la música y los fx
+				Mix_VolumeMusic((int)sliderValue);
+				Mix_Volume(-1, (int)sliderValue);
 			}
-
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
 				// Notificar a los observadores al soltar el botón del ratón
 				NotifyObserver();
@@ -55,16 +68,16 @@ bool GuiControlSlider::Update(float dt)
 
 void GuiControlSlider::DrawSlider()
 {
-	app->render->DrawRectangle(bounds, 255, 255, 255, 100, true, false);
-
-	float normalizedPosition = (currentValue - minValue) / (maxValue - minValue);
-	int cursorX = bounds.x + static_cast<int>(normalizedPosition * bounds.w);
+	//app->render->DrawRectangle(bounds, 255, 255, 255, 180, true, false);
+	SDL_RenderCopy(app->render->renderer, texture, &MusicBarRect, &bounds);
 
 	 // Ajusta según sea necesario
+	//ajusta el valor sliderValue entre 0 y 128 teniendo en cuenta el tamaño del slider
+	sliderValue = (mouseX - bounds.x) * 128 / 123;
 
 	if (state == GuiControlState::PRESSED)
 	{
-		cursorBounds = { mouseX, bounds.y + 10, 5, 5 };
+		cursorBounds = { mouseX-10, bounds.y, 22, 16 };
 	}
 
 	switch (state)
@@ -73,19 +86,15 @@ void GuiControlSlider::DrawSlider()
 		app->render->DrawRectangle(cursorBounds, 200, 200, 200, 255, true, false);
 		break;
 	case GuiControlState::NORMAL:
-		app->render->DrawRectangle(cursorBounds, 0, 0, 255, 255, true, false);
+		SDL_RenderCopy(app->render->renderer, texture, &MusicSliderRect, &cursorBounds);
+		/*app->render->DrawRectangle(cursorBounds, 0, 0, 255, 255, true, false);*/
 		break;
 	case GuiControlState::FOCUSED:
-		app->render->DrawRectangle(cursorBounds, 0, 0, 20, 255, true, false);
+		SDL_RenderCopy(app->render->renderer, texture, &MusicSliderRect, &cursorBounds);
 		break;
 	case GuiControlState::PRESSED:
-		app->render->DrawRectangle(cursorBounds, 255, 0, 0, 255, true, false);
+		SDL_RenderCopy(app->render->renderer, texture, &MusicSliderRect, &cursorBounds);
 		break;
 	}
-
-
-	// Dibujar el "cursor" del slider
-	
-
 }
 

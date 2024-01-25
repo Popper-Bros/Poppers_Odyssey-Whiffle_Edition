@@ -39,6 +39,9 @@
 	  <PopperFull texturepath ="Assets/Textures/UI/popperUI.png"/>
 	  <Numbers texturepath ="Assets/Textures/UI/numbers.png"/>
   </HUD>
+	<GUI>
+		<GUI texturepath ="Assets/Textures/UI/GUI.png"/>
+	</GUI>
 
 	<scene>
 		<player scene="1" x="80" y="166" texturepath="Assets/Textures/Spritesheet.png" Bala_texturePath="Assets/Textures/Shadow_disparo.png">

@@ -13,11 +13,6 @@ GuiManager::GuiManager() :Module()
 
 GuiManager::~GuiManager() {}
 
-bool GuiManager::Start()
-{
-	return true;
-}
-
 // L15: DONE1: Implement CreateGuiControl function that instantiates a new GUI control and add it to the list of controls
 GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds)
 {
@@ -41,6 +36,19 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	guiControlsList.Add(guiControl);
 
 	return guiControl;
+}
+
+bool GuiManager::Start()
+{
+	ListItem<GuiControl*>* control = guiControlsList.start;
+
+	while (control != nullptr)
+	{
+		control->data->Start();
+		control = control->next;
+	}
+
+	return true;
 }
 
 bool GuiManager::Update(float dt)

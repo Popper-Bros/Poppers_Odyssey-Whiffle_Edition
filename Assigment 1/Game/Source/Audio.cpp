@@ -173,8 +173,6 @@ bool Audio::PlayFx(unsigned int id, int volume, int repeat)
 {
 	bool ret = false;
 	
-	
-
 	volume = (volume < 0) ? 0 : (volume > MIX_MAX_VOLUME) ? MIX_MAX_VOLUME : volume;
 
 	ListItem<Mix_Chunk*>* item;

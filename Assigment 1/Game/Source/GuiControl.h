@@ -50,6 +50,10 @@ public:
 		color.r = 255; color.g = 255; color.b = 255;
 		texture = NULL;
 	}
+	virtual bool Start()
+	{
+		return true;
+	}
 
 	// Called each loop iteration
 	virtual bool Update(float dt)
