@@ -76,12 +76,6 @@ bool HUD::Start() {
 	popperRec = { 66, 40, 16, 20 };
 	popperRec2 = { 81, 40, 16, 20 };
 	popperRec3 = { 96, 40, 16, 20 };
-	for (int i = 0; i < 10; i++)
-	{
-		Num[i] = { 11*(i+1), 0, 9, 20 };
-	}
-
-	timerRect = { 500, 20, 9, 20 };
 
 	SDL_SetTextureAlphaMod(popperEmpty, 100);
 
@@ -97,7 +91,6 @@ bool HUD::Update(float dt)
 		elapsedTime = 0;
 	}
 	elapsedTime = timer.ReadSec();
-	LOG("%d", timer.ReadSec());
 
 	std::string tiempoString = std::to_string(timer.ReadSec());
 	const char *n = tiempoString.c_str();
@@ -105,10 +98,15 @@ bool HUD::Update(float dt)
 	{
 		app->render->DrawText(n, 500, 20, 15, 30);
 	}
-	else
+	if (elapsedTime >= 10 && elapsedTime < 100)
 	{
 		app->render->DrawText(n, 500, 20, 30, 30);
 	}
+	if (elapsedTime >= 100)
+	{
+		app->render->DrawText(n, 500, 20, 45, 30);
+	}
+
 	
 	
 	playerHealth = app->scene->GetPlayerLife();
