@@ -23,6 +23,9 @@
 	<entitymanager />
 	<HUD />
 	<guiManager />
+	<SceneDie />
+	<SceneMenu />
+	<SceneIntro />
 	<:anonymous />
 	<renderer>
 		<camera x="0" y="0" />

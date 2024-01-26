@@ -27,6 +27,7 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
+
 	LOG("Loading Scene");
 	bool ret = true;
 
@@ -422,26 +423,33 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 	//	item->parameters = itemNode;
 	//}
 	
-	if (node.child("Player")) {
-		player->position.x = node.child("Player").attribute("x").as_int();
-		player->position.y = node.child("Player").attribute("y").as_int();
-		player->intoxication = node.child("Player").attribute("intoxication").as_int();
-		player->health = node.child("Player").attribute("health").as_int();
-		player->itemPicked = node.child("Player").attribute("itemPicked").as_int();
-		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x+0.3f),PIXEL_TO_METERS(player->position.y+0.3f) }, 0);
+	for (pugi::xml_node playerNode = node.child("Player"); playerNode; playerNode = playerNode.next_sibling("Player")) {
+		this->player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+		this->player->parameters = playerNode;
+		this->player->Awake();
+		this->player->texturepath = playerNode.attribute("texturepath").as_string();
+		this->player->Start();
+		this->player->isAlive = true;
+		this->player->position.x = node.child("Player").attribute("x").as_int();
+		this->player->position.y = node.child("Player").attribute("y").as_int();
+		this->player->intoxication = node.child("Player").attribute("intoxication").as_int();
+		this->player->health = node.child("Player").attribute("health").as_int();
+		this->player->itemPicked = node.child("Player").attribute("itemPicked").as_int();
+		
+
 	}
 
 	for (pugi::xml_node healNode = node.child("Heal"); healNode; healNode = healNode.next_sibling("Heal")) {
 		if (healNode.attribute("isAlive").as_bool() == true && heal->isAlive == false) {
-			heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
-			heal->parameters = healNode;
-			heal->Awake();
-			heal->texturepath = healNode.attribute("texturepath").as_string();
-			heal->Start();
-			heal->isAlive = true;
+			this->heal = (Heal*)app->entityManager->CreateEntity(EntityType::HEAL);
+			this->heal->parameters = healNode;
+			this->heal->Awake();
+			this->heal->texturepath = healNode.attribute("texturepath").as_string();
+			this->heal->Start();
+			this->heal->isAlive = true;
 		}
 		if (healNode.attribute("isAlive").as_bool() == false && heal->isAlive == true) {
-			heal->isAlive = false;
+			this->heal->isAlive = false;
 		}
 		this->heal->position.x = node.child("Heal").attribute("x").as_int();
 		this->heal->position.y = node.child("Heal").attribute("y").as_int();
@@ -480,15 +488,15 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 
 	for (pugi::xml_node itemNode = node.child("item"); itemNode; itemNode = itemNode.next_sibling("item")) {
 			if (itemNode.attribute("isAlive").as_bool() == true && item->isAlive == false) {
-				item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-				item->parameters = itemNode;
-				item->Awake();
-				item->texturepath = itemNode.attribute("texturepath").as_string();
-				item->Start();
-				item->isAlive = true;
+				this->item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+				this->item->parameters = itemNode;
+				this->item->Awake();
+				this->item->texturepath = itemNode.attribute("texturepath").as_string();
+				this->item->Start();
+				this->item->isAlive = true;
 			}
 			if (itemNode.attribute("isAlive").as_bool() == false && item->isAlive == true) {
-				item->isAlive = false;
+				this->item->isAlive = false;
 			}
 			this->item->position.x = itemNode.attribute("x").as_int();
 			this->item->position.y = itemNode.attribute("y").as_int();

@@ -77,20 +77,25 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	bool isPaused = false;
+
+	Player* player;
+
+	pugi::xml_node savedConfig;
+
 	GuiControlSlider* Slider;
 	GuiControlButton* gcButton;
+
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
-	Player* player;
+	
 	Item* item;
 	Heal* heal;
 	EnemyShadow* enemyShadow;
 	EnemyZombie* enemyZombie;
 	Boss* boss;
-	pugi::xml_node savedConfig;
 
 	SDL_Texture* mouseTileTex = nullptr;
 

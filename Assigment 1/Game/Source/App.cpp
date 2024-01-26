@@ -4,6 +4,9 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "SceneDie.h"
+#include "SceneMenu.h"
+#include "SceneIntro.h"
 #include "Scene.h"
 #include "Map.h"
 #include "Physics.h"
@@ -36,6 +39,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics();
 	pathfinding = new PathFinding();
 	map = new Map();
+	sceneDie = new SceneDie();
+	sceneMenu = new SceneMenu();
+	sceneIntro = new SceneIntro();
 	scene = new Scene();
 	entityManager = new EntityManager();
 	render = new Render();
@@ -57,6 +63,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entityManager);
 	AddModule(hud);
 	AddModule(guiManager);
+	AddModule(sceneDie);
+	AddModule(sceneMenu);
+	AddModule(sceneIntro);
 	AddModule(animation);
 
 	// Render last to swap buffer
