@@ -77,6 +77,8 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	bool isPaused = false;
+	GuiControlSlider* Slider;
+	GuiControlButton* gcButton;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
@@ -93,10 +95,7 @@ private:
 	SDL_Texture* mouseTileTex = nullptr;
 
 	//GuiControlButton* gcButton;
-	GuiControlSlider* Slider;
-	GuiControlButton* gcButton;
-
-
+	int variable = 0;
 };
 
 #endif // __SCENE_H__

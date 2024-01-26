@@ -25,16 +25,24 @@ HUD::~HUD()
 // Called before render is available
 bool HUD::Awake(pugi::xml_node& config)
 {
-    HealthBar1Path = config.child("HealthBar1").attribute("texturepath").as_string();
-    HealthBar2Path = config.child("HealthBar2").attribute("texturepath").as_string();
-    HealthBar3Path = config.child("HealthBar3").attribute("texturepath").as_string();
-    HealthBar4Path = config.child("HealthBar4").attribute("texturepath").as_string();
-    HealthBar5Path = config.child("HealthBar5").attribute("texturepath").as_string();
-    HealthBarNullPath = config.child("HealthBarNull").attribute("texturepath").as_string();
+
+	pugi::xml_node HealthBarN = config.child("HealthBarNull");
+	pugi::xml_node HealthBar1N = config.child("HealthBar1");
+	pugi::xml_node HealthBar2N = config.child("HealthBar2");
+	pugi::xml_node HealthBar3N = config.child("HealthBar3");
+	pugi::xml_node HealthBar4N = config.child("HealthBar4");
+	pugi::xml_node HealthBar5N = config.child("HealthBar5");
+
+    HealthBar1Path = HealthBar1N.attribute("texturepath").as_string();
+    HealthBar2Path = HealthBar2N.attribute("texturepath").as_string();
+    HealthBar3Path = HealthBar3N.attribute("texturepath").as_string();
+    HealthBar4Path = HealthBar4N.attribute("texturepath").as_string();
+    HealthBar5Path = HealthBar5N.attribute("texturepath").as_string();
+    HealthBarNullPath = HealthBarN.attribute("texturepath").as_string();
     BoxPath = config.child("Box").attribute("texturepath").as_string();
     HeartPath = config.child("Heart").attribute("texturepath").as_string();
 
-	EnemyHealthBarNullPath = config.child("EnemyHealthNull").attribute("texturepath").as_string();
+	EnemyHealthBarNullPath = config.child("HUD").child("EnemyHealthNull").attribute("texturepath").as_string();
 	EnemyHealthBar1Path = config.child("EnemyHealth1").attribute("texturepath").as_string();
 	EnemyHealthBar2Path = config.child("EnemyHealth2").attribute("texturepath").as_string();
 	EnemyHealthBar3Path = config.child("EnemyHealth3").attribute("texturepath").as_string();

@@ -330,14 +330,24 @@ bool Scene::Update(float dt)
 		app->hud->Start();
 		app->render->camera.x = 0;
 	}
-	return true;
-
-	if(isPaused)
+	if (isPaused)
 	{
-		SDL_Rect pos = { 0,0, 120,12 };
-		gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Didac, el virgen", pos, this);
-		return true;
+		app->win->GetWindowSize(windowW, windowH);
+		SDL_Rect pos = { windowW/2-40, windowH/2-100, 80,30 };
+		SDL_Rect pos2 = { windowW / 2 - 40, windowH / 2 - 50, 80,30 };
+		SDL_Rect pos3 = { windowW / 2 - 40, windowH / 2, 80,30 };
+		SDL_Rect pos4 = { windowW / 2 - 40, windowH / 2 + 50, 80,30 };
+		if (variable == 0)
+		{
+			gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RESUME", pos, this);
+			gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "SETTINGS", pos2, this);
+			gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "BACK to TITLE", pos3, this);
+			gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "EXIT", pos4, this);
+			variable++;
+		}
+		
 	}
+	return true;
 }
 
 // Called each loop iteration
@@ -355,20 +365,32 @@ bool Scene::PostUpdate()
 	}
 	if (isPaused)
 	{
+		
+		app->guiManager->active = true;
 		//pause the game
 		app->physics->step = 0;
 		app->audio->active = false;
-		player->animSpeed = 0;
 		for (int i = 0; i < app->entityManager->entities.Count(); i++)
 		{
 			app->entityManager->entities[i]->animSpeed = 0;
 		}
+		
 	}
 	else if (!isPaused)
 	{
+		variable = 0;
 		app->physics->step = 1.0f / 60.0f;
 		app->audio->active = true;
-		player->animSpeed = 0.01f;
+		for (int i = 0; i < app->entityManager->entities.Count(); i++)
+		{
+			app->entityManager->entities[i]->animSpeed = 0.01;
+		}
+		//unload the button
+		if (gcButton != nullptr)
+		{
+			app->guiManager->active = false;
+		}
+
 	}
 
 	return ret;

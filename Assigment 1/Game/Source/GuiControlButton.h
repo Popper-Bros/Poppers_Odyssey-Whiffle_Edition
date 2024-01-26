@@ -16,6 +16,10 @@ public:
 
 	// Called each loop iteration
 	bool Update(float dt);
+	//destroy button
+	void DestroyButton();
+
+
 
 private:
 
