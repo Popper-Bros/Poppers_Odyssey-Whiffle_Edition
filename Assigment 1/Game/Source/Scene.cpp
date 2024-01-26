@@ -188,7 +188,7 @@ bool Scene::Start()
 
 	SDL_Rect btPos = { windowW / 2 - 60,20, 120,12 };
 	//gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Didac, el virgen", btPos, this);
-	//gcButton = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "", btPos, this);
+	Slider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "", btPos, this);
 
 	return true;
 }
@@ -338,12 +338,15 @@ bool Scene::Update(float dt)
 		SDL_Rect pos2 = { windowW / 2 - 40, windowH / 2 - 50, 80,30 };
 		SDL_Rect pos3 = { windowW / 2 - 40, windowH / 2, 80,30 };
 		SDL_Rect pos4 = { windowW / 2 - 40, windowH / 2 + 50, 80,30 };
+		SDL_Rect pos5 = { windowW / 2 - 40, windowH / 2 + 100, 80,30 };
+
 		if (variable == 0)
 		{
 			gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RESUME", pos, this);
 			gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "SETTINGS", pos2, this);
 			gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "BACK to TITLE", pos3, this);
 			gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "EXIT", pos4, this);
+			
 			variable++;
 		}
 		
@@ -356,17 +359,16 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if(esc || app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		ret = false;
 	//make a pause menu
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		isPaused = !isPaused;
+		isPaused = true;
 		
 	}
 	if (isPaused)
 	{
-		
 		app->guiManager->active = true;
 		//pause the game
 		app->physics->step = 0;

@@ -38,43 +38,6 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	return guiControl;
 }
 
-GuiControl* GuiManager::DestroyButton(GuiControlButton* guiControl)
-{
-	ListItem<GuiControl*>* control = guiControlsList.start;
-	GuiControl* deletedControl = nullptr;
-
-	while (control != nullptr)
-	{
-		if (control->data == guiControl)
-		{
-			deletedControl = control->data;
-			guiControlsList.Del(control);
-			break;
-		}
-		control = control->next;
-	}
-
-	delete deletedControl;
-	return guiControl;
-}
-
-GuiControl* GuiManager::DestroySlider(GuiControlSlider* guiControl)
-{
-	ListItem<GuiControl*>* control = guiControlsList.start;
-
-	while (control != nullptr)
-	{
-		if (control->data == guiControl)
-		{
-			guiControlsList.Del(control);
-			break;
-		}
-		control = control->next;
-	}
-
-	return guiControl;
-}
-
 bool GuiManager::Start()
 {
 	ListItem<GuiControl*>* control = guiControlsList.start;

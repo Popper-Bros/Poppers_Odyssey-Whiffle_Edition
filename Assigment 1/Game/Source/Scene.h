@@ -84,6 +84,7 @@ public:
 
 	GuiControlSlider* Slider;
 	GuiControlButton* gcButton;
+	bool esc = false;
 
 private:
 	SDL_Texture* img;

@@ -33,6 +33,14 @@ bool GuiControlButton::Update(float dt)
             if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
             {
                 state = GuiControlState::PRESSED;
+                if (id == 1)
+                {
+                    app->scene->isPaused = false;
+                }  
+                if (id == 4)
+                {
+                    app->scene->esc = true;
+                }
             }
 
             if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)

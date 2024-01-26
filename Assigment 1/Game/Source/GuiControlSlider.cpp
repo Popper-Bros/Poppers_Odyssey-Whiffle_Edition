@@ -27,7 +27,7 @@ bool GuiControlSlider::Start()
 	MusicBarRect = { 14,0,30,3 };
 	MusicSliderRect = { 14,5,11,8 };
 
-	cursorBounds = { bounds.x + (bounds.w / 2), bounds.y - 10 + 10, 22, 16 };
+	cursorBounds = { bounds.x + (bounds.w / 2), bounds.y, 22, 16 };
 	return true;
 }
 

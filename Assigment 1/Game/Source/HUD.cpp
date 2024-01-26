@@ -12,6 +12,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "Player.h"
+#include "Window.h"
 
 HUD::HUD() : Module()
 {
@@ -108,23 +109,25 @@ bool HUD::Update(float dt)
 	}
 	elapsedTime = timer.ReadSec();
 
+	int windowW, windowH;
+	SDL_GetWindowSize(app->win->window, &windowW, &windowH);
 	std::string tiempoString = std::to_string(timer.ReadSec());
 	const char *n = tiempoString.c_str();
 	if (elapsedTime == 1)
 	{
-		app->render->DrawText(n, 500, 20, 7, 30);
+		app->render->DrawText(n, windowW-100, 20, 7, 30);
 	}
 	if (elapsedTime < 10 && elapsedTime != 1)
 	{
-		app->render->DrawText(n, 500, 20, 15, 30);
+		app->render->DrawText(n, windowW- 100, 20, 15, 30);
 	}
 	if (elapsedTime >= 10 && elapsedTime < 100)
 	{
-		app->render->DrawText(n, 500, 20, 30, 30);
+		app->render->DrawText(n, windowW - 100, 20, 30, 30);
 	}
 	if (elapsedTime >= 100)
 	{
-		app->render->DrawText(n, 500, 20, 45, 30);
+		app->render->DrawText(n, windowW - 100, 20, 45, 30);
 	}
 
 	

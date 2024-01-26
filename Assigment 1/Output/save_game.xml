@@ -22,9 +22,9 @@
 	</scene>
 	<entitymanager />
 	<HUD />
-	<guiManager />
 	<SceneDie />
 	<SceneMenu />
+	<guiManager />
 	<SceneIntro />
 	<:anonymous />
 	<renderer>

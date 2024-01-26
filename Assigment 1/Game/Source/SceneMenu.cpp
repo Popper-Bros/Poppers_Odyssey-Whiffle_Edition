@@ -43,11 +43,6 @@ bool SceneMenu::Start()
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
 	
-	//Get the size of the texture
-	app->tex->GetSize(menuTexture, texW, texH);
-
-	textPosX = (float)windowW / 2 - (float)texW / 2;
-	textPosY = (float)windowH / 2 - (float)texH / 2;
 
 	app->win->GetWindowSize(windowW, windowH);
 
@@ -56,9 +51,7 @@ bool SceneMenu::Start()
 
 	textPosX = (float)windowW / 2 - (float)texW / 2;
 	textPosY = (float)windowH / 2 - (float)texH / 2;
-
-	SDL_Rect btPos = { windowW / 2 - 60,20, 120,12 };
-	//gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Didac, el virgen", btPos, this);
+	
 	//gcButton = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "", btPos, this);
 
 	return true;
@@ -73,12 +66,16 @@ bool SceneMenu::PreUpdate()
 // Called each loop iteration
 bool SceneMenu::Update(float dt)
 {
+	SDL_Rect btPos = { 0,20, 120,12 };
+	//gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Didac, el virgen", btPos, this);
+	Slider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "", btPos, this);
 	SDL_Rect rect;
 	rect.x = 0;
 	rect.y = 0;
 	rect.w = windowW;
 	rect.h = windowH;
 	app->render->DrawTexture(menuTexture, 0, 0, &rect);
+	
 	return true;
 }
 
@@ -87,6 +84,7 @@ bool SceneMenu::PostUpdate()
 {
 	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) {
 		CleanUp();
+		
 	}
 
 	bool ret = true;

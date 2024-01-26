@@ -101,7 +101,9 @@ bool Render::Update(float dt)
 	}
 	if (app->scene->isPaused)
 	{
-		DrawRectangle({ 0,0,1028,786 }, 0, 0, 0, 150, true, false);
+		int windowW, windowH;
+		SDL_GetWindowSize(app->win->window, &windowW, &windowH);
+		DrawRectangle({ 0,0,windowW,windowH }, 0, 0, 0, 150, true, false);
 		//elimina el rectangulo de la pantalla
 
 	}
