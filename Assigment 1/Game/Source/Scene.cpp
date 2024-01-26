@@ -401,20 +401,13 @@ bool Scene::LoadState(pugi::xml_node node) // esta funcion carga los datos del x
 	//	item->parameters = itemNode;
 	//}
 	
-	for (pugi::xml_node playerNode = node.child("Player"); playerNode; playerNode = playerNode.next_sibling("Player")) {
-		this->player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-		this->player->parameters = playerNode;
-		this->player->Awake();
-		this->player->texturepath = playerNode.attribute("texturepath").as_string();
-		this->player->Start();
-		this->player->isAlive = true;
-		this->player->position.x = node.child("Player").attribute("x").as_int();
-		this->player->position.y = node.child("Player").attribute("y").as_int();
-		this->player->intoxication = node.child("Player").attribute("intoxication").as_int();
-		this->player->health = node.child("Player").attribute("health").as_int();
-		this->player->itemPicked = node.child("Player").attribute("itemPicked").as_int();
-		
-
+	if (node.child("Player")) {
+		player->position.x = node.child("Player").attribute("x").as_int();
+		player->position.y = node.child("Player").attribute("y").as_int();
+		player->intoxication = node.child("Player").attribute("intoxication").as_int();
+		player->health = node.child("Player").attribute("health").as_int();
+		player->itemPicked = node.child("Player").attribute("itemPicked").as_int();
+		player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x + 0.3f),PIXEL_TO_METERS(player->position.y + 0.3f) }, 0);
 	}
 
 	for (pugi::xml_node healNode = node.child("Heal"); healNode; healNode = healNode.next_sibling("Heal")) {
