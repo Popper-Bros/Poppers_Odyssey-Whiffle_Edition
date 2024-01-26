@@ -64,12 +64,12 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-	Move_right.speed = animVel * dt;
-	Move_left.speed = animVel * dt;
-	Idle_right.speed = animVel * dt;
-	Idle_left.speed = animVel * dt;
-	Jump_right.speed = animVel * dt;
-	Jump_left.speed = animVel * dt;
+	Move_right.speed = animSpeed * dt;
+	Move_left.speed = animSpeed * dt;
+	Idle_right.speed = animSpeed * dt;
+	Idle_left.speed = animSpeed * dt;
+	Jump_right.speed = animSpeed * dt;
+	Jump_left.speed = animSpeed * dt;
 	Die.speed = 0.01f * dt;
 
 	if (app->map->level == 1 &&	position.x > 1930 && position.y < 260 && !win) {

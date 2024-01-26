@@ -201,6 +201,9 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
+
+	app->physics->step = 1.0f / 60.0f;
 	switch (player->itemPicked)
 	{
 	case 0:
@@ -226,21 +229,21 @@ bool Scene::Update(float dt)
 		playerAlive = false;
 	}
 
-	float camSpeed = 0.125f; 
+	float camSpeed = 0.125f;
 
 	//if(app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	//	app->render->camera.y -= (int)ceil(camSpeed * dt);
-	
+
 	//if(app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	//	app->render->camera.y += (int)ceil(camSpeed * dt);
 
 	//camera movement
-	if (app->render->camera.x < 0 && ((app->scene->player->position.x) + app->render->camera.x)<(((app->render->camera.w) / 2)) - 40)
+	if (app->render->camera.x < 0 && ((app->scene->player->position.x) + app->render->camera.x) < (((app->render->camera.w) / 2)) - 40)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 	if (app->render->camera.x > -1024 && ((app->scene->player->position.x) + app->render->camera.x) > (((app->render->camera.w) / 2)) + 40)
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
 
-	if (player->position.x > 925 && player->position.y < 200 && checkpoint==0 && app->map->level == 1)
+	if (player->position.x > 925 && player->position.y < 200 && checkpoint == 0 && app->map->level == 1)
 	{
 		app->SaveRequest();
 		checkpoint = 1;
@@ -253,7 +256,7 @@ bool Scene::Update(float dt)
 	}
 
 	//el player vuelve al pricipio 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) { 
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && player->isAlive && player->fell == false) {
 		checkpoint = 0;
 		app->render->camera.x = 0;
 		if (app->map->level == 1) {
@@ -277,13 +280,13 @@ bool Scene::Update(float dt)
 		app->SaveRequest();
 	}
 	//el player respawnea en el ultimo checkpoint
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && player->isAlive && player->fell == false){
-		if (checkpoint==0) player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && player->isAlive && player->fell == false) {
+		if (checkpoint == 0) player->pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 		else if (checkpoint == 1) player->pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);
 	}
 
-	playerTile = app->map->WorldToMap(25+player->position.x, player->position.y - app->render->camera.y);
-		
+	playerTile = app->map->WorldToMap(25 + player->position.x, player->position.y - app->render->camera.y);
+
 	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 
 	//hace un save
@@ -326,9 +329,15 @@ bool Scene::Update(float dt)
 		app->entityManager->Start();
 		app->hud->Start();
 		app->render->camera.x = 0;
-		
 	}
 	return true;
+
+	if(isPaused)
+	{
+		SDL_Rect pos = { 0,0, 120,12 };
+		gcButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Didac, el virgen", pos, this);
+		return true;
+	}
 }
 
 // Called each loop iteration
@@ -338,6 +347,29 @@ bool Scene::PostUpdate()
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+	//make a pause menu
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		isPaused = !isPaused;
+		
+	}
+	if (isPaused)
+	{
+		//pause the game
+		app->physics->step = 0;
+		app->audio->active = false;
+		player->animSpeed = 0;
+		for (int i = 0; i < app->entityManager->entities.Count(); i++)
+		{
+			app->entityManager->entities[i]->animSpeed = 0;
+		}
+	}
+	else if (!isPaused)
+	{
+		app->physics->step = 1.0f / 60.0f;
+		app->audio->active = true;
+		player->animSpeed = 0.01f;
+	}
 
 	return ret;
 }

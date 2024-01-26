@@ -22,6 +22,7 @@ class Physics;
 class PathFinding;
 class HUD;
 class GuiManager;
+class Animation;
 
 class App
 {
@@ -102,6 +103,7 @@ public:
 	PathFinding* pathfinding;
 	HUD* hud;
 	GuiManager* guiManager;
+	Animation* animation;
 
 private:
 

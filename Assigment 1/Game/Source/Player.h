@@ -57,7 +57,6 @@ public:
 	bool isAlive = true;
 	bool win = false;
 
-	float animVel = 0.01f;
 	float frameCounter = 0.0f;
 	int frameSpeed = 2;
 	bool collidingPlat;

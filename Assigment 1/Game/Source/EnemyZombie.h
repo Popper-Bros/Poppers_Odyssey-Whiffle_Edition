@@ -73,7 +73,6 @@ public:
 
 	float timerOn = false;
 	Timer timer = Timer();
-	float animSpeed = 0.01f;
 
 	iPoint enemyTile;
 

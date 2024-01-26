@@ -90,11 +90,23 @@ bool HUD::Update(float dt)
 		timerOn = true;
 		elapsedTime = 0;
 	}
+	if (app->scene->isPaused)
+	{
+		timer.Stop();
+	}
+	else
+	{
+		timer.Resume();
+	}
 	elapsedTime = timer.ReadSec();
 
 	std::string tiempoString = std::to_string(timer.ReadSec());
 	const char *n = tiempoString.c_str();
-	if (elapsedTime < 10)
+	if (elapsedTime == 1)
+	{
+		app->render->DrawText(n, 500, 20, 7, 30);
+	}
+	if (elapsedTime < 10 && elapsedTime != 1)
 	{
 		app->render->DrawText(n, 500, 20, 15, 30);
 	}

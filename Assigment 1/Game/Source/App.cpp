@@ -11,6 +11,7 @@
 #include "HUD.h"
 #include "GuiManager.h"
 #include "Optick/include/optick.h"
+#include "Animation.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -40,6 +41,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	hud = new HUD();
 	guiManager = new GuiManager();
+	animation = new Animation();
 
 
 	// Ordered for awake / Start / Update
@@ -55,6 +57,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entityManager);
 	AddModule(hud);
 	AddModule(guiManager);
+	AddModule(animation);
 
 	// Render last to swap buffer
 	AddModule(render);

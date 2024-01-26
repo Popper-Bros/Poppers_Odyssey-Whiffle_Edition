@@ -105,6 +105,7 @@ public:
 	int health;
 	const char* texturepath;
 	int Num;
+	float animSpeed = 0.01f;
 
 	SDL_Texture* mouseTileTex = nullptr;
 };

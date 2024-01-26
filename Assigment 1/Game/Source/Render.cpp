@@ -99,6 +99,11 @@ bool Render::Update(float dt)
 			timerOn = false;
 		}
 	}
+	if (app->scene->isPaused)
+	{
+		DrawRectangle({ 0,0,1028,786 }, 0, 0, 0, 150, true, false);
+
+	}
 
 	return true;
 }

@@ -92,6 +92,7 @@ public:
 
 	// Debug mode
 	bool debug;
+	float step = 1.0f / 60.0f;
 
 private:
 

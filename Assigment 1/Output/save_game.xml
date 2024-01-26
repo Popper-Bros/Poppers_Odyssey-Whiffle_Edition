@@ -23,6 +23,7 @@
 	<entitymanager />
 	<HUD />
 	<guiManager />
+	<:anonymous />
 	<renderer>
 		<camera x="0" y="0" />
 	</renderer>

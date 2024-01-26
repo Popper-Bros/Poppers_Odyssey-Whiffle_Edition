@@ -1,11 +1,16 @@
 #ifndef __ANIMATION_H__
 #define __ANIMATION_H__
 
-#include "SDL/include/SDL_rect.h"
+#include "Module.h"
+#include "App.h"
+
 #include "PugiXml/src/pugixml.hpp"
+
+
 #define MAX_FRAMES 60
 
-class Animation
+
+class Animation : public Module
 {
 public:
 	bool loop = true;
@@ -96,4 +101,4 @@ public:
 	
 };
 
-#endif
+#endif //__ANIMATION_H__

@@ -13,6 +13,7 @@
 #include "GuiControl.h"
 #include "GuiControlButton.h"
 #include "GuiControlSlider.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -74,6 +75,8 @@ public:
 	bool SaveState(pugi::xml_node node);
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
+
+	bool isPaused = false;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
@@ -90,7 +93,9 @@ private:
 	SDL_Texture* mouseTileTex = nullptr;
 
 	//GuiControlButton* gcButton;
-	GuiControlSlider* gcButton;
+	GuiControlSlider* Slider;
+	GuiControlButton* gcButton;
+
 
 };
 
