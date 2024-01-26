@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "GuiControl.h"
+#include "GuiControlButton.h"
+#include "GuiControlSlider.h"
 
 #include "List.h"
 
@@ -27,6 +29,9 @@ public:
 
 	// Additional methods
 	GuiControl* CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds = { 0,0,0,0 });
+
+	GuiControl* DestroyButton(GuiControlButton* guiControl);
+	GuiControl* DestroySlider(GuiControlSlider* guiControl);
 
 public:
 

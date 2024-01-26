@@ -102,6 +102,7 @@ bool Render::Update(float dt)
 	if (app->scene->isPaused)
 	{
 		DrawRectangle({ 0,0,1028,786 }, 0, 0, 0, 150, true, false);
+		//elimina el rectangulo de la pantalla
 
 	}
 
@@ -120,7 +121,8 @@ bool Render::CleanUp()
 {
 	LOG("Destroying SDL render");
 	SDL_DestroyRenderer(renderer);
-	app->tex->UnLoad(t);
+	app->tex->UnLoad(t);	
+
 	return true;
 }
 
