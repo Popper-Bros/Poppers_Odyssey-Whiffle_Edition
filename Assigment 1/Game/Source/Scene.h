@@ -80,6 +80,8 @@ public:
 
 	Player* player;
 
+	Boss* boss;
+
 	pugi::xml_node savedConfig;
 
 	GuiControlSlider* Slider;
@@ -96,7 +98,6 @@ private:
 	Heal* heal;
 	EnemyShadow* enemyShadow;
 	EnemyZombie* enemyZombie;
-	Boss* boss;
 
 	SDL_Texture* mouseTileTex = nullptr;
 

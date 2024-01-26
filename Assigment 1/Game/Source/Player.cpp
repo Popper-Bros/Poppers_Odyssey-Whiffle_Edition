@@ -273,12 +273,12 @@ bool Player::Update(float dt)
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
 
 		//si la animacion de muerte termina se resetea la posicion del jugador y se activa la animacion de idle
-		if (currentAnimation->GetCurrentFrameIndex() >= 7 && !reset)
+		if (currentAnimation->GetCurrentFrameIndex() >= 7)
 		{
-			reset = true;
-			app->entityManager->DestroyEntity(this);
-			app->physics->ChupaBody(app->physics->GetWorld(), pbody->body);
-			app->scene->CleanUp();
+			app->scene->player->isAlive = true;
+			app->scene->player->currentAnimation->Reset();
+
+			app->LoadRequest();
 			/*if (app->scene->checkpoint == 0) pbody->body->SetTransform({ PIXEL_TO_METERS(80),PIXEL_TO_METERS(182) }, 0);
 			else if (app->scene->checkpoint == 1) pbody->body->SetTransform({ PIXEL_TO_METERS(980),PIXEL_TO_METERS(150) }, 0);*/
 			
