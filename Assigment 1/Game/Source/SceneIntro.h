@@ -1,14 +1,7 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __SCENEINTRO_H__
+#define __SCENEINTRO_H__
 
 #include "Module.h"
-#include "Player.h"
-#include "Item.h"
-#include "Heal.h"
-#include "EnemyShadow.h"
-#include "EnemyZombie.h"
-#include "Boss.h"
-#include "Particulas.h"
 #include "HUD.h"
 #include "GuiControl.h"
 #include "GuiControlButton.h"
@@ -17,14 +10,14 @@
 
 struct SDL_Texture;
 
-class Scene : public Module
+class SceneIntro : public Module
 {
 public:
 
-	Scene();
+	SceneIntro();
 
 	// Destructor
-	virtual ~Scene();
+	virtual ~SceneIntro();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
@@ -48,53 +41,18 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	int checkpoint;
-	
-	bool playerAlive = true;
+	Animation* currentAnimation = &title;
 
-	int playerItem = 0;
-
-	bool tp1 = false;
-
-	bool tp2 = false;
-
-	iPoint getPlayerPos();
-
-	int GetPlayerLife();
-
-	PathFinding* pathfinding;
-
-	iPoint playerTile;
-
-	Particulas* particulas;
-
-	//
-	bool LoadState(pugi::xml_node node);
-
-	//
-	bool SaveState(pugi::xml_node node);
+	//Animation idleAnim;
+	Animation title;
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
-	bool isPaused = false;
-
-	Player* player;
-
-	pugi::xml_node savedConfig;
-
 private:
-	SDL_Texture* img;
+	SDL_Texture* introTexture;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
-	
-	Item* item;
-	Heal* heal;
-	EnemyShadow* enemyShadow;
-	EnemyZombie* enemyZombie;
-	Boss* boss;
-
-	SDL_Texture* mouseTileTex = nullptr;
 
 	//GuiControlButton* gcButton;
 	GuiControlSlider* Slider;
@@ -103,4 +61,4 @@ private:
 
 };
 
-#endif // __SCENE_H__
+#endif // __SceneIntro_H__

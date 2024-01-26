@@ -56,6 +56,8 @@ public:
 	float countF = 0.0f;
 	bool isAlive = true;
 	bool win = false;
+	
+	bool reset = false;
 
 	float frameCounter = 0.0f;
 	int frameSpeed = 2;
